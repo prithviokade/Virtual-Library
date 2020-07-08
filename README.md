@@ -95,6 +95,8 @@ A group study app where students can check into app, log their day's goals/topic
     
 ## Wireframes
 
+<<img src='wireframes.png' title='Wireframes' width='' alt='Wireframes' />/>
+
 ## Schema 
 
 ### Models
