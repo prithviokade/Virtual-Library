@@ -85,12 +85,12 @@ A group study app where students can check into app, log their day's goals/topic
 * Registration -> 
    * Home
 * Home Tab (all Tables, Current Table) -> 
-   * Details of each Table
-* Create a Table 
-   * Home Tab 
-* Post progress 
-   * Stream Tab 
-* Project progress 
+   * Details of each Table (on click)
+* Create a Table ->
+   * Home 
+* Create a post ->
+   * Stream 
+* Project progress ->
    * None 
     
 ## Wireframes
