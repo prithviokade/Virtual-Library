@@ -2,6 +2,8 @@ package com.example.virtuallibrary;
 
 import android.app.Application;
 
+import com.example.virtuallibrary.models.Post;
+import com.example.virtuallibrary.models.Table;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -14,7 +16,8 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         // Register your parse models
-        //ParseObject.registerSubclass(_.class);
+        ParseObject.registerSubclass(Table.class);
+        ParseObject.registerSubclass(Post.class);
 
 
         // set applicationId, and server server based on the values in the Heroku settings.

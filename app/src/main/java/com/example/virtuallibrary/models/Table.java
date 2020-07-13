@@ -1,5 +1,6 @@
 package com.example.virtuallibrary.models;
 
+import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -18,8 +19,8 @@ public class Table extends ParseObject {
     public static final String KEY_MATES = "mates";
     public static final String KEY_STATUS = "status";
 
-    public String getCreator() {
-        return getString(KEY_CREATOR);
+    public ParseUser getCreator() {
+        return getParseUser(KEY_CREATOR);
     }
 
     public void setCreator(ParseUser creator) {
