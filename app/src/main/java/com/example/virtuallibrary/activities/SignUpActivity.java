@@ -1,4 +1,4 @@
-package com.example.virtuallibrary;
+package com.example.virtuallibrary.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,13 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.virtuallibrary.MainActivity;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.activities.MainActivity;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-
-import org.w3c.dom.Text;
 
 public class SignUpActivity extends AppCompatActivity {
 
