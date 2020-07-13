@@ -11,10 +11,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="157dp"
+        android:layout_marginTop="19dp"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -24,6 +22,7 @@
         android:layout_below="@+id/ivProfile"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
         android:text="Prithvi Okade"
         android:textSize="18sp"
         android:textStyle="bold" />

@@ -6,14 +6,16 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 
-// @Parcel(analyze={Table.class})
+@Parcel(analyze={Table.class})
 @ParseClassName("Table")
 public class Table extends ParseObject {
 
     // empty constructor needed by the Parceler library
-    // public Post() { }
+    public Table() { }
 
     public static final String KEY_CREATOR = "creator";
     public static final String KEY_MATES = "mates";

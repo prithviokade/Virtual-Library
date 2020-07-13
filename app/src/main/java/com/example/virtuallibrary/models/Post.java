@@ -5,12 +5,14 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-// @Parcel(analyze={Post.class})
+import org.parceler.Parcel;
+
+@Parcel(analyze={Post.class})
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
     // empty constructor needed by the Parceler library
-    // public Post() { }
+    public Post() { }
 
     public static final String KEY_CAPTION = "caption";
     public static final String KEY_IMAGE = "image";

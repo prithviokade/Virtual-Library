@@ -63,8 +63,8 @@ public class HomeFragment extends Fragment {
                     return;
                 }
                 for (Table table : retreivedTables) {
-                    Log.i(TAG, table.getCreator().getUsername());
-                    // Log.i(TAG, table.getMates().get(0).getUsername());
+                    Log.i(TAG, table.getCreator().getString("name"));
+                    Log.i(TAG, table.getMates().get(0).getUsername());
                 }
                 // tables.clear();
                 // tables.addAll(retreivedTables);
