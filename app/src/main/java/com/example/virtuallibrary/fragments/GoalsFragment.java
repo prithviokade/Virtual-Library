@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -20,10 +21,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.activities.LoginActivity;
+import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +43,9 @@ public class GoalsFragment extends Fragment {
     TextView tvBio;
     RecyclerView rvChecklist;
     Button btnLogOut;
+    List<String> goals;
+    List<String> done;
+    GoalsAdapter adapter;
 
     public static GoalsFragment newInstance(String param1, String param2) {
         GoalsFragment fragment = new GoalsFragment();
@@ -63,6 +71,15 @@ public class GoalsFragment extends Fragment {
         tvBio = view.findViewById(R.id.tvBio);
         rvChecklist = view.findViewById(R.id.rvChecklist);
         btnLogOut = view.findViewById(R.id.btnLogOut);
+        goals = new ArrayList<>();
+        done = new ArrayList<>();
+
+        adapter = new GoalsAdapter(getContext(), goals, done);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
+        rvChecklist.setAdapter(adapter);
+        rvChecklist.setLayoutManager(linearLayoutManager);
+        queryGoals();
 
         ParseFile profile = ParseUser.getCurrentUser().getParseFile("picture");
         if (profile != null) {
@@ -96,5 +113,12 @@ public class GoalsFragment extends Fragment {
             }
         });
 
+    }
+
+    private void queryGoals() {
+        List<String> foundGoals = (List<String>) ParseUser.getCurrentUser().get("goals");
+        List<String> foundDone = (List<String>) ParseUser.getCurrentUser().get("done");
+        adapter.clear();
+        adapter.addAll(foundGoals, foundDone);
     }
 }

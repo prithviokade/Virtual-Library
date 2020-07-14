@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment =  new HomeFragment();
                         break;
                     case R.id.actionProgress:
+                        Log.d(TAG, "goalsfragment created");
                         fragTag = "GoalsFragment";
                         fragment = new GoalsFragment();
                         break;

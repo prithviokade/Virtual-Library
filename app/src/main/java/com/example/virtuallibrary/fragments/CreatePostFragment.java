@@ -35,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class CreatePostFragment extends Fragment {
 
-    public static final String TAG = "CreateFragment";
+    public static final String TAG = "CreatePostFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 112;
     public String photoFileName = "photo.jpg";
     File photoFile;

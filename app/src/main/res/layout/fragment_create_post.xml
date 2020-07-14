@@ -16,7 +16,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="0dp"
-        android:backgroundTint="@color/lightGreen"
+        android:backgroundTint="@color/vlGreen"
         android:text="Post"
         android:textColor="@color/lightGrey" />
 
