@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     ImageButton btnAdd;
+    Button btnCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnAdd = findViewById(R.id.btnAdd);
+        btnCancel = findViewById(R.id.btnCancel);
+        btnCancel.setVisibility(View.INVISIBLE);
         bottomNavigation = findViewById(R.id.bottomNavigation);
         // getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         // getSupportActionBar().setCustomView(R.layout.actionbar);
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnCancel.setVisibility(View.VISIBLE);
                 Fragment fragment;
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
                 switch (fragTag) {
@@ -90,6 +94,30 @@ public class MainActivity extends AppCompatActivity {
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 btnAdd.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAdd.setVisibility(View.VISIBLE);
+                Fragment fragment;
+                // case on each fragment and navigate to the corresponding add table/goal/post fragment
+                switch (fragTag) {
+                    case "HomeFragment":
+                    default:
+                        fragment = new HomeFragment();
+                        break;
+                    case "GoalsFragment":
+                        fragment = new GoalsFragment();
+                        break;
+                    case "PostsFragment":
+                        btnCancel.setText("Close");
+                        fragment = new PostsFragment();
+                        break;
+                }
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                btnCancel.setVisibility(View.INVISIBLE);
             }
         });
 
