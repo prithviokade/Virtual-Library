@@ -47,7 +47,7 @@ public class GoalsFragment extends Fragment {
     List<String> done;
     GoalsAdapter adapter;
 
-    public static GoalsFragment newInstance(String param1, String param2) {
+    public static GoalsFragment newInstance() {
         GoalsFragment fragment = new GoalsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
