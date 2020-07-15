@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CreateFragment">
+    tools:context=".fragments.CreatePostFragment">
 
 
     <Button
@@ -18,7 +18,7 @@
         android:layout_marginEnd="0dp"
         android:backgroundTint="@color/vlGreen"
         android:text="Post"
-        android:textColor="@color/lightGrey" />
+        android:textColor="@color/plainWhite" />
 
     <Button
         android:id="@+id/btnCamera"
