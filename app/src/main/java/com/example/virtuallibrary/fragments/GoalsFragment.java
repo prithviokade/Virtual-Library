@@ -23,6 +23,7 @@ import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.activities.LoginActivity;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.models.Goal;
+import com.facebook.login.LoginManager;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -98,6 +99,7 @@ public class GoalsFragment extends Fragment {
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginManager.getInstance().logOut();
                 ParseUser.logOut();
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
@@ -108,11 +110,6 @@ public class GoalsFragment extends Fragment {
 
     private void queryGoals() {
         List<Goal> foundGoals = (List<Goal>) ParseUser.getCurrentUser().get("goals");
-        try {
-            Log.d(TAG, foundGoals.get(0).fetchIfNeeded().getString("goal"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         adapter.clear();
         adapter.addAll(foundGoals);
     }

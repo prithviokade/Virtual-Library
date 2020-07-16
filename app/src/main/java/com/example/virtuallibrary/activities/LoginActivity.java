@@ -26,6 +26,7 @@ import com.facebook.login.widget.LoginButton;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import java.util.Arrays;
 
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
     private static final String EMAIL = "email";
     private static final String USER_POSTS = "user_posts";
     private static final String AUTH_TYPE = "rerequest";
+    public static String LOGIN_STATUS;
 
     private CallbackManager mCallbackManager;
 
@@ -178,6 +180,8 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
                     Log.e(TAG, "Error while logging in", e);
                     return;
                 }
+                Log.d(TAG, "Success logging in");
+                LOGIN_STATUS = "Success";
                 goMainActivity();
             }
         });
@@ -191,15 +195,39 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
 
     @Override
     public void onCompleted(User user) {
-        // mProfilePhotoView.setImageURI(user.getPicture());
-        Log.d("name", user.getName());
-        Log.d("id", user.getId());
+        String username;
+        String email = null;
         if (user.getEmail() == null) {
-            Log.d(TAG, "no email");
-            // mEmail.setText(R.string.no_email_perm);
+            username = user.getName();
         } else {
-            Log.d("email", user.getEmail());
+            email = user.getEmail();
+            username = email.split("@")[0];
         }
+
+        loginUser(username, user.getId());
+        if (LOGIN_STATUS == null) {
+            // Create the ParseUser
+            ParseUser newUser = new ParseUser();
+            // Set properties
+            newUser.setUsername(username);
+            newUser.setPassword(user.getId());
+            if (email != null) {
+                newUser.setEmail(email);
+            }
+            // Invoke signUpInBackground
+            newUser.signUpInBackground(new SignUpCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                        goMainActivity();
+                    } else {
+                        Log.e(TAG, "Error while signing up", e);
+                        return;
+                    }
+                }
+            });
+        }
+
+        // mProfilePhotoView.setImageURI(user.getPicture());
         // mPermissions.setText(user.getPermissions());
     }
 }
