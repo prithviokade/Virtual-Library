@@ -49,6 +49,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if (ParseUser.getCurrentUser() != null) {
+            goMainActivity();
+        }
+        getSupportActionBar().hide();
+
         mCallbackManager = CallbackManager.Factory.create();
 
         LoginButton mLoginButton = findViewById(R.id.login_button);
@@ -79,11 +84,6 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e(TAG, "help", e);
                     }
                 });
-
-        if (ParseUser.getCurrentUser() != null) {
-            goMainActivity();
-        }
-        getSupportActionBar().hide();
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);

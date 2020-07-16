@@ -1,7 +1,3 @@
-# Virtual-Library
-Original App Design Project
-===
-
 # Virtual Library
 
 ## Table of Contents
@@ -16,12 +12,12 @@ A group study app where students can check into app, log their day's goals/topic
 
 ### App Evaluation
 
-- **Category:** Productivity, Social 
+- **Category:** Productivity, Social
 - **Mobile:** Uses camera, audio, real-time.
-- **Story:** Allows users to engage in a productive, but still social, work environment even when they are not able to physically enter such an evironment. 
+- **Story:** Allows users to engage in a productive, but still social, work environment even when they are not able to physically enter such an evironment.
 - **Market:** Anyone who works at home can enjoy this app.
-- **Habit:** Users can have this app open consistently during the work day. 
-- **Scope:** Having the functionality of getting recommendations and joining tables with some communication is interesting to use and build. Added social features make the app more well-rounded and engaging. 
+- **Habit:** Users can have this app open consistently during the work day.
+- **Scope:** Having the functionality of getting recommendations and joining tables with some communication is interesting to use and build. Added social features make the app more well-rounded and engaging.
 
 ## Product Spec
 
@@ -29,24 +25,24 @@ A group study app where students can check into app, log their day's goals/topic
 
 **Required Must-have Stories**
 
-* User can create a new account
-* User can login
-* User can input their goals, study preferences
-* User can get recommendations for tables they can join
-* User can see all tables and join a table
-* User can see recommendations for a good table for them to join
-* User can chat with others at their table
-* User can listen to the music at their table
-* User can mark their goals as complete
-* User can post a new photo to their feed
+[x] User can create a new account
+[x] User can login
+[x] User can input their goals and update the status of
+[ ] User can get recommendations for tables they can join
+[ ] User can see all tables and join a table
+[ ] User can chat with others at their table
+[x] User can post a new photo to their feed and view other users' posts
 
 **Optional Nice-to-have Stories**
 
-* User can add a comment to a photo
-* User can tap a photo to view a more detailed photo screen with comments
-* User can view individual profiles and see progress
-* User can video chat with others at their table
-* User can view leaderboard of people who've made the most progress
+[ ] User can add a comment/like to a photo
+[ ] User can invite friends
+[ ] User can follow other users
+[ ] User can tap a photo to view a more detailed photo screen with comments
+[ ] User can view individual profiles and see progress
+[ ] User can listen to the music at their table
+[ ] User can video chat with others at their table
+[ ] User can screen share
 
 ### 2. Screen Archetypes
 
@@ -56,17 +52,17 @@ A group study app where students can check into app, log their day's goals/topic
 * Login Screen
    * User can login
    * User selects their preferences for the day
-   * User plans out their goals for the day 
-* Tables Screen  
-   * User can see all tables, clicking on the table opens a fragment describing its details 
-   * User can see the table they're currently at if applicable, clicking on this opens up the current state of the table (chatting, music, etc.) 
+   * User plans out their goals for the day
+* Tables Screen
+   * User can see all tables, clicking on the table opens a fragment describing its details
+   * User can see the table they're currently at if applicable, clicking on this opens up the current state of the table (chatting, music, etc.)
    * User can see recommendations for the table they should join
-* Table Creation 
-   * User can create their own table for people to join  
+* Table Creation
+   * User can create their own table for people to join
 * Progress
-   * User can keep track of how much of their goals they've accomplished 
+   * User can keep track of how much of their goals they've accomplished
 * Stream
-   * User can view a feed of photos 
+   * User can view a feed of photos
 * Content Creation
    * User can post a new photo to their feed
 
@@ -80,25 +76,51 @@ A group study app where students can check into app, log their day's goals/topic
 
 **Flow Navigation** (Screen to Screen)
 
-* Login -> 
+* Login ->
    * Home
-* Registration -> 
+* Registration ->
    * Home
-* Home Tab (all Tables, Current Table) -> 
+* Home Tab (all Tables, Current Table) ->
    * Details of each Table (on click)
 * Create a Table ->
-   * Home 
+   * Home
 * Create a post ->
-   * Stream 
+   * Stream
 * Project progress ->
-   * None 
-    
+   * None
+
 ## Wireframes
 
 <img src='wireframes.png' title='Wireframes' width='' alt='Wireframes' />
 
-## Schema 
+## Schema
 
 ### Models
+* Tables
+    * Users
+    * Status
+    * Details
+    * Chat
+* Goals
+    * User
+    * Checklist
+    * Completed
+* Posts
+    * User
+    * Likes
+    * Comments
+    * Image
+    * Captions
+* Users (to add)
+    * Name
+    * Profile Picture
+    * Goals and Status of goals
+    * Bio
 
 ### Networking
+* (Read) Query all tables for user to join
+* (Create) New tables
+* (Read) Get user's checklist
+* (Create) Update user's checklist
+* (Read) Get all posts
+* (Create) Make a post
