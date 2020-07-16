@@ -35,13 +35,6 @@ public class PostsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static PostsFragment newInstance(String param1, String param2) {
-        PostsFragment fragment = new PostsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

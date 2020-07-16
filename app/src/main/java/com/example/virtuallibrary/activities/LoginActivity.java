@@ -2,6 +2,7 @@ package com.example.virtuallibrary.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,12 +127,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
+            // @SuppressLint("ResourceAsColor")
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!(etUsername.getText().toString().isEmpty()) && !(etPassword.getText().toString().isEmpty())) {
                     // set login button color and enable
                     Log.d(TAG, "detected");
                     btnLogin.setEnabled(true);
+                    // btnLogin.setBackgroundColor(R.color.vlgreen);
+                    // btnLogin.setTextColor(R.color.plainwhite);
                     btnLogin.setBackgroundColor(0xFF55BD7E);
                     btnLogin.setTextColor(0xffffffff);
                 } else {

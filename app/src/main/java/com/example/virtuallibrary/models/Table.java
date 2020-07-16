@@ -9,6 +9,7 @@ import com.parse.ParseUser;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Parcel(analyze={Table.class})
 @ParseClassName("Table")
@@ -37,8 +38,8 @@ public class Table extends ParseObject {
         put(KEY_STATUS, status);
     }
 
-    public ArrayList<ParseUser> getMates() {
-        return (ArrayList<ParseUser>) get(KEY_MATES);
+    public List<ParseUser> getMates() {
+        return (List<ParseUser>) get(KEY_MATES);
     }
 
     public void setMates(ArrayList<ParseUser> mates) {

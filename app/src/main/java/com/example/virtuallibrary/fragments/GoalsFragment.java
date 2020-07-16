@@ -22,7 +22,11 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.activities.LoginActivity;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
+import com.example.virtuallibrary.models.Goal;
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
@@ -30,29 +34,17 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GoalsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GoalsFragment extends Fragment {
 
+    public static final String TAG = "GoalsFragment";
     ImageView ivProfPic;
     TextView tvUsername;
     TextView tvName;
     TextView tvBio;
     RecyclerView rvChecklist;
     Button btnLogOut;
-    List<String> goals;
-    List<String> done;
+    List<Goal> goals;
     GoalsAdapter adapter;
-
-    public static GoalsFragment newInstance() {
-        GoalsFragment fragment = new GoalsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,9 +64,8 @@ public class GoalsFragment extends Fragment {
         rvChecklist = view.findViewById(R.id.rvChecklist);
         btnLogOut = view.findViewById(R.id.btnLogOut);
         goals = new ArrayList<>();
-        done = new ArrayList<>();
 
-        adapter = new GoalsAdapter(getContext(), goals, done);
+        adapter = new GoalsAdapter(getContext(), goals);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
         rvChecklist.setAdapter(adapter);
@@ -116,9 +107,13 @@ public class GoalsFragment extends Fragment {
     }
 
     private void queryGoals() {
-        List<String> foundGoals = (List<String>) ParseUser.getCurrentUser().get("goals");
-        List<String> foundDone = (List<String>) ParseUser.getCurrentUser().get("done");
+        List<Goal> foundGoals = (List<Goal>) ParseUser.getCurrentUser().get("goals");
+        try {
+            Log.d(TAG, foundGoals.get(0).fetchIfNeeded().getString("goal"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         adapter.clear();
-        adapter.addAll(foundGoals, foundDone);
+        adapter.addAll(foundGoals);
     }
 }

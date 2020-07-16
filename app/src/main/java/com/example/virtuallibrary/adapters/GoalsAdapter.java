@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.models.Goal;
 import com.example.virtuallibrary.models.Post;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -30,14 +31,12 @@ import java.util.List;
 public class GoalsAdapter  extends RecyclerView.Adapter<GoalsAdapter.ViewHolder> {
 
     Context context;
-    List<String> goals;
-    List<String> done;
+    List<Goal> goals;
     public static final String TAG = "GoalsAdapter";
 
-    public GoalsAdapter(Context context, List<String> goals, List<String> done) {
+    public GoalsAdapter(Context context, List<Goal> goals) {
         this.context = context;
         this.goals = goals;
-        this.done = done;
     }
 
     @NonNull
@@ -49,9 +48,8 @@ public class GoalsAdapter  extends RecyclerView.Adapter<GoalsAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String goal = goals.get(position);
-        String status = done.get(position);
-        holder.bind(goal, done, position);
+        Goal goal = goals.get(position);
+        holder.bind(goal);
     }
 
     @Override
@@ -70,16 +68,14 @@ public class GoalsAdapter  extends RecyclerView.Adapter<GoalsAdapter.ViewHolder>
             btnDone = itemView.findViewById(R.id.btnDone);
         }
 
-        public void bind(final String goal, final List<String> statuses, final int position) {
-            tvGoal.setText(goal);
+        public void bind(final Goal goal) {
+            tvGoal.setText(goal.getGoal());
 
-            final String[] status = {statuses.get(position)};
+            final String status = goal.getStatus();
 
-            Log.d("GOAL", goal + " STATUS " + status[0] + "text");
-
-            if (status[0].equals("complete")) {
+            if (status.equals("complete")) {
                 btnDone.setImageResource(R.drawable.ic_baseline_check_box_24);
-            } else if (status[0].equals("intermediate")) {
+            } else if (status.equals("intermediate")) {
                 btnDone.setImageResource(R.drawable.ic_baseline_indeterminate_check_box_24);
             } else {
                 btnDone.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
@@ -88,22 +84,19 @@ public class GoalsAdapter  extends RecyclerView.Adapter<GoalsAdapter.ViewHolder>
             btnDone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String status = goal.getStatus();
                     ParseUser user = ParseUser.getCurrentUser();
-                    if (status[0].equals("complete")) {
-                        status[0] = "incomplete";
-                        done.set(position, "incomplete");
+                    if (status.equals("complete")) {
+                        goal.setStatus("incomplete");
                         btnDone.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
-                    } else if (status[0].equals("intermediate")) {
-                        status[0] = "complete";
-                        done.set(position, "complete");
+                    } else if (status.equals("intermediate")) {
+                        goal.setStatus("complete");
                         btnDone.setImageResource(R.drawable.ic_baseline_check_box_24);
                     } else {
-                        status[0] = "intermediate";
-                        statuses.set(position,"intermediate");
-                        done.set(position,"intermediate");
+                        goal.setStatus("intermediate");
                         btnDone.setImageResource(R.drawable.ic_baseline_indeterminate_check_box_24);
                     }
-                    user.put("done", done);
+                    saveGoal(goal);
                     saveUser();
                 }
             });
@@ -113,15 +106,26 @@ public class GoalsAdapter  extends RecyclerView.Adapter<GoalsAdapter.ViewHolder>
     // Clean all elements of the recycler
     public void clear() {
         goals.clear();
-        done.clear();
         notifyDataSetChanged();
     }
 
     // Add a list of items
-    public void addAll(List<String> listGoals, List<String> listDone) {
+    public void addAll(List<Goal> listGoals) {
         goals.addAll(listGoals);
-        done.addAll(listDone);
         notifyDataSetChanged();
+    }
+
+    private void saveGoal(Goal goal) {
+        goal.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving goal info", e);
+                } else {
+                    Log.i(TAG, "Success saving goal info");
+                }
+            }
+        });
     }
 
     private void saveUser() {

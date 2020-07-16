@@ -25,24 +25,24 @@ A group study app where students can check into app, log their day's goals/topic
 
 **Required Must-have Stories**
 
-[x] User can create a new account
-[x] User can login
-[x] User can input their goals and update the status of
-[ ] User can get recommendations for tables they can join
-[ ] User can see all tables and join a table
-[ ] User can chat with others at their table
-[x] User can post a new photo to their feed and view other users' posts
+* [x] User can create a new account
+* [x] User can login
+* [x] User can input their goals and update the status of
+* [ ] User can get recommendations for tables they can join
+* [ ] User can see all tables and join a table
+* [ ] User can chat with others at their table
+* [x] User can post a new photo to their feed and view other users' posts
 
 **Optional Nice-to-have Stories**
 
-[ ] User can add a comment/like to a photo
-[ ] User can invite friends
-[ ] User can follow other users
-[ ] User can tap a photo to view a more detailed photo screen with comments
-[ ] User can view individual profiles and see progress
-[ ] User can listen to the music at their table
-[ ] User can video chat with others at their table
-[ ] User can screen share
+* [ ] User can add a comment/like to a photo
+* [ ] User can invite friends
+* [ ] User can follow other users
+* [ ] User can tap a photo to view a more detailed photo screen with comments
+* [ ] User can view individual profiles and see progress
+* [ ] User can listen to the music at their table
+* [ ] User can video chat with others at their table
+* [ ] User can screen share
 
 ### 2. Screen Archetypes
 

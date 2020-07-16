@@ -16,15 +16,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.models.Goal;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateGoalFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CreateGoalFragment extends Fragment {
 
     EditText etGoal;
@@ -38,13 +34,6 @@ public class CreateGoalFragment extends Fragment {
 
     public CreateGoalFragment() {
         // Required empty public constructor
-    }
-
-    public static CreateGoalFragment newInstance() {
-        CreateGoalFragment fragment = new CreateGoalFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -98,13 +87,29 @@ public class CreateGoalFragment extends Fragment {
                 if (status == null) {
                     status = "incomplete";
                 }
-                ParseUser.getCurrentUser().add("goals", goal);
-                ParseUser.getCurrentUser().add("done", status);
+                Goal addGoal = new Goal();
+                addGoal.setGoal(goal);
+                addGoal.setStatus(status);
+                ParseUser.getCurrentUser().add("goals", addGoal);
+                saveGoal(addGoal);
                 saveUser();
                 etGoal.setText("");
                 btnComp.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
                 btnInprog.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
                 btnIncomp.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
+            }
+        });
+    }
+
+    private void saveGoal(Goal goal) {
+        goal.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving goal info", e);
+                } else {
+                    Log.i(TAG, "Success saving goal info");
+                }
             }
         });
     }
