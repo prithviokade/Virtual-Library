@@ -13,7 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.virtuallibrary.GetUserCallback;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserRequest;
+import com.example.virtuallibrary.models.User;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -26,7 +29,7 @@ import com.parse.ParseUser;
 
 import java.util.Arrays;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements GetUserCallback.IGetUserResponse {
 
     public static final String TAG = "LoginActivity";
     EditText etUsername;
@@ -43,8 +46,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        goMainActivity();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UserRequest.makeUserRequest(new GetUserCallback(LoginActivity.this).getCallback());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,5 +187,19 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onCompleted(User user) {
+        // mProfilePhotoView.setImageURI(user.getPicture());
+        Log.d("name", user.getName());
+        Log.d("id", user.getId());
+        if (user.getEmail() == null) {
+            Log.d(TAG, "no email");
+            // mEmail.setText(R.string.no_email_perm);
+        } else {
+            Log.d("email", user.getEmail());
+        }
+        // mPermissions.setText(user.getPermissions());
     }
 }
