@@ -171,16 +171,16 @@
         android:textSize="12sp" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTextPersonName"
+        android:layout_below="@+id/etTopic"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/tvSize3" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etTopic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn2"
@@ -192,23 +192,23 @@
         android:textSize="14sp" />
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/btnVisitorsFalse"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
-        android:layout_below="@+id/spinner"
+        android:layout_below="@+id/spinType"
         android:layout_marginStart="5dp"
         android:layout_marginTop="18dp"
-        android:layout_toEndOf="@+id/button10"
+        android:layout_toEndOf="@+id/btnVisitorsTrue"
         android:text="No"
         android:textSize="12sp" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/btnVisitorsTrue"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
-        android:layout_below="@+id/spinner"
+        android:layout_below="@+id/spinType"
         android:layout_marginStart="5dp"
         android:layout_marginTop="18dp"
         android:layout_toEndOf="@+id/tvSize4"
@@ -216,17 +216,17 @@
         android:textSize="12sp" />
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTextMultiLine"
+        android:layout_below="@+id/etDescription"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         android:text="Create" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/etDescription"
         android:layout_width="match_parent"
         android:layout_height="77dp"
         android:layout_below="@+id/tvSize5"
@@ -238,15 +238,15 @@
         android:inputType="textMultiLine" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnLock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button12"
-        android:layout_alignBottom="@+id/button12"
+        android:layout_alignTop="@+id/btnCreate"
+        android:layout_alignBottom="@+id/btnCreate"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="12dp"
-        android:layout_toStartOf="@+id/button12"
+        android:layout_toStartOf="@+id/btnCreate"
         android:background="#FFFFFF"
         android:src="@drawable/ic_baseline_lock_open_24" />
 </RelativeLayout>

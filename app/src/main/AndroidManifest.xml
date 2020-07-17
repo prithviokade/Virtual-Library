@@ -14,7 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.DetailsActivity"></activity>
+
+        <activity android:name=".activities.DetailsActivity">
+            <!-- Intent filter used for Messenger protocol version 20150311 -->
+            <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.facebook.orca.category.PLATFORM_THREAD_20150311" />
+            </intent-filter>
+
+            <!-- Intent filter used for Messenger protocol version 20150314 -->
+            <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.facebook.orca.category.PLATFORM_THREAD_20150314" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activities.SignUpActivity" />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
