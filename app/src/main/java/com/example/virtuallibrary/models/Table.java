@@ -1,8 +1,6 @@
 package com.example.virtuallibrary.models;
 
-import com.parse.Parse;
 import com.parse.ParseClassName;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -21,6 +19,12 @@ public class Table extends ParseObject {
     public static final String KEY_CREATOR = "creator";
     public static final String KEY_MATES = "mates";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_SIZE = "size";
+    public static final String KEY_TOPIC = "topic";
+    public static final String KEY_TYPE = "type";
+    public static final String KEY_VISITING = "visiting";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_LOCKED = "locked";
 
     public ParseUser getCreator() {
         return getParseUser(KEY_CREATOR);
@@ -49,4 +53,41 @@ public class Table extends ParseObject {
     public void addMate(ParseUser mate) {
         add(KEY_MATES, mate);
     }
+
+    public int getSize() { return getInt(KEY_SIZE); }
+
+    public void setSize(int size) { put(KEY_SIZE, size); }
+
+    public String getTopic() {
+        return getString(KEY_TOPIC);
+    }
+
+    public void setTopic(String topic) {
+        put(KEY_TOPIC, topic);
+    }
+
+    public String getType() {
+        return getString(KEY_TYPE);
+    }
+
+    public void setType(String type) {
+        put(KEY_TYPE, type);
+    }
+
+    public boolean getVisiting() { return getBoolean(KEY_VISITING); }
+
+    public void setVisiting(boolean visiting) { put(KEY_VISITING, visiting); }
+
+    public String getDescription() {
+        return getString(KEY_DESCRIPTION);
+    }
+
+    public void setDescription(String description) {
+        put(KEY_DESCRIPTION, description);
+    }
+
+    public boolean getLocked() { return getBoolean(KEY_LOCKED); }
+
+    public void setLocked(boolean locked) { put(KEY_LOCKED, locked); }
+
 }

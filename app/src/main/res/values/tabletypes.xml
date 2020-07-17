@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tabletypes_array">
+        <item>quiet study</item>
+        <item>collaborative</item>
+        <item>quiet study with breaks</item>
+    </string-array>
+</resources>
