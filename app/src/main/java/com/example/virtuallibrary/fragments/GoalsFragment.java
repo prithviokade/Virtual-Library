@@ -22,6 +22,8 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.activities.LoginActivity;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
+import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
+import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
 import com.example.virtuallibrary.models.Goal;
 import com.facebook.login.LoginManager;
 import com.parse.Parse;
@@ -37,6 +39,8 @@ import java.util.List;
 
 public class GoalsFragment extends Fragment {
 
+    FragmentGoalsBinding binding;
+
     public static final String TAG = "GoalsFragment";
     ImageView ivProfPic;
     TextView tvUsername;
@@ -51,19 +55,21 @@ public class GoalsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_goals, container, false);
+        binding = FragmentGoalsBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ivProfPic = view.findViewById(R.id.ivProfile);
-        tvUsername = view.findViewById(R.id.tvScreenName);
-        tvName = view.findViewById(R.id.tvName);
-        tvBio = view.findViewById(R.id.tvBio);
-        rvChecklist = view.findViewById(R.id.rvChecklist);
-        btnLogOut = view.findViewById(R.id.btnLogOut);
+        ivProfPic = binding.ivProfile;
+        tvUsername = binding.tvScreenName;
+        tvName = binding.tvName;
+        tvBio = binding.tvBio;
+        rvChecklist = binding.rvChecklist;
+        btnLogOut = binding.btnLogOut;
         goals = new ArrayList<>();
 
         adapter = new GoalsAdapter(getContext(), goals);

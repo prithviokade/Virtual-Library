@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.virtuallibrary.GetUserCallback;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserRequest;
+import com.example.virtuallibrary.databinding.ActivityLoginBinding;
 import com.example.virtuallibrary.models.User;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -60,7 +61,9 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         if (ParseUser.getCurrentUser() != null) {
             goMainActivity();
@@ -69,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
 
         mCallbackManager = CallbackManager.Factory.create();
 
-        LoginButton mLoginButton = findViewById(R.id.login_button);
+        LoginButton mLoginButton = binding.loginButton;
 
         // Set the initial permissions to request from the user while logging in
         mLoginButton.setPermissions(Arrays.asList(EMAIL, USER_POSTS));
@@ -98,10 +101,10 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
                     }
                 });
 
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        tvSignUp = findViewById(R.id.tvSignUp);
+        etUsername = binding.etUsername;
+        etPassword = binding.etPassword;
+        btnLogin = binding.btnLogin;
+        tvSignUp = binding.tvSignUp;
 
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

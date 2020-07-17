@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.databinding.ActivityDetailsBinding;
 import com.facebook.messenger.MessengerThreadParams;
 import com.facebook.messenger.MessengerUtils;
 import com.facebook.messenger.ShareToMessengerParams;
@@ -27,9 +28,11 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityDetailsBinding binding = ActivityDetailsBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        setContentView(R.layout.activity_details);
-        mMessengerButton = findViewById(R.id.btnSend);
+        mMessengerButton = binding.btnSend;
 
         // If we received Intent.ACTION_PICK from Messenger, we were launched from a composer shortcut
         // or the reply flow.

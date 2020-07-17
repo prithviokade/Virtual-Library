@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.activities.MainActivity;
+import com.example.virtuallibrary.databinding.ActivitySignUpBinding;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -28,15 +29,18 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        ActivitySignUpBinding binding = ActivitySignUpBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
 
         getSupportActionBar().hide();
-        etPhone = findViewById(R.id.etPhone);
-        etEmail = findViewById(R.id.etEmail);
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        btnSignUp = findViewById(R.id.btnSignUp);
-        tvLogin = findViewById(R.id.tvLogin);
+        etPhone = binding.etPhone;
+        etEmail = binding.etEmail;
+        etUsername = binding.etUsername;
+        etPassword = binding.etPassword;
+        btnSignUp = binding.btnSignUp;
+        tvLogin = binding.tvLogin;
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

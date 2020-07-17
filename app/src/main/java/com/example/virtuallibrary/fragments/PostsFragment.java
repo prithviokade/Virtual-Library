@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.adapters.PostsAdapter;
+import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
+import com.example.virtuallibrary.databinding.FragmentPostsBinding;
 import com.example.virtuallibrary.models.Post;
 import com.example.virtuallibrary.models.Table;
 import com.parse.FindCallback;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostsFragment extends Fragment {
+
+    FragmentPostsBinding binding;
 
     public static final String TAG = "PostsFragment";
     RecyclerView rvPosts;
@@ -39,13 +43,15 @@ public class PostsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_posts, container, false);
+        binding = FragmentPostsBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvPosts = view.findViewById(R.id.rvPosts);
+        rvPosts = binding.rvPosts;
         posts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), posts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

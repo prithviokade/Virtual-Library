@@ -23,6 +23,8 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.databinding.FragmentCreatePostBinding;
+import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
 import com.example.virtuallibrary.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -34,6 +36,8 @@ import java.io.File;
 import static android.app.Activity.RESULT_OK;
 
 public class CreatePostFragment extends Fragment {
+
+    FragmentCreatePostBinding binding;
 
     public static final String TAG = "CreatePostFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 112;
@@ -52,16 +56,18 @@ public class CreatePostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_post, container, false);
+        binding = FragmentCreatePostBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        etCaption = view.findViewById(R.id.etCaption);
-        btnCamera = view.findViewById(R.id.btnCamera);
-        btnPost = view.findViewById(R.id.btnPost);
-        ivPhoto = view.findViewById(R.id.ivPhoto);
+        etCaption = binding.etCaption;
+        btnCamera = binding.btnCamera;
+        btnPost = binding.btnPost;
+        ivPhoto = binding.ivPhoto;
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,10 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.adapters.TableAdapter;
+import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
+import com.example.virtuallibrary.databinding.FragmentHomeBinding;
 import com.example.virtuallibrary.models.Table;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -26,10 +29,13 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    FragmentHomeBinding binding;
+
     public static final String TAG = "HomeFragment";
     List<Table> tables;
     TableAdapter adapter;
     RecyclerView rvTables;
+    ImageView ivCurrTable;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -39,13 +45,23 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvTables = view.findViewById(R.id.rvTables);
+        rvTables = binding.rvTables;
+        ivCurrTable = binding.ivCurrTable;
+
+        ivCurrTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivCurrTable.setVisibility(View.GONE);
+            }
+        });
 
         tables = new ArrayList<>();
         adapter = new TableAdapter(getContext(), tables);

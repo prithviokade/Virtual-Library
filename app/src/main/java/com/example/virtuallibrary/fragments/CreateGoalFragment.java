@@ -16,12 +16,16 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.databinding.FragmentCreateGoalBinding;
+import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
 import com.example.virtuallibrary.models.Goal;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class CreateGoalFragment extends Fragment {
+
+    FragmentCreateGoalBinding binding;
 
     EditText etGoal;
     ImageButton btnIncomp;
@@ -40,17 +44,19 @@ public class CreateGoalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_goal, container, false);
+        binding = FragmentCreateGoalBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        etGoal = view.findViewById(R.id.etGoal);
-        btnIncomp = view.findViewById(R.id.btnIncomp);
-        btnInprog = view.findViewById(R.id.btnInprog);
-        btnComp = view.findViewById(R.id.btnComp);
-        btnSave = view.findViewById(R.id.btnSave);
+        etGoal = binding.etGoal;
+        btnIncomp = binding.btnIncomp;
+        btnInprog = binding.btnInprog;
+        btnComp = binding.btnComp;
+        btnSave = binding.btnSave;
 
         btnIncomp.setOnClickListener(new View.OnClickListener() {
             @Override

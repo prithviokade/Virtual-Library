@@ -9,6 +9,21 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTables"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivCurrTable"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF" />
+
+    <ImageView
+        android:id="@+id/ivCurrTable"
+        android:layout_width="match_parent"
+        android:layout_height="217dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/eighttable" />
 
 </RelativeLayout>

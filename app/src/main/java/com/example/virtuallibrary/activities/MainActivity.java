@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.databinding.ActivityMainBinding;
 import com.example.virtuallibrary.fragments.CreateGoalFragment;
 import com.example.virtuallibrary.fragments.CreatePostFragment;
 import com.example.virtuallibrary.fragments.CreateTableFragment;
@@ -35,12 +36,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        btnAdd = findViewById(R.id.btnAdd);
-        btnCancel = findViewById(R.id.btnCancel);
-        btnCancel.setVisibility(View.INVISIBLE);
-        bottomNavigation = findViewById(R.id.bottomNavigation);
+        btnAdd = binding.btnAdd;
+        btnCancel = binding.btnCancel;
+        bottomNavigation = binding.bottomNavigation;
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment =  new HomeFragment();
                         break;
                 }
+                btnCancel.setVisibility(View.INVISIBLE);
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
@@ -107,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new GoalsFragment();
                         break;
                     case PostsFragment.TAG:
-                        btnCancel.setText("Close");
                         fragment = new PostsFragment();
                         break;
                 }
