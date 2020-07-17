@@ -20,7 +20,6 @@ public class DetailsActivity extends AppCompatActivity {
     // application.
     private static final int REQUEST_CODE_SHARE_TO_MESSENGER = 1;
 
-    private Toolbar mToolbar;
     private View mMessengerButton;
     private MessengerThreadParams mThreadParams;
     private boolean mPicking;
@@ -30,10 +29,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_details);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mMessengerButton = findViewById(R.id.messenger_send_button);
-
-        mToolbar.setTitle(R.string.app_name);
+        mMessengerButton = findViewById(R.id.btnSend);
 
         // If we received Intent.ACTION_PICK from Messenger, we were launched from a composer shortcut
         // or the reply flow.
@@ -56,10 +52,8 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void onMessengerButtonClicked() {
-        // The URI can reference a file://, content://, or android.resource. Here we use
-        // android.resource for sample purposes.
-        Uri uri =
-                Uri.parse("android.resource://com.example.virtuallibrary/" + R.drawable.tree);
+        // The URI can reference a file://, content://, or android.resource
+        Uri uri = Uri.parse("android.resource://com.example.virtuallibrary/" + R.drawable.tree);
 
         // Create the parameters for what we want to send to Messenger.
         ShareToMessengerParams shareToMessengerParams =
