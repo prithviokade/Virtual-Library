@@ -109,21 +109,45 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        rvMessages.setVisibility(View.INVISIBLE);
+        etCompose.setVisibility(View.INVISIBLE);
+        btnSend.setVisibility(View.INVISIBLE);
+
         if (containsUser(table, ParseUser.getCurrentUser())) {
             btnJoin.setText("Leave");
+            rvMessages.setVisibility(View.VISIBLE);
+            etCompose.setVisibility(View.VISIBLE);
+            btnSend.setVisibility(View.VISIBLE);
         }
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ("Join".equals(btnJoin.getText().toString())) {
+                if ("Join".equals(btnJoin.getText().toString())) { // joined table
+                    rvMessages.setVisibility(View.VISIBLE);
+                    etCompose.setVisibility(View.VISIBLE);
+                    btnSend.setVisibility(View.VISIBLE);
+                    String members = tvMembers.getText().toString();
+                    members += ", @" + ParseUser.getCurrentUser().getUsername();
+                    members = members.replaceAll("None\\, ", "");
+                    tvMembers.setText(members);
+
                     removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
                     ParseUser.getCurrentUser().put("current", table);
                     btnJoin.setText("Leave");
                     saveTable(table);
                     saveUser();
-                } else {
+                } else { // left table
+                    rvMessages.setVisibility(View.INVISIBLE);
+                    etCompose.setVisibility(View.INVISIBLE);
+                    btnSend.setVisibility(View.INVISIBLE);
+                    String members = tvMembers.getText().toString();
+                    Log.d(TAG, members);
+                    members = members.replaceAll("\\, \\@" + ParseUser.getCurrentUser().getUsername(), "");
+                    Log.d(TAG, ", @" + ParseUser.getCurrentUser().getUsername());
+                    tvMembers.setText(members);
+
                     removeFromPreviousTable(ParseUser.getCurrentUser());
                     ParseUser.getCurrentUser().remove("current");
                     saveUser();

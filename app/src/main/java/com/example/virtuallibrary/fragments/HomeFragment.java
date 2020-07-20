@@ -115,6 +115,7 @@ public class HomeFragment extends Fragment {
                 }
                 for (Table table : retreivedTables) {
                     Log.i(TAG, table.getCreator().getString("name"));
+
                 }
                 adapter.clear();
                 adapter.addAll(retreivedTables);

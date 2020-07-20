@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="@color/plainWhite"
     tools:context=".activities.LoginActivity">
 
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/ivLogo"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="10dp"
@@ -45,16 +46,6 @@
         android:enabled="false"
         android:text="Log In"
         android:textColor="#EBF4FB" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="50dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -96,5 +87,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="OR" />
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="181dp"
+        android:layout_height="175dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:visibility="visible"
+        tools:srcCompat="@drawable/logo" />
 
 </RelativeLayout>

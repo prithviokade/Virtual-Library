@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.virtuallibrary.GetUserCallback;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
     EditText etPassword;
     Button btnLogin;
     TextView tvSignUp;
+    ImageView ivLogo;
     private static final String EMAIL = "email";
     private static final String USER_POSTS = "user_posts";
     private static final String AUTH_TYPE = "rerequest";
@@ -64,6 +66,9 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        ivLogo = binding.ivLogo;
+        ivLogo.setImageResource(R.drawable.logo);
 
         if (ParseUser.getCurrentUser() != null) {
             goMainActivity();
