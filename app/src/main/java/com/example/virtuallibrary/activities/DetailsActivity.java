@@ -81,13 +81,14 @@ public class DetailsActivity extends AppCompatActivity {
         for (ParseUser user : mates) {
             members += "@";
             try {
-                members += user.fetchIfNeeded().getUsername();
+                members += user.fetch().getUsername();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            Log.d("members", members);
             members += ", ";
         }
-        tvMembers.setText(members.substring(0, members.length() - 2));
+        if (!members.isEmpty()) { tvMembers.setText(members.substring(0, members.length() - 2)); }
 
         if (table.getVisiting()) {
             tvVisitors.setText("allowed");
@@ -116,14 +117,15 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if ("Join".equals(btnJoin.getText().toString())) {
+                    removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
-                    ParseUser.getCurrentUser().remove("current");
+                    ParseUser.getCurrentUser().put("current", table);
                     btnJoin.setText("Leave");
                     saveTable(table);
                     saveUser();
                 } else {
                     removeFromPreviousTable(ParseUser.getCurrentUser());
-                    ParseUser.getCurrentUser().put("current", table);
+                    ParseUser.getCurrentUser().remove("current");
                     saveUser();
                     btnJoin.setText("Join");
                 }
@@ -170,8 +172,12 @@ public class DetailsActivity extends AppCompatActivity {
 
     private boolean containsUser(Table table, ParseUser user) {
         for (ParseUser mate : table.getMates()) {
-            if (mate.getUsername().equals(user.getUsername())) {
-                return true;
+            try {
+                if (mate.fetch().getUsername().equals(user.fetch().getUsername())) {
+                    return true;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
         return false;

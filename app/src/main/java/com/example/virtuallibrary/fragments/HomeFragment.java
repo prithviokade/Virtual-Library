@@ -61,7 +61,12 @@ public class HomeFragment extends Fragment {
         rvTables = binding.rvTables;
         ivCurrTable = binding.ivCurrTable;
 
-        final Table currTable = (Table) ParseUser.getCurrentUser().get("current");
+        Table currTable = null;
+        try {
+            currTable = (Table) ParseUser.getCurrentUser().fetch().get("current");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (currTable == null) {
             ivCurrTable.setVisibility(View.GONE);
         } else {
@@ -76,11 +81,12 @@ public class HomeFragment extends Fragment {
             if (size == 10) { ivCurrTable.setImageResource(R.drawable.tentable); }
         }
 
+        final Table finalCurrTable = currTable;
         ivCurrTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), DetailsActivity.class);
-                intent.putExtra("TABLE", Parcels.wrap(currTable));
+                intent.putExtra("TABLE", Parcels.wrap(finalCurrTable));
                 startActivity(intent);
             }
         });
@@ -109,7 +115,6 @@ public class HomeFragment extends Fragment {
                 }
                 for (Table table : retreivedTables) {
                     Log.i(TAG, table.getCreator().getString("name"));
-                    Log.i(TAG, table.getMates().get(0).getUsername());
                 }
                 adapter.clear();
                 adapter.addAll(retreivedTables);
