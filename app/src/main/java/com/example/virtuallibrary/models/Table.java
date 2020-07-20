@@ -1,6 +1,7 @@
 package com.example.virtuallibrary.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -27,7 +28,12 @@ public class Table extends ParseObject {
     public static final String KEY_LOCKED = "locked";
 
     public ParseUser getCreator() {
-        return getParseUser(KEY_CREATOR);
+        try {
+            return fetch().getParseUser(KEY_CREATOR);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void setCreator(ParseUser creator) {
@@ -35,7 +41,12 @@ public class Table extends ParseObject {
     }
 
     public String getStatus() {
-        return getString(KEY_STATUS);
+        try {
+            return fetch().getString(KEY_STATUS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public void setStatus(String status) {
@@ -43,10 +54,15 @@ public class Table extends ParseObject {
     }
 
     public List<ParseUser> getMates() {
-        return (List<ParseUser>) get(KEY_MATES);
+        try {
+            return (List<ParseUser>) fetch().get(KEY_MATES);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public void setMates(ArrayList<ParseUser> mates) {
+    public void setMates(List<ParseUser> mates) {
         put(KEY_MATES, mates);
     }
 
@@ -54,12 +70,24 @@ public class Table extends ParseObject {
         add(KEY_MATES, mate);
     }
 
-    public int getSize() { return getInt(KEY_SIZE); }
+    public int getSize() {
+        try {
+            return fetch().getInt(KEY_SIZE);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 
     public void setSize(int size) { put(KEY_SIZE, size); }
 
     public String getTopic() {
-        return getString(KEY_TOPIC);
+        try {
+            return fetch().getString(KEY_TOPIC);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public void setTopic(String topic) {
@@ -67,26 +95,50 @@ public class Table extends ParseObject {
     }
 
     public String getType() {
-        return getString(KEY_TYPE);
+        try {
+            return fetch().getString(KEY_TYPE);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public void setType(String type) {
         put(KEY_TYPE, type);
     }
 
-    public boolean getVisiting() { return getBoolean(KEY_VISITING); }
+    public boolean getVisiting() {
+        try {
+            return fetch().getBoolean(KEY_VISITING);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
 
     public void setVisiting(boolean visiting) { put(KEY_VISITING, visiting); }
 
     public String getDescription() {
-        return getString(KEY_DESCRIPTION);
+        try {
+            return fetch().getString(KEY_DESCRIPTION);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public void setDescription(String description) {
         put(KEY_DESCRIPTION, description);
     }
 
-    public boolean getLocked() { return getBoolean(KEY_LOCKED); }
+    public boolean getLocked() {
+        try {
+            return fetch().getBoolean(KEY_LOCKED);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
 
     public void setLocked(boolean locked) { put(KEY_LOCKED, locked); }
 

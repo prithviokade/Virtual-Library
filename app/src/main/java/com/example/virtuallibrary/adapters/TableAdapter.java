@@ -76,7 +76,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
             if (size == 6) { ivTable.setImageResource(R.drawable.sixtable); }
             if (size == 8) { ivTable.setImageResource(R.drawable.eighttable); }
             if (size == 10) { ivTable.setImageResource(R.drawable.tentable); }
-            
+
             ivTable.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

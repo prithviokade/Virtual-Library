@@ -1,5 +1,6 @@
 package com.example.virtuallibrary.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.activities.DetailsActivity;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.adapters.TableAdapter;
 import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
@@ -23,6 +25,9 @@ import com.example.virtuallibrary.models.Table;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +61,27 @@ public class HomeFragment extends Fragment {
         rvTables = binding.rvTables;
         ivCurrTable = binding.ivCurrTable;
 
+        final Table currTable = (Table) ParseUser.getCurrentUser().get("current");
+        if (currTable == null) {
+            ivCurrTable.setVisibility(View.GONE);
+        } else {
+            int size = currTable.getSize();
+            if (size == 1) { ivCurrTable.setImageResource(R.drawable.onetable); }
+            if (size == 2) { ivCurrTable.setImageResource(R.drawable.twotable); }
+            if (size == 3) { ivCurrTable.setImageResource(R.drawable.threetable); }
+            if (size == 4) { ivCurrTable.setImageResource(R.drawable.fourtable); }
+            if (size == 5) { ivCurrTable.setImageResource(R.drawable.fivetable); }
+            if (size == 6) { ivCurrTable.setImageResource(R.drawable.sixtable); }
+            if (size == 8) { ivCurrTable.setImageResource(R.drawable.eighttable); }
+            if (size == 10) { ivCurrTable.setImageResource(R.drawable.tentable); }
+        }
+
         ivCurrTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ivCurrTable.setVisibility(View.GONE);
+                Intent intent = new Intent(getContext(), DetailsActivity.class);
+                intent.putExtra("TABLE", Parcels.wrap(currTable));
+                startActivity(intent);
             }
         });
 
