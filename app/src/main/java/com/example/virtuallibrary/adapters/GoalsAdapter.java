@@ -72,7 +72,7 @@ public class GoalsAdapter  extends RecyclerView.Adapter<GoalsAdapter.ViewHolder>
             tvGoal.setText(goal.getGoal());
 
             final String status = goal.getStatus();
-
+            Log.d(TAG, status);
             if (status.equals("complete")) {
                 btnDone.setImageResource(R.drawable.ic_baseline_check_box_24);
             } else if (status.equals("intermediate")) {
