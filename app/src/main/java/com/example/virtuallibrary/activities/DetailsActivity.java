@@ -55,7 +55,16 @@ public class DetailsActivity extends AppCompatActivity {
         etCompose = binding.etCompose;
         btnSend = binding.btnSend;
 
-        tvSize.setText(Integer.toString(table.getSize()));
+        int size = table.getSize();
+        tvSize.setText(Integer.toString(size));
+        if (size == 1) { ivTable.setImageResource(R.drawable.onetable); }
+        if (size == 2) { ivTable.setImageResource(R.drawable.twotable); }
+        if (size == 3) { ivTable.setImageResource(R.drawable.threetable); }
+        if (size == 4) { ivTable.setImageResource(R.drawable.fourtable); }
+        if (size == 5) { ivTable.setImageResource(R.drawable.fivetable); }
+        if (size == 6) { ivTable.setImageResource(R.drawable.sixtable); }
+        if (size == 8) { ivTable.setImageResource(R.drawable.eighttable); }
+        if (size == 10) { ivTable.setImageResource(R.drawable.tentable); }
 
         List<ParseUser> mates = table.getMates();
         String members = "";
