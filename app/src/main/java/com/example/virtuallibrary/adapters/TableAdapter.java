@@ -64,6 +64,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
         TextView tvMemberCount;
         TextView tvVisitors;
         TextView tvDescription;
+        RelativeLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +75,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
             tvMemberCount = itemView.findViewById(R.id.tvMemberCount);
             tvVisitors = itemView.findViewById(R.id.tvVisitors);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            container = itemView.findViewById(R.id.container);
         }
 
         public void bind(final Table table) {
@@ -87,7 +89,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
             if (size == 8) { ivTable.setImageResource(R.drawable.eighttable); }
             if (size == 10) { ivTable.setImageResource(R.drawable.tentable); }
 
-            ivTable.setOnClickListener(new View.OnClickListener() {
+            container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, DetailsActivity.class);

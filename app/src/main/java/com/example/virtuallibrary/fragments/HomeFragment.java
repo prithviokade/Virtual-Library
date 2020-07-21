@@ -117,8 +117,7 @@ public class HomeFragment extends Fragment {
                     return;
                 }
                 for (Table table : retreivedTables) {
-                    Log.i(TAG, table.getCreator().getString("name"));
-
+                    Log.i(TAG, table.getCreator().getUsername());
                 }
                 adapter.clear();
                 adapter.addAll(retreivedTables);
