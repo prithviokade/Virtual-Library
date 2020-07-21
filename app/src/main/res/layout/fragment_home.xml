@@ -5,7 +5,147 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightGreen"
+    android:foregroundTint="@color/plainwhite"
     tools:context=".fragments.HomeFragment">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="227dp"
+        android:layout_height="189dp"
+        android:layout_above="@+id/rvTables"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/ivCurrTable"
+        android:background="@color/plainWhite"
+        android:backgroundTint="#FFFFFF"
+        android:src="@drawable/ic_baseline_crop_3_2_24" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView26"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Status "
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView26"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/ivTable"
+        android:layout_toEndOf="@+id/textView21"
+        android:text="on break"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView21"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Size "
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvSize"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStatus"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/ivTable"
+        android:layout_toEndOf="@+id/textView22"
+        android:text="4"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView22"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Members "
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvMemberCount"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSize"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/ivTable"
+        android:layout_toEndOf="@+id/textView23"
+        android:text="2"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView23"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Visitors "
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvVisitors"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMemberCount"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/ivTable"
+        android:layout_toEndOf="@+id/textView24"
+        android:text="allowed"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView24"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Description: "
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="216dp"
+        android:layout_height="71dp"
+        android:layout_below="@+id/textView25"
+        android:layout_alignBottom="@+id/ivCurrTable"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/ivCurrTable"
+        android:text="This is a collaborative table working on android development."
+        android:textSize="12dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTables"
@@ -19,12 +159,25 @@
 
     <ImageView
         android:id="@+id/ivCurrTable"
-        android:layout_width="match_parent"
-        android:layout_height="217dp"
-        android:layout_alignParentStart="true"
+        android:layout_width="184dp"
+        android:layout_height="184dp"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
         android:background="#FFFFFF"
         android:src="@drawable/eighttable" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Current Table"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
 </RelativeLayout>

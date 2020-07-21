@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.activities.DetailsActivity;
@@ -42,6 +44,11 @@ public class HomeFragment extends Fragment {
     TableAdapter adapter;
     RecyclerView rvTables;
     ImageView ivCurrTable;
+    TextView tvStatus;
+    TextView tvSize;
+    TextView tvMemberCount;
+    TextView tvVisitors;
+    TextView tvDescription;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -61,6 +68,11 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvTables = binding.rvTables;
         ivCurrTable = binding.ivCurrTable;
+        tvStatus = binding.tvStatus;
+        tvSize = binding.tvSize;
+        tvMemberCount = binding.tvMemberCount;
+        tvVisitors = binding.tvVisitors;
+        tvDescription = binding.tvDescription;
 
         Table currTable = null;
         try {
@@ -99,6 +111,21 @@ public class HomeFragment extends Fragment {
         rvTables.setAdapter(adapter);
         rvTables.setLayoutManager(linearLayoutManager);
         queryTables();
+
+        tvStatus.setText(currTable.getStatus());
+        tvSize.setText(Integer.toString(currTable.getSize()));
+        tvMemberCount.setText(Integer.toString(currTable.getMates().size()));
+        if (currTable.getVisiting()) {
+            tvVisitors.setText("allowed");
+        } else {
+            tvVisitors.setText("not allowed");
+        }
+
+        String topic = currTable.getTopic();
+        String type = currTable.getType();
+        String description = currTable.getDescription();
+        String fullDescription = "This is a " + type + " table, focusing on " + topic + ".\n" + description;
+        tvDescription.setText(fullDescription);
     }
 
     protected void queryTables() {
