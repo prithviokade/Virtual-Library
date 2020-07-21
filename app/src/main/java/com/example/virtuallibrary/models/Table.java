@@ -37,6 +37,15 @@ public class Table extends ParseObject {
         }
     }
 
+    public String getCreatorUsername() {
+        try {
+            return getCreator().fetch().getUsername();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
     public void setCreator(ParseUser creator) {
         put(KEY_CREATOR, creator);
     }

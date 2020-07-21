@@ -116,12 +116,39 @@ public class HomeFragment extends Fragment {
                     Log.e(TAG, "Error while getting table" + e);
                     return;
                 }
+                int i = 0;
+                List<Table> filteredTables = new ArrayList<>();
                 for (Table table : retreivedTables) {
-                    Log.i(TAG, table.getCreator().getUsername());
+                    if (tablesEqual(table, (Table) ParseUser.getCurrentUser().get("current"))) {
+                        continue;
+                    }
+                    if (table.getLocked()) {
+                        continue;
+                    }
+                    filteredTables.add(table);
                 }
                 adapter.clear();
-                adapter.addAll(retreivedTables);
+                adapter.addAll(filteredTables);
             }
         });
+    }
+
+    private boolean tablesEqual(Table self, Table other) {
+        if (!(self.getCreatorUsername().equals(other.getCreatorUsername()))) {
+            return false;
+        }
+        if (self.getSize() != other.getSize()) {
+            return false;
+        }
+        if (!(self.getTopic().equals(other.getTopic()))) {
+            return false;
+        }
+        if (!(self.getDescription().equals(other.getDescription()))) {
+            return false;
+        }
+        if (!(self.getType().equals(other.getType()))) {
+            return false;
+        }
+        return true;
     }
 }
