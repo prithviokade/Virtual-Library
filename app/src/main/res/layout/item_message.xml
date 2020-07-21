@@ -3,15 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="2.5dp"
+    android:textAlignment="textEnd">
 
     <TextView
-        android:id="@+id/tvRecieved"
-        android:layout_width="190dp"
+        android:id="@+id/tvSent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="27dp"
-        android:text="TextView" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="215dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="2dp"
+        android:text="hi"
+        android:textAlignment="textEnd" />
 
     <ImageView
         android:id="@+id/ivRecieved"
@@ -24,10 +31,14 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvSent"
-        android:layout_width="190dp"
+        android:id="@+id/tvRecieved"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="2dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="180dp"
         android:text="TextView" />
 </RelativeLayout>
