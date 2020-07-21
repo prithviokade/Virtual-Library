@@ -10,16 +10,142 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="210dp"
+            android:layout_height="90dp"
+            android:layout_below="@+id/textView14"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/ivTable"
+            android:text="This is a collaborative table working on android development."
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/tvMemberCount"
+            android:layout_width="167dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSize"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/ivTable"
+            android:layout_toEndOf="@+id/textView10"
+            android:text="2"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/tvVisitors"
+            android:layout_width="167dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvMemberCount"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/ivTable"
+            android:layout_toEndOf="@+id/textView13"
+            android:text="allowed"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView10"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Visitors "
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView8"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Members "
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView17"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Size "
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Status "
+            android:textSize="12dp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/ivTable"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:srcCompat="@drawable/ic_baseline_crop_16_9_24" />
+            android:layout_width="184dp"
+            android:layout_height="183dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            card_view:srcCompat="@drawable/fourtable" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView13"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Description: "
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvSize"
+            android:layout_width="167dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvStatus"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/ivTable"
+            android:layout_toEndOf="@+id/textView8"
+            android:text="4"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="167dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/ivTable"
+            android:layout_toEndOf="@+id/textView17"
+            android:text="on break"
+            android:textSize="12dp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

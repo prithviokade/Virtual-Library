@@ -59,11 +59,21 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivTable;
+        TextView tvStatus;
+        TextView tvSize;
+        TextView tvMemberCount;
+        TextView tvVisitors;
+        TextView tvDescription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // find views by id
             ivTable = itemView.findViewById(R.id.ivTable);
+            tvStatus = itemView.findViewById(R.id.tvStatus);
+            tvSize = itemView.findViewById(R.id.tvSize);
+            tvMemberCount = itemView.findViewById(R.id.tvMemberCount);
+            tvVisitors = itemView.findViewById(R.id.tvVisitors);
+            tvDescription = itemView.findViewById(R.id.tvDescription);
         }
 
         public void bind(final Table table) {
@@ -85,6 +95,21 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
                     context.startActivity(intent);
                 }
             });
+
+            tvStatus.setText(table.getStatus());
+            tvSize.setText(Integer.toString(table.getSize()));
+            tvMemberCount.setText(Integer.toString(table.getMates().size()));
+            if (table.getVisiting()) {
+                tvVisitors.setText("allowed");
+            } else {
+                tvVisitors.setText("not allowed");
+            }
+
+            String topic = table.getTopic();
+            String type = table.getType();
+            String description = table.getDescription();
+            String fullDescription = "This is a " + type + " table, focusing on " + topic + ".\n" + description;
+            tvDescription.setText(fullDescription);
         }
     }
 
