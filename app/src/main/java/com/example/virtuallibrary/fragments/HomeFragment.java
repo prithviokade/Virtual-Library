@@ -21,6 +21,7 @@ import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.adapters.TableAdapter;
 import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
 import com.example.virtuallibrary.databinding.FragmentHomeBinding;
+import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Table;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -104,6 +105,8 @@ public class HomeFragment extends Fragment {
         ParseQuery<Table> query = ParseQuery.getQuery(Table.class);
         query.include(Table.KEY_CREATOR);
         query.include(Table.KEY_MATES);
+        query.include(Table.KEY_CHAT);
+        query.include(Table.KEY_CHAT + "." + Message.KEY_SENDER);
         query.setLimit(20);
         query.addDescendingOrder(Table.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Table>() {

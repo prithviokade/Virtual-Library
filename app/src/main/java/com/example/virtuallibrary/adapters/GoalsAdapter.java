@@ -28,7 +28,7 @@ import com.parse.SaveCallback;
 
 import java.util.List;
 
-public class GoalsAdapter  extends RecyclerView.Adapter<GoalsAdapter.ViewHolder> {
+public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.ViewHolder> {
 
     Context context;
     List<Goal> goals;

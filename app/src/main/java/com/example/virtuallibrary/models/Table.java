@@ -26,6 +26,7 @@ public class Table extends ParseObject {
     public static final String KEY_VISITING = "visiting";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_LOCKED = "locked";
+    public static final String KEY_CHAT = "chat";
 
     public ParseUser getCreator() {
         try {
@@ -141,5 +142,22 @@ public class Table extends ParseObject {
     }
 
     public void setLocked(boolean locked) { put(KEY_LOCKED, locked); }
+
+    public List<Message> getChat() {
+        try {
+            return (List<Message>) fetch().get(KEY_CHAT);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setChat(List<Message> messages) {
+        put(KEY_CHAT, messages);
+    }
+
+    public void addChat(Message message) {
+        add(KEY_CHAT, message);
+    }
 
 }

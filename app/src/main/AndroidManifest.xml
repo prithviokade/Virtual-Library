@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.PreferencesActivity"></activity>
         <activity android:name=".activities.DetailsActivity">
 
             <!-- Intent filter used for Messenger protocol version 20150311 -->

@@ -2,6 +2,7 @@ package com.example.virtuallibrary.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -16,7 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.adapters.GoalsAdapter;
+import com.example.virtuallibrary.adapters.MessageAdapter;
 import com.example.virtuallibrary.databinding.ActivityDetailsBinding;
+import com.example.virtuallibrary.models.Goal;
+import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Table;
 import com.facebook.messenger.MessengerThreadParams;
 import com.facebook.messenger.MessengerUtils;
@@ -46,6 +51,10 @@ public class DetailsActivity extends AppCompatActivity {
     ImageButton btnSend;
     Button btnJoin;
 
+    List<Message> messages;
+    MessageAdapter adapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +73,13 @@ public class DetailsActivity extends AppCompatActivity {
         etCompose = binding.etCompose;
         btnSend = binding.btnSend;
         btnJoin = binding.btnJoin;
+
+        messages = new ArrayList<>();
+        adapter = new MessageAdapter(this, messages);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvMessages.setAdapter(adapter);
+        rvMessages.setLayoutManager(linearLayoutManager);
+        getMessages();
 
         int size = table.getSize();
         tvSize.setText(Integer.toString(size));
@@ -106,6 +122,14 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String text = etCompose.getText().toString();
+                Message newMessage = new Message();
+                newMessage.setText(text);
+                newMessage.setSender(ParseUser.getCurrentUser());
+                saveMessage(newMessage);
+                table.addChat(newMessage);
+                saveTable(table);
+                etCompose.setText("");
+                adapter.add(newMessage);
             }
         });
 
@@ -157,6 +181,12 @@ public class DetailsActivity extends AppCompatActivity {
         });
     }
 
+    private void getMessages() {
+        List<Message> foundMessage = (List<Message>) table.getChat();
+        adapter.clear();
+        adapter.addAll(foundMessage);
+    }
+
     private void removeFromPreviousTable(ParseUser user) {
         Table currentTable = (Table) user.get("current");
         if (currentTable != null) {
@@ -186,9 +216,22 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error while saving new post", e);
+                    Log.e(TAG, "Error while saving new table", e);
                 } else {
-                    Log.i(TAG, "Success saving new post");
+                    Log.i(TAG, "Success saving new table");
+                }
+            }
+        });
+    }
+
+    private void saveMessage(Message message) {
+        message.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving new message", e);
+                } else {
+                    Log.i(TAG, "Success saving new message");
                 }
             }
         });
