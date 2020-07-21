@@ -1,5 +1,7 @@
 package com.example.virtuallibrary.models;
 
+import androidx.annotation.Nullable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -169,4 +171,30 @@ public class Table extends ParseObject {
         add(KEY_CHAT, message);
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!Table.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final Table other = (Table) obj;
+        if (!(this.getCreatorUsername().equals(other.getCreatorUsername()))) {
+            return false;
+        }
+        if (this.getSize() != other.getSize()) {
+            return false;
+        }
+        if (!(this.getTopic().equals(other.getTopic()))) {
+            return false;
+        }
+        if (!(this.getDescription().equals(other.getDescription()))) {
+            return false;
+        }
+        if (!(this.getType().equals(other.getType()))) {
+            return false;
+        }
+        return true;
+    }
 }

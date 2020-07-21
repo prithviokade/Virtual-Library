@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
                 int i = 0;
                 List<Table> filteredTables = new ArrayList<>();
                 for (Table table : retreivedTables) {
-                    if (tablesEqual(table, (Table) ParseUser.getCurrentUser().get("current"))) {
+                    if (table.equals( (Table) ParseUser.getCurrentUser().get("current"))) {
                         continue;
                     }
                     if (table.getLocked()) {
@@ -131,24 +131,5 @@ public class HomeFragment extends Fragment {
                 adapter.addAll(filteredTables);
             }
         });
-    }
-
-    private boolean tablesEqual(Table self, Table other) {
-        if (!(self.getCreatorUsername().equals(other.getCreatorUsername()))) {
-            return false;
-        }
-        if (self.getSize() != other.getSize()) {
-            return false;
-        }
-        if (!(self.getTopic().equals(other.getTopic()))) {
-            return false;
-        }
-        if (!(self.getDescription().equals(other.getDescription()))) {
-            return false;
-        }
-        if (!(self.getType().equals(other.getType()))) {
-            return false;
-        }
-        return true;
     }
 }
