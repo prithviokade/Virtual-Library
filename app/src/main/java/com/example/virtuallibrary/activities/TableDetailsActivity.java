@@ -132,7 +132,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                 newMessage.setSender(ParseUser.getCurrentUser());
                 saveMessage(newMessage);
                 table.addChat(newMessage);
-                saveTable(table);
+                TableUtils.saveTable(table);
                 etCompose.setText("");
                 adapter.add(newMessage);
             }
@@ -168,11 +168,11 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     spnStatus.setEnabled(true);
                     btnInvite.setVisibility(View.VISIBLE);
 
-                    removeFromPreviousTable(ParseUser.getCurrentUser());
+                    TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
                     ParseUser.getCurrentUser().put("current", table);
                     btnJoin.setText("Leave");
-                    saveTable(table);
+                    TableUtils.saveTable(table);
                     saveUser();
                 } else { // left table
                     rvMessages.setVisibility(View.INVISIBLE);
@@ -181,12 +181,13 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     String members = tvMembers.getText().toString();
                     Log.d(TAG, members);
                     members = members.replaceAll("\\, \\@" + ParseUser.getCurrentUser().getUsername(), "");
+                    members = members.replaceAll("\\@" + ParseUser.getCurrentUser().getUsername(), "");
                     Log.d(TAG, ", @" + ParseUser.getCurrentUser().getUsername());
                     tvMembers.setText(members);
                     spnStatus.setEnabled(false);
                     btnInvite.setVisibility(View.INVISIBLE);
 
-                    removeFromPreviousTable(ParseUser.getCurrentUser());
+                    TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     ParseUser.getCurrentUser().remove("current");
                     saveUser();
                     btnJoin.setText("Join");
@@ -203,49 +204,10 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         });
     }
 
-
-
     private void getMessages() {
         List<Message> foundMessage = (List<Message>) table.getChat();
         adapter.clear();
         adapter.addAll(foundMessage);
-    }
-
-    private void removeFromPreviousTable(ParseUser user) {
-        Table currentTable = (Table) user.get("current");
-        if (currentTable != null) {
-            List<ParseUser> newMates = new ArrayList<>();
-            for (ParseUser mate : currentTable.getMates()) {
-                try {
-                    Log.d(TAG, mate.fetch().getUsername() + "  " + user.fetch().getUsername());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (!(mate.getUsername().equals(user.getUsername()))) {
-                    try {
-                        Log.d(TAG, mate.fetch().getUsername() + "  " + user.fetch().getUsername());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    newMates.add(mate);
-                }
-            }
-            currentTable.setMates(newMates);
-            saveTable(currentTable);
-        }
-    }
-
-    private void saveTable(Table table) {
-        table.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving new table", e);
-                } else {
-                    Log.i(TAG, "Success saving new table");
-                }
-            }
-        });
     }
 
     private void saveMessage(Message message) {
@@ -277,7 +239,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         table.setStatus(parent.getItemAtPosition(pos).toString());
-        saveTable(table);
+        TableUtils.saveTable(table);
     }
 
     @Override

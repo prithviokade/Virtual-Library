@@ -146,45 +146,8 @@ public class CreateTableFragment extends Fragment {
                 }
             }
         });
-        removeFromPreviousTable(ParseUser.getCurrentUser());
+        TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
         ParseUser.getCurrentUser().put("current", table);
-    }
-
-    private void removeFromPreviousTable(ParseUser user) {
-        Table currentTable = (Table) user.get("current");
-        if (currentTable != null) {
-            List<ParseUser> newMates = new ArrayList<>();
-            for (ParseUser mate : currentTable.getMates()) {
-                try {
-                    Log.d(TAG, mate.fetch().getUsername() + "  " + user.fetch().getUsername());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (!(mate.getUsername().equals(user.getUsername()))) {
-                    try {
-                        Log.d(TAG, mate.fetch().getUsername() + "  " + user.fetch().getUsername());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    newMates.add(mate);
-                }
-            }
-            currentTable.setMates(newMates);
-            saveTableExists(currentTable);
-        }
-    }
-
-    private void saveTableExists(Table table) {
-        table.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving new post", e);
-                } else {
-                    Log.i(TAG, "Success saving new post");
-                }
-            }
-        });
     }
 
     @Override public void onDestroyView() {
