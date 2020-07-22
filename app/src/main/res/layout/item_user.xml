@@ -24,10 +24,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/ivProfilePic"
         android:text="TextView"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
@@ -39,5 +39,5 @@
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivProfilePic"
         android:text="TextView"
-        android:textSize="10sp" />
+        android:textSize="12sp" />
 </RelativeLayout>

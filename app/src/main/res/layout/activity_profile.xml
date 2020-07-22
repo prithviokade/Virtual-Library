@@ -42,10 +42,10 @@
         android:id="@+id/rvChecklist"
         android:layout_width="match_parent"
         android:layout_height="512dp"
-        android:layout_below="@+id/btnAddFriend"
+        android:layout_below="@+id/tvBio"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="2dp" />
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:id="@+id/tvBio"
@@ -59,11 +59,13 @@
 
     <ImageButton
         android:id="@+id/btnAddFriend"
-        android:layout_width="wrap_content"
+        android:layout_width="46dp"
         android:layout_height="29dp"
-        android:layout_below="@+id/tvBio"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp"
+        android:layout_below="@+id/ivProfile"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/tvName"
+        android:background="@color/lightGreen"
         app:srcCompat="@drawable/ic_baseline_person_add_24" />
 
 </RelativeLayout>

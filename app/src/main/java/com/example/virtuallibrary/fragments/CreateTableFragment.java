@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
@@ -192,6 +193,10 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (size == 0 || etTopic.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Please fill in the above categories!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String topic = etTopic.getText().toString();
                 String description = etDescription.getText().toString();
                 saveTable(topic, description);
