@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.models.Table;
 
@@ -72,14 +73,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
 
         public void bind(final Table table) {
             int size = table.getSize();
-            if (size == 1) { ivTable.setImageResource(R.drawable.onetable); }
-            if (size == 2) { ivTable.setImageResource(R.drawable.twotable); }
-            if (size == 3) { ivTable.setImageResource(R.drawable.threetable); }
-            if (size == 4) { ivTable.setImageResource(R.drawable.fourtable); }
-            if (size == 5) { ivTable.setImageResource(R.drawable.fivetable); }
-            if (size == 6) { ivTable.setImageResource(R.drawable.sixtable); }
-            if (size == 8) { ivTable.setImageResource(R.drawable.eighttable); }
-            if (size == 10) { ivTable.setImageResource(R.drawable.tentable); }
+            ivTable.setImageResource(TableUtils.getTableImage(size));
 
             container.setOnClickListener(new View.OnClickListener() {
                 @Override

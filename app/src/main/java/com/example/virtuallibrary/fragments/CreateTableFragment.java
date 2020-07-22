@@ -24,6 +24,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
 import com.example.virtuallibrary.models.Table;
 import com.parse.ParseException;
@@ -207,6 +208,7 @@ public class CreateTableFragment extends Fragment {
     {
         public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
             size = Integer.valueOf(parent.getItemAtPosition(pos).toString());
+            ivTable.setImageResource(TableUtils.getTableImage(size));
         }
 
         @Override

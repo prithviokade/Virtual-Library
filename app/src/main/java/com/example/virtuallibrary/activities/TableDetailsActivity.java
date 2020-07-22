@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.adapters.MessageAdapter;
 import com.example.virtuallibrary.databinding.ActivityTableDetailsBinding;
 import com.example.virtuallibrary.models.Message;
@@ -89,14 +90,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
 
         int size = table.getSize();
         tvSize.setText(Integer.toString(size));
-        if (size == 1) { ivTable.setImageResource(R.drawable.onetable); }
-        if (size == 2) { ivTable.setImageResource(R.drawable.twotable); }
-        if (size == 3) { ivTable.setImageResource(R.drawable.threetable); }
-        if (size == 4) { ivTable.setImageResource(R.drawable.fourtable); }
-        if (size == 5) { ivTable.setImageResource(R.drawable.fivetable); }
-        if (size == 6) { ivTable.setImageResource(R.drawable.sixtable); }
-        if (size == 8) { ivTable.setImageResource(R.drawable.eighttable); }
-        if (size == 10) { ivTable.setImageResource(R.drawable.tentable); }
+        ivTable.setImageResource(TableUtils.getTableImage(size));
 
         List<ParseUser> mates = table.getMates();
         String members = "";
