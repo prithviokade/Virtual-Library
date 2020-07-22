@@ -2,8 +2,6 @@ package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
-import com.example.virtuallibrary.activities.DetailsActivity;
-import com.example.virtuallibrary.models.Post;
+import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.models.Table;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -92,7 +84,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
             container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, DetailsActivity.class);
+                    Intent intent = new Intent(context, TableDetailsActivity.class);
                     intent.putExtra("TABLE", Parcels.wrap(table));
                     context.startActivity(intent);
                 }

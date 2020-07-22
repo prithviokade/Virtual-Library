@@ -1,12 +1,9 @@
 package com.example.virtuallibrary.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.util.Log;
@@ -19,20 +16,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.virtuallibrary.OnSwipeTouchListener;
 import com.example.virtuallibrary.R;
-import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.adapters.MessageAdapter;
-import com.example.virtuallibrary.databinding.ActivityDetailsBinding;
-import com.example.virtuallibrary.models.Goal;
+import com.example.virtuallibrary.databinding.ActivityTableDetailsBinding;
 import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Table;
-import com.facebook.messenger.MessengerThreadParams;
-import com.facebook.messenger.MessengerUtils;
-import com.facebook.messenger.ShareToMessengerParams;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -42,9 +31,9 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class TableDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    public static final String TAG = "DetailsActivity";
+    public static final String TAG = "TableDetailsActivity";
 
     Table table;
     ImageView ivTable;
@@ -68,7 +57,7 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityDetailsBinding binding = ActivityDetailsBinding.inflate(getLayoutInflater());
+        ActivityTableDetailsBinding binding = ActivityTableDetailsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 

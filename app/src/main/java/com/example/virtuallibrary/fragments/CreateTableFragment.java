@@ -15,10 +15,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.virtuallibrary.R;
@@ -31,27 +33,19 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateTableFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class CreateTableFragment extends Fragment {
 
     public static final String TAG = "CreateTableFragment";
 
     FragmentCreateTableBinding binding;
     ImageView ivTable;
-    Button btn1;
-    Button btn2;
-    Button btn3;
-    Button btn4;
-    Button btn5;
-    Button btn6;
-    Button btn8;
-    Button btn10;
     ImageButton btnLock;
     Button btnCreate;
-    Button btnVisitorsTrue;
-    Button btnVisitorsFalse;
     EditText etTopic;
     Spinner spinType;
     EditText etDescription;
+    Spinner spinSize;
+    Switch switchVisitors;
 
     int size;
     boolean visitors;
@@ -75,112 +69,32 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ivTable = binding.ivTable;
-        btn1 = binding.btn1;
-        btn2 = binding.btn2;
-        btn3 = binding.btn3;
-        btn4 = binding.btn4;
-        btn5 = binding.btn5;
-        btn6 = binding.btn6;
-        btn8 = binding.btn8;
-        btn10 = binding.btn10;
-        btnVisitorsTrue = binding.btnVisitorsTrue;
-        btnVisitorsFalse = binding.btnVisitorsFalse;
         btnLock = binding.btnLock;
         btnCreate = binding.btnCreate;
         etTopic = binding.etTopic;
         spinType = binding.spinType;
         etDescription = binding.etDescription;
-        final Resources res = getResources();
+        spinSize = binding.spinSize;
+        switchVisitors = binding.switchVisitors;
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.tabletypes_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinType.setAdapter(adapter);
-        spinType.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(getContext(), R.array.tabletypes_array, android.R.layout.simple_spinner_item);
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinType.setAdapter(adapterType);
+        spinType.setOnItemSelectedListener(new TypesSpinnerClass());
+
+        ArrayAdapter<CharSequence> adapterSize = ArrayAdapter.createFromResource(getContext(), R.array.tablesizes_array, android.R.layout.simple_spinner_item);
+        adapterSize.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinSize.setAdapter(adapterSize);
+        spinSize.setOnItemSelectedListener(new SizesSpinnerClass());
+
+        visitors = false;
+        switchVisitors.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                visitors = isChecked;
+            }
+        });
 
         locked = false;
-        size = 0;
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ivTable.setImageResource(R.drawable.onetable);
-                btn1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                size = 1;
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                ivTable.setImageResource(R.drawable.twotable);
-                btn2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                size = 2;
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                ivTable.setImageResource(R.drawable.threetable);
-                btn3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                size = 3;
-            }
-        });
-        btn4.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                ivTable.setImageResource(R.drawable.fourtable);
-                btn4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                size = 4;
-            }
-        });
-        btn5.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                ivTable.setImageResource(R.drawable.fivetable);
-                btn5.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                size = 5;
-            }
-        });
-        btn6.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                ivTable.setImageResource(R.drawable.sixtable);
-                btn6.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                size = 6;
-            }
-        });
-        btn8.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                ivTable.setImageResource(R.drawable.eighttable);
-                btn8.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                size = 8;
-            }
-        });
-        btn10.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                ivTable.setImageResource(R.drawable.tentable);
-                btn10.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                size = 10;
-            }
-        });
-
-        btnVisitorsTrue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnVisitorsTrue.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                btnVisitorsFalse.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.plainWhite));
-                visitors = true;
-            }
-        });
-        btnVisitorsFalse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnVisitorsFalse.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
-                btnVisitorsTrue.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.plainWhite));
-                visitors = false;
-            }
-        });
-
         btnLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -277,14 +191,27 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
         binding = null;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        Log.d(TAG, "selected: " + Integer.toString(pos));
-        type = parent.getItemAtPosition(pos).toString();
+    class TypesSpinnerClass implements AdapterView.OnItemSelectedListener
+    {
+        public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+            type = parent.getItemAtPosition(pos).toString();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            type = parent.getItemAtPosition(0).toString();
+        }
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        type = parent.getItemAtPosition(0).toString();
+    class SizesSpinnerClass implements AdapterView.OnItemSelectedListener
+    {
+        public void onItemSelected(AdapterView<?> parent, View v, int pos, long id) {
+            size = Integer.valueOf(parent.getItemAtPosition(pos).toString());
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            size = 0;
+        }
     }
 }

@@ -15,14 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
-import com.example.virtuallibrary.activities.DetailsActivity;
 import com.example.virtuallibrary.activities.ProfileActivity;
-import com.example.virtuallibrary.models.Table;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
