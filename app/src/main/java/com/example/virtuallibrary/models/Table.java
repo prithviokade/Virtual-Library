@@ -180,21 +180,22 @@ public class Table extends ParseObject {
             return false;
         }
         final Table other = (Table) obj;
-        if (!(this.getCreatorUsername().equals(other.getCreatorUsername()))) {
-            return false;
-        }
-        if (this.getSize() != other.getSize()) {
-            return false;
-        }
-        if (!(this.getTopic().equals(other.getTopic()))) {
-            return false;
-        }
-        if (!(this.getDescription().equals(other.getDescription()))) {
-            return false;
-        }
-        if (!(this.getType().equals(other.getType()))) {
+        if (!(this.getObjectId().equals(other.getObjectId()))) {
             return false;
         }
         return true;
+    }
+
+    public boolean containsUser(ParseUser user) {
+        for (ParseUser mate : this.getMates()) {
+            try {
+                if (mate.fetch().getUsername().equals(user.fetch().getUsername())) {
+                    return true;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 }

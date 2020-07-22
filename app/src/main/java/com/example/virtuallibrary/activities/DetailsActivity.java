@@ -62,6 +62,8 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
     List<Message> messages;
     MessageAdapter adapter;
 
+    boolean isMember;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,20 +161,20 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
         spnStatus.setEnabled(false);
         btnInvite.setVisibility(View.INVISIBLE);
 
-        if (containsUser(table, ParseUser.getCurrentUser())) { // current table
+        isMember = table.containsUser(ParseUser.getCurrentUser());
+        if (isMember) { // current table
             btnJoin.setText("Leave");
             rvMessages.setVisibility(View.VISIBLE);
             etCompose.setVisibility(View.VISIBLE);
             btnSend.setVisibility(View.VISIBLE);
             spnStatus.setEnabled(true);
             btnInvite.setVisibility(View.VISIBLE);
-
         }
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ("Join".equals(btnJoin.getText().toString())) { // joined table
+                if (!isMember) { // joined table
                     rvMessages.setVisibility(View.VISIBLE);
                     etCompose.setVisibility(View.VISIBLE);
                     btnSend.setVisibility(View.VISIBLE);
@@ -206,6 +208,7 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
                     saveUser();
                     btnJoin.setText("Join");
                 }
+                isMember = !isMember;
             }
         });
 
@@ -273,19 +276,6 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
                 }
             }
         });
-    }
-
-    private boolean containsUser(Table table, ParseUser user) {
-        for (ParseUser mate : table.getMates()) {
-            try {
-                if (mate.fetch().getUsername().equals(user.fetch().getUsername())) {
-                    return true;
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
     }
 
     private void saveUser() {

@@ -100,9 +100,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 }
                 tvRecieved.setText(message.getText());
             }
-            Date time = message.getCreatedAt();
+            Date time = null;
+            try {
+                time = message.fetch().getCreatedAt();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Log.d(TAG, time.toString() + message.getText());
             DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
-            String dateString = dateFormat.format(time).toString();
+            String dateString = dateFormat.format(time);
             if (dateString.charAt(0) == '0') {tvTime.setText(dateString.substring(1)); }
             else {tvTime.setText(dateString); }
             container.setOnTouchListener(new OnSwipeTouchListener(context) {
