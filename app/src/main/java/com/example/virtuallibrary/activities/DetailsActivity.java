@@ -19,7 +19,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.virtuallibrary.OnSwipeTouchListener;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.adapters.MessageAdapter;
