@@ -124,7 +124,10 @@ public class HomeFragment extends Fragment {
         String topic = currTable.getTopic();
         String type = currTable.getType();
         String description = currTable.getDescription();
-        String fullDescription = "This is a " + type + " table, focusing on " + topic + ".\n" + description;
+        String fullDescription = "This is an open, " + type + " table, focusing on " + topic + ".\n" + description;
+        if (currTable.getLocked()) {
+            fullDescription = "This is an invite-only, " + type + " table, focusing on " + topic + ".\n" + description;
+        }
         tvDescription.setText(fullDescription);
     }
 
