@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="statustypes_array">
+        <item>working</item>
+        <item>on a break</item>
+        <item>socializing</item>
+    </string-array>
+</resources>

@@ -8,12 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
@@ -36,7 +40,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public static final String TAG = "DetailsActivity";
 
@@ -50,6 +54,7 @@ public class DetailsActivity extends AppCompatActivity {
     EditText etCompose;
     ImageButton btnSend;
     Button btnJoin;
+    Spinner spnStatus;
 
     List<Message> messages;
     MessageAdapter adapter;
@@ -73,6 +78,7 @@ public class DetailsActivity extends AppCompatActivity {
         etCompose = binding.etCompose;
         btnSend = binding.btnSend;
         btnJoin = binding.btnJoin;
+        spnStatus = binding.spnStatus;
 
         messages = new ArrayList<>();
         adapter = new MessageAdapter(this, messages);
@@ -80,6 +86,11 @@ public class DetailsActivity extends AppCompatActivity {
         rvMessages.setAdapter(adapter);
         rvMessages.setLayoutManager(linearLayoutManager);
         getMessages();
+
+        ArrayAdapter<CharSequence> spnAdapter = ArrayAdapter.createFromResource(this, R.array.statustypes_array, R.layout.spinneritem);
+        spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnStatus.setAdapter(spnAdapter);
+        spnStatus.setOnItemSelectedListener(this);
 
         int size = table.getSize();
         tvSize.setText(Integer.toString(size));
@@ -104,7 +115,14 @@ public class DetailsActivity extends AppCompatActivity {
             Log.d("members", members);
             members += ", ";
         }
-        if (!members.isEmpty()) { tvMembers.setText(members.substring(0, members.length() - 2)); }
+        if (!members.isEmpty()) { members = members.substring(0, members.length() - 2); }
+        else { members = "None"; }
+        tvMembers.setText(members);
+
+        // SpannableString ssMembers = new SpannableString(members);
+        
+
+
 
         if (table.getVisiting()) {
             tvVisitors.setText("allowed");
@@ -136,12 +154,14 @@ public class DetailsActivity extends AppCompatActivity {
         rvMessages.setVisibility(View.INVISIBLE);
         etCompose.setVisibility(View.INVISIBLE);
         btnSend.setVisibility(View.INVISIBLE);
+        spnStatus.setEnabled(false);
 
-        if (containsUser(table, ParseUser.getCurrentUser())) {
+        if (containsUser(table, ParseUser.getCurrentUser())) { // current table
             btnJoin.setText("Leave");
             rvMessages.setVisibility(View.VISIBLE);
             etCompose.setVisibility(View.VISIBLE);
             btnSend.setVisibility(View.VISIBLE);
+            spnStatus.setEnabled(true);
         }
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +175,7 @@ public class DetailsActivity extends AppCompatActivity {
                     members += ", @" + ParseUser.getCurrentUser().getUsername();
                     members = members.replaceAll("None\\, ", "");
                     tvMembers.setText(members);
+                    spnStatus.setEnabled(true);
 
                     removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
@@ -171,6 +192,7 @@ public class DetailsActivity extends AppCompatActivity {
                     members = members.replaceAll("\\, \\@" + ParseUser.getCurrentUser().getUsername(), "");
                     Log.d(TAG, ", @" + ParseUser.getCurrentUser().getUsername());
                     tvMembers.setText(members);
+                    spnStatus.setEnabled(false);
 
                     removeFromPreviousTable(ParseUser.getCurrentUser());
                     ParseUser.getCurrentUser().remove("current");
@@ -262,4 +284,13 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        table.setStatus(parent.getItemAtPosition(pos).toString());
+        saveTable(table);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) { }
 }
