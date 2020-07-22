@@ -34,7 +34,6 @@
         android:layout_below="@+id/tvName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
-        android:text="@prthv_"
         android:textColor="#F0AAA7A7"
         android:textSize="12sp" />
 

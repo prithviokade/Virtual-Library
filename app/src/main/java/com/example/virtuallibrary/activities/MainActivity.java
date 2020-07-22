@@ -21,6 +21,7 @@ import com.example.virtuallibrary.fragments.CreateTableFragment;
 import com.example.virtuallibrary.fragments.GoalsFragment;
 import com.example.virtuallibrary.fragments.HomeFragment;
 import com.example.virtuallibrary.fragments.PostsFragment;
+import com.example.virtuallibrary.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,16 +51,23 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.actionProgress:
+                        btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = GoalsFragment.TAG;
                         fragment = new GoalsFragment();
                         break;
                     case R.id.actionPosts:
+                        btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = PostsFragment.TAG;
-                        // getSupportActionBar().hide();
                         fragment = new PostsFragment();
+                        break;
+                    case R.id.actionSearch:
+                        selectedFragmentTag = SearchFragment.TAG;
+                        fragment = new SearchFragment();
+                        btnAdd.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.actionHome:
                     default:
+                        btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = HomeFragment.TAG;
                         fragment =  new HomeFragment();
                         break;

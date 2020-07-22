@@ -55,6 +55,7 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
     ImageButton btnSend;
     Button btnJoin;
     Spinner spnStatus;
+    ImageButton btnInvite;
 
     List<Message> messages;
     MessageAdapter adapter;
@@ -79,6 +80,7 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
         btnSend = binding.btnSend;
         btnJoin = binding.btnJoin;
         spnStatus = binding.spnStatus;
+        btnInvite = binding.btnInvite;
 
         messages = new ArrayList<>();
         adapter = new MessageAdapter(this, messages);
@@ -120,8 +122,6 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
         tvMembers.setText(members);
 
         // SpannableString ssMembers = new SpannableString(members);
-        
-
 
 
         if (table.getVisiting()) {
@@ -155,6 +155,7 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
         etCompose.setVisibility(View.INVISIBLE);
         btnSend.setVisibility(View.INVISIBLE);
         spnStatus.setEnabled(false);
+        btnInvite.setVisibility(View.INVISIBLE);
 
         if (containsUser(table, ParseUser.getCurrentUser())) { // current table
             btnJoin.setText("Leave");
@@ -162,6 +163,8 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
             etCompose.setVisibility(View.VISIBLE);
             btnSend.setVisibility(View.VISIBLE);
             spnStatus.setEnabled(true);
+            btnInvite.setVisibility(View.VISIBLE);
+
         }
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +179,7 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
                     members = members.replaceAll("None\\, ", "");
                     tvMembers.setText(members);
                     spnStatus.setEnabled(true);
+                    btnInvite.setVisibility(View.VISIBLE);
 
                     removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
@@ -193,6 +197,7 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
                     Log.d(TAG, ", @" + ParseUser.getCurrentUser().getUsername());
                     tvMembers.setText(members);
                     spnStatus.setEnabled(false);
+                    btnInvite.setVisibility(View.INVISIBLE);
 
                     removeFromPreviousTable(ParseUser.getCurrentUser());
                     ParseUser.getCurrentUser().remove("current");
@@ -201,7 +206,16 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
                 }
             }
         });
+
+        btnInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
+
+
 
     private void getMessages() {
         List<Message> foundMessage = (List<Message>) table.getChat();

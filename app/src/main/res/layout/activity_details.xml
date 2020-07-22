@@ -191,4 +191,13 @@
         android:textSize="20sp"
         android:clickable="false" />
 
+    <ImageButton
+        android:id="@+id/btnInvite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:backgroundTint="#FFFFFF"
+        app:srcCompat="@drawable/ic_baseline_group_add_24" />
+
 </RelativeLayout>

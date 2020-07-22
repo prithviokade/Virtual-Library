@@ -52,7 +52,7 @@ A group study app where students can check into app, log their day's goals/topic
 * Login Screen
    * User can login
    * User selects their preferences for the day
-   * User plans out their goals for the day
+   * User plans out their goals
 * Tables Screen
    * User can see all tables, clicking on the table opens a fragment describing its details
    * User can see the table they're currently at if applicable, clicking on this opens up the current state of the table (chatting, music, etc.)
