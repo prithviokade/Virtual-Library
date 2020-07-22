@@ -1,9 +1,12 @@
 package com.example.virtuallibrary.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +44,98 @@ public class SignUpActivity extends AppCompatActivity {
         etPassword = binding.etPassword;
         btnSignUp = binding.btnSignUp;
         tvLogin = binding.tvLogin;
+
+        etPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String phone = etPhone.getText().toString();
+                String email = etEmail.getText().toString();
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                if (!phone.isEmpty() && !email.isEmpty() && !username.isEmpty() && !password.isEmpty()) {
+                    btnSignUp.setEnabled(true);
+                    btnSignUp.setBackgroundColor(ContextCompat.getColor(SignUpActivity.this, R.color.vlGreen));
+                    btnSignUp.setTextColor(ContextCompat.getColor(SignUpActivity.this, R.color.plainWhite));
+                } else {
+                    btnSignUp.setEnabled(false);
+                    btnSignUp.setBackgroundColor(ContextCompat.getColor(SignUpActivity.this, R.color.lightGreen));
+                    btnSignUp.setTextColor(ContextCompat.getColor(SignUpActivity.this, R.color.lightGrey));
+                }
+            }
+        });
+
+        etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String phone = etPhone.getText().toString();
+                String email = etEmail.getText().toString();
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                if (!phone.isEmpty() && !email.isEmpty() && !username.isEmpty() && !password.isEmpty()) {
+                    btnSignUp.setEnabled(true);
+                    btnSignUp.setBackgroundColor(ContextCompat.getColor(SignUpActivity.this, R.color.vlGreen));
+                    btnSignUp.setTextColor(ContextCompat.getColor(SignUpActivity.this, R.color.plainWhite));
+                } else {
+                    btnSignUp.setEnabled(false);
+                    btnSignUp.setBackgroundColor(ContextCompat.getColor(SignUpActivity.this, R.color.lightGreen));
+                    btnSignUp.setTextColor(ContextCompat.getColor(SignUpActivity.this, R.color.lightGrey));
+                }
+            }
+        });
+
+        etUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String phone = etPhone.getText().toString();
+                String email = etEmail.getText().toString();
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                if (!phone.isEmpty() && !email.isEmpty() && !username.isEmpty() && !password.isEmpty()) {
+                    btnSignUp.setEnabled(true);
+                    btnSignUp.setBackgroundColor(ContextCompat.getColor(SignUpActivity.this, R.color.vlGreen));
+                    btnSignUp.setTextColor(ContextCompat.getColor(SignUpActivity.this, R.color.plainWhite));
+                } else {
+                    btnSignUp.setEnabled(false);
+                    btnSignUp.setBackgroundColor(ContextCompat.getColor(SignUpActivity.this, R.color.lightGreen));
+                    btnSignUp.setTextColor(ContextCompat.getColor(SignUpActivity.this, R.color.lightGrey));
+                }
+            }
+        });
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String phone = etPhone.getText().toString();
+                String email = etEmail.getText().toString();
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                if (!phone.isEmpty() && !email.isEmpty() && !username.isEmpty() && !password.isEmpty()) {
+                    btnSignUp.setEnabled(true);
+                    btnSignUp.setBackgroundColor(ContextCompat.getColor(SignUpActivity.this, R.color.vlGreen));
+                    btnSignUp.setTextColor(ContextCompat.getColor(SignUpActivity.this, R.color.plainWhite));
+                } else {
+                    btnSignUp.setEnabled(false);
+                    btnSignUp.setBackgroundColor(ContextCompat.getColor(SignUpActivity.this, R.color.lightGreen));
+                    btnSignUp.setTextColor(ContextCompat.getColor(SignUpActivity.this, R.color.lightGrey));
+                }
+            }
+        });
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

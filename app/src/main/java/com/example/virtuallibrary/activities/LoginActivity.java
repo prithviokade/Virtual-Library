@@ -1,6 +1,7 @@
 package com.example.virtuallibrary.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -153,14 +154,12 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
                     // set login button color and enable
                     Log.d(TAG, "detected");
                     btnLogin.setEnabled(true);
-                    // btnLogin.setBackgroundColor(R.color.vlgreen);
-                    // btnLogin.setTextColor(R.color.plainwhite);
-                    btnLogin.setBackgroundColor(0xFF55BD7E);
-                    btnLogin.setTextColor(0xffffffff);
+                    btnLogin.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.vlGreen));
+                    btnLogin.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.plainWhite));
                 } else {
                     btnLogin.setEnabled(false);
-                    btnLogin.setBackgroundColor(0x4A038132);
-                    btnLogin.setTextColor(0xFFEBF4FB);
+                    btnLogin.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.lightGreen));
+                    btnLogin.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.lightGrey));
                 }
             }
 

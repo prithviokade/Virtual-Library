@@ -81,7 +81,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 Glide.with(context).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(ivProfilePic);
             }
 
-            tvUsername.setText(user.getUsername());
+            tvUsername.setText("@"+user.getUsername());
             tvName.setText(user.getString("name"));
 
             container.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +92,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     context.startActivity(intent);
                 }
             });
-
 
         }
     }

@@ -1,9 +1,11 @@
 package com.example.virtuallibrary.fragments;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -88,6 +90,7 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
         etTopic = binding.etTopic;
         spinType = binding.spinType;
         etDescription = binding.etDescription;
+        final Resources res = getResources();
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.tabletypes_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -100,7 +103,7 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 ivTable.setImageResource(R.drawable.onetable);
-                btn1.setBackgroundColor(0xFFEBF4FB);
+                btn1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
                 size = 1;
             }
         });
@@ -108,7 +111,7 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 ivTable.setImageResource(R.drawable.twotable);
-                btn2.setBackgroundColor(0xFFEBF4FB);
+                btn2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
                 size = 2;
             }
         });
@@ -116,7 +119,7 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 ivTable.setImageResource(R.drawable.threetable);
-                btn3.setBackgroundColor(0xFFEBF4FB);
+                btn3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
                 size = 3;
             }
         });
@@ -124,7 +127,7 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 ivTable.setImageResource(R.drawable.fourtable);
-                btn4.setBackgroundColor(0xFFEBF4FB);
+                btn4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
                 size = 4;
             }
         });
@@ -132,7 +135,7 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 ivTable.setImageResource(R.drawable.fivetable);
-                btn5.setBackgroundColor(0xFFEBF4FB);
+                btn5.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
                 size = 5;
             }
         });
@@ -140,7 +143,7 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 ivTable.setImageResource(R.drawable.sixtable);
-                btn6.setBackgroundColor(0xFFEBF4FB);
+                btn6.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
                 size = 6;
             }
         });
@@ -148,7 +151,7 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 ivTable.setImageResource(R.drawable.eighttable);
-                btn8.setBackgroundColor(0xFFEBF4FB);
+                btn8.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
                 size = 8;
             }
         });
@@ -156,7 +159,7 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 ivTable.setImageResource(R.drawable.tentable);
-                btn10.setBackgroundColor(0xFFEBF4FB);
+                btn10.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
                 size = 10;
             }
         });
@@ -164,16 +167,16 @@ public class CreateTableFragment extends Fragment implements AdapterView.OnItemS
         btnVisitorsTrue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnVisitorsTrue.setBackgroundColor(0xFFEBF4FB);
-                btnVisitorsFalse.setBackgroundColor(0xFFFFFFFF);
+                btnVisitorsTrue.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
+                btnVisitorsFalse.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.plainWhite));
                 visitors = true;
             }
         });
         btnVisitorsFalse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnVisitorsFalse.setBackgroundColor(0xFFEBF4FB);
-                btnVisitorsTrue.setBackgroundColor(0xFFFFFFFF);
+                btnVisitorsFalse.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGrey));
+                btnVisitorsTrue.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.plainWhite));
                 visitors = false;
             }
         });

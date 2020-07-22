@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment {
     TextView tvMemberCount;
     TextView tvVisitors;
     TextView tvDescription;
+    TextView tvCurrentTableText;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -73,6 +74,7 @@ public class HomeFragment extends Fragment {
         tvMemberCount = binding.tvMemberCount;
         tvVisitors = binding.tvVisitors;
         tvDescription = binding.tvDescription;
+        tvCurrentTableText = binding.tvCurrentTableText;
 
         Table currTable = null;
         try {
@@ -82,6 +84,7 @@ public class HomeFragment extends Fragment {
         }
         if (currTable == null) {
             ivCurrTable.setVisibility(View.GONE);
+            tvCurrentTableText.setVisibility(View.INVISIBLE);
         } else {
             int size = currTable.getSize();
             if (size == 1) { ivCurrTable.setImageResource(R.drawable.onetable); }
@@ -92,6 +95,25 @@ public class HomeFragment extends Fragment {
             if (size == 6) { ivCurrTable.setImageResource(R.drawable.sixtable); }
             if (size == 8) { ivCurrTable.setImageResource(R.drawable.eighttable); }
             if (size == 10) { ivCurrTable.setImageResource(R.drawable.tentable); }
+
+            tvCurrentTableText.setVisibility(View.VISIBLE);
+            tvStatus.setText(currTable.getStatus());
+            tvSize.setText(Integer.toString(currTable.getSize()));
+            tvMemberCount.setText(Integer.toString(currTable.getMates().size()));
+            if (currTable.getVisiting()) {
+                tvVisitors.setText("allowed");
+            } else {
+                tvVisitors.setText("not allowed");
+            }
+
+            String topic = currTable.getTopic();
+            String type = currTable.getType();
+            String description = currTable.getDescription();
+            String fullDescription = "This is an open, " + type + " table, focusing on " + topic + ".\n" + description;
+            if (currTable.getLocked()) {
+                fullDescription = "This is an invite-only, " + type + " table, focusing on " + topic + ".\n" + description;
+            }
+            tvDescription.setText(fullDescription);
         }
 
         final Table finalCurrTable = currTable;
@@ -112,23 +134,6 @@ public class HomeFragment extends Fragment {
         rvTables.setLayoutManager(linearLayoutManager);
         queryTables();
 
-        tvStatus.setText(currTable.getStatus());
-        tvSize.setText(Integer.toString(currTable.getSize()));
-        tvMemberCount.setText(Integer.toString(currTable.getMates().size()));
-        if (currTable.getVisiting()) {
-            tvVisitors.setText("allowed");
-        } else {
-            tvVisitors.setText("not allowed");
-        }
-
-        String topic = currTable.getTopic();
-        String type = currTable.getType();
-        String description = currTable.getDescription();
-        String fullDescription = "This is an open, " + type + " table, focusing on " + topic + ".\n" + description;
-        if (currTable.getLocked()) {
-            fullDescription = "This is an invite-only, " + type + " table, focusing on " + topic + ".\n" + description;
-        }
-        tvDescription.setText(fullDescription);
     }
 
     protected void queryTables() {
