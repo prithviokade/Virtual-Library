@@ -29,7 +29,15 @@ public class TableUtils {
         if (currentTable != null) {
             List<ParseUser> newMates = new ArrayList<>();
             for (ParseUser mate : currentTable.getMates()) {
-                if (!(mate.getUsername().equals(user.getUsername()))) {
+                String mateUsername = null;
+                String userUsername = null;
+                try {
+                    mateUsername = mate.fetch().getUsername();
+                    userUsername = user.fetch().getUsername();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (!(mateUsername.equals(userUsername))) {
                     newMates.add(mate);
                 }
             }
