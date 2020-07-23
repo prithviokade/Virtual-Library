@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.adapters.TableAdapter;
@@ -94,17 +95,17 @@ public class HomeFragment extends Fragment {
             tvSize.setText(Integer.toString(currTable.getSize()));
             tvMemberCount.setText(Integer.toString(currTable.getMates().size()));
             if (currTable.getVisiting()) {
-                tvVisitors.setText("allowed");
+                tvVisitors.setText(R.string.allowed);
             } else {
-                tvVisitors.setText("not allowed");
+                tvVisitors.setText(R.string.not_allowed);
             }
 
             String topic = currTable.getTopic();
             String type = currTable.getType();
             String description = currTable.getDescription();
-            String fullDescription = "This is an open, " + type + " table, focusing on " + topic + ".\n" + description;
+            String fullDescription = getString(R.string.description_open_pt1) + " " + type + " " + getString(R.string.description_pt2) + " " + topic + ".\n" + description;
             if (currTable.getLocked()) {
-                fullDescription = "This is an invite-only, " + type + " table, focusing on " + topic + ".\n" + description;
+                fullDescription = getString(R.string.description_closed_pt1) + " " + type + " " + getString(R.string.description_pt2) + " " + topic + ".\n" + description;
             }
             tvDescription.setText(fullDescription);
         }
@@ -114,7 +115,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), TableDetailsActivity.class);
-                intent.putExtra("TABLE", Parcels.wrap(finalCurrTable));
+                intent.putExtra(TableUtils.TAG, Parcels.wrap(finalCurrTable));
                 startActivity(intent);
             }
         });
@@ -141,7 +142,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void done(List<Table> retreivedTables, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error while getting table" + e);
                     return;
                 }
                 int i = 0;

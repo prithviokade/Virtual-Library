@@ -79,7 +79,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, TableDetailsActivity.class);
-                    intent.putExtra("TABLE", Parcels.wrap(table));
+                    intent.putExtra(TableUtils.TAG, Parcels.wrap(table));
                     context.startActivity(intent);
                 }
             });
@@ -88,15 +88,15 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
             tvSize.setText(Integer.toString(table.getSize()));
             tvMemberCount.setText(Integer.toString(table.getMates().size()));
             if (table.getVisiting()) {
-                tvVisitors.setText("allowed");
+                tvVisitors.setText(R.string.allowed);
             } else {
-                tvVisitors.setText("not allowed");
+                tvVisitors.setText(R.string.not_allowed);
             }
 
             String topic = table.getTopic();
             String type = table.getType();
             String description = table.getDescription();
-            String fullDescription = "This is a " + type + " table, focusing on " + topic + ".\n" + description;
+            String fullDescription = context.getString(R.string.description_pt1) + " " + type + " " + context.getString(R.string.description_pt2) + topic + ".\n" + description;
             tvDescription.setText(fullDescription);
         }
     }

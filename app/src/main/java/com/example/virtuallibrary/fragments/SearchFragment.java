@@ -125,7 +125,6 @@ public class SearchFragment extends Fragment {
             @Override
             public void done(List<ParseUser> retreivedUsers, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error while getting users");
                     return;
                 }
                 for (int i = 0; i < retreivedUsers.size(); i++) {

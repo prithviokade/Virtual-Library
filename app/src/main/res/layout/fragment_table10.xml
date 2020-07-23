@@ -32,8 +32,8 @@
         android:layout_alignStart="@+id/ivTable"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="185dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginStart="188dp"
+        android:layout_marginTop="9dp"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -43,8 +43,8 @@
         android:layout_alignStart="@+id/ivTable"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="183dp"
-        android:layout_marginTop="147dp"
+        android:layout_marginStart="188dp"
+        android:layout_marginTop="160dp"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -54,7 +54,7 @@
         android:layout_alignStart="@+id/ivTable"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="228dp"
+        android:layout_marginStart="232dp"
         android:layout_marginTop="147dp"
         tools:src="@tools:sample/avatars" />
 
@@ -65,8 +65,8 @@
         android:layout_alignStart="@+id/ivTable"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="271dp"
-        android:layout_marginTop="147dp"
+        android:layout_marginStart="114dp"
+        android:layout_marginTop="111dp"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -76,8 +76,8 @@
         android:layout_alignStart="@+id/ivTable"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="94dp"
+        android:layout_marginStart="259dp"
+        android:layout_marginTop="112dp"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -87,8 +87,8 @@
         android:layout_alignStart="@+id/ivTable"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="228dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="235dp"
+        android:layout_marginTop="26dp"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -97,8 +97,8 @@
         android:layout_height="35dp"
         android:layout_alignStart="@+id/ivTable"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="295dp"
-        android:layout_marginTop="87dp"
+        android:layout_marginStart="259dp"
+        android:layout_marginTop="66dp"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -117,8 +117,8 @@
         android:layout_height="35dp"
         android:layout_alignStart="@+id/ivTable"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="85dp"
+        android:layout_marginStart="113dp"
+        android:layout_marginTop="64dp"
         tools:src="@tools:sample/avatars" />
 
 

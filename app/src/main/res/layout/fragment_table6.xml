@@ -23,6 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="145dp"
         android:layout_marginTop="18dp"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -33,6 +34,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="206dp"
         android:layout_marginTop="18dp"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -43,6 +45,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="206dp"
         android:layout_marginTop="155dp"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -53,6 +56,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="271dp"
         android:layout_marginTop="85dp"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -63,6 +67,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="145dp"
         android:layout_marginTop="155dp"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
     <ImageView
@@ -73,5 +78,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="80dp"
         android:layout_marginTop="85dp"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 </RelativeLayout>

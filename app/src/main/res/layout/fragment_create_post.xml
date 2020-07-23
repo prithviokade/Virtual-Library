@@ -17,7 +17,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="0dp"
         android:backgroundTint="@color/vlGreen"
-        android:text="Post"
+        android:text="@string/post"
         android:textColor="@color/plainWhite" />
 
     <Button
@@ -29,7 +29,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/vlGreen"
-        android:text="Take Photo/Video"
+        android:text="@string/take_post"
         android:textColor="#FFFFFF" />
 
     <EditText
@@ -40,7 +40,7 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Caption"
+        android:hint="@string/caption"
         android:inputType="textMultiLine"
         android:minLines="3"
         android:textSize="14sp" />

@@ -11,6 +11,8 @@ import java.util.List;
 
 public class UserUtils {
 
+    public static final String TAG = "USER";
+
     public static ParseFile getProfilePicture(ParseUser user) {
         try {
             return user.fetch().getParseFile("picture");
@@ -22,10 +24,6 @@ public class UserUtils {
 
     public static void addGoal(ParseUser user, Goal goal) {
         user.add("goals", goal);
-    }
-
-    public static void saveUser(ParseUser user) {
-        user.saveInBackground();
     }
 
     public static void setCurrentTable(ParseUser user, Table table) {

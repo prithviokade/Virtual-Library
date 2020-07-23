@@ -99,18 +99,5 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    private void savePost(Post post) {
-        post.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e("PostsAdapter", "Error while saving post info", e);
-                } else {
-                    Log.i("PostsAdapter", "Success saving post info");
-                }
-            }
-        });
-    }
-
 }
 

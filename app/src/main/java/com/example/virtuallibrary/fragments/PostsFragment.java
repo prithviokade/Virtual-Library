@@ -72,11 +72,7 @@ public class PostsFragment extends Fragment {
             @Override
             public void done(List<Post> retreivedPosts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error while getting posts" + e);
                     return;
-                }
-                for (Post post : retreivedPosts) {
-                    Log.i(TAG, UserUtils.getName(post.getUser()));
                 }
                 adapter.clear();
                 adapter.addAll(retreivedPosts);

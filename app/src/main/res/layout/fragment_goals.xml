@@ -23,7 +23,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:text="Prithvi Okade"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -53,7 +52,6 @@
         android:layout_below="@+id/tvScreenName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
-        android:text="cmu '22 "
         android:textSize="12sp" />
 
     <Button
@@ -64,7 +62,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:backgroundTint="#FFFFFF"
-        android:text="Log Out"
+        android:text="@string/logout"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/vlGreen"
         android:textSize="12sp" />

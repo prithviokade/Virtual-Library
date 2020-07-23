@@ -126,7 +126,6 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!(etUsername.getText().toString().isEmpty()) && !(etPassword.getText().toString().isEmpty())) {
                     // set login button color and enable
-                    Log.d(TAG, "detected");
                     btnLogin.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.vlGreen));
                     btnLogin.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.plainWhite));
                     btnLogin.setEnabled(true);
@@ -150,7 +149,6 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!(etUsername.getText().toString().isEmpty()) && !(etPassword.getText().toString().isEmpty())) {
                     // set login button color and enable
-                    Log.d(TAG, "detected");
                     btnLogin.setEnabled(true);
                     btnLogin.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.vlGreen));
                     btnLogin.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.plainWhite));
@@ -182,10 +180,8 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
             @Override
             public void done(ParseUser user, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error while logging in", e);
                     return;
                 }
-                Log.d(TAG, "Success logging in");
                 LOGIN_STATUS = "Success";
                 goMainActivity();
             }
@@ -225,14 +221,11 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
                     if (e == null) {
                         goMainActivity();
                     } else {
-                        Log.e(TAG, "Error while signing up", e);
                         return;
                     }
                 }
             });
         }
 
-        // mProfilePhotoView.setImageURI(user.getPicture());
-        // mPermissions.setText(user.getPermissions());
     }
 }

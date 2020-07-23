@@ -14,7 +14,6 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/btnDone"
-        android:text="TextView"
         android:textSize="18sp" />
 
     <ImageButton

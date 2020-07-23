@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.ProfileActivity;
 import com.example.virtuallibrary.databinding.FragmentTable1Binding;
@@ -43,7 +44,7 @@ public class Table1Fragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            table = bundle.getParcelable("TABLE");
+            table = bundle.getParcelable(TableUtils.TAG);
         }
 
         return view;
@@ -72,7 +73,7 @@ public class Table1Fragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ProfileActivity.class);
-                    intent.putExtra("USER", Parcels.wrap(mates.get(finalI)));
+                    intent.putExtra(UserUtils.TAG, Parcels.wrap(mates.get(finalI)));
                     startActivity(intent);
                 }
             });

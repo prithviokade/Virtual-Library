@@ -86,7 +86,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ProfileActivity.class);
-                    intent.putExtra("USER", Parcels.wrap(user));
+                    intent.putExtra(UserUtils.TAG, Parcels.wrap(user));
                     context.startActivity(intent);
                 }
             });

@@ -31,7 +31,7 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    public static final String TAG = "GoalsFragment";
+    public static final String TAG = "ProfileActivity";
     ImageView ivProfPic;
     TextView tvUsername;
     TextView tvName;
@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("USER"));
+        user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra(UserUtils.TAG));
         ivProfPic = binding.ivProfile;
         tvUsername = binding.tvScreenName;
         tvName = binding.tvName;

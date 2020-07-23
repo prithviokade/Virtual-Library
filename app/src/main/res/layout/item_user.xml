@@ -26,7 +26,6 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/ivProfilePic"
-        android:text="TextView"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -38,6 +37,5 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivProfilePic"
-        android:text="TextView"
         android:textSize="12sp" />
 </RelativeLayout>

@@ -23,7 +23,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:text="Prithvi Okade"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -34,7 +33,6 @@
         android:layout_below="@+id/tvName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
-        android:text="@prthv_"
         android:textColor="#F0AAA7A7"
         android:textSize="12sp" />
 
@@ -54,7 +52,6 @@
         android:layout_below="@+id/tvScreenName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
-        android:text="cmu '22 "
         android:textSize="12sp" />
 
     <ImageButton

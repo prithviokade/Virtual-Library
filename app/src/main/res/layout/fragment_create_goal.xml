@@ -12,7 +12,7 @@
         android:layout_height="88dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Goal"
+        android:hint="@string/goal"
         android:inputType="textMultiLine" />
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="Select status: "
+        android:text="@string/select_goal_status"
         android:textSize="16sp" />
 
     <ImageButton
@@ -66,7 +66,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="36dp"
         android:layout_marginTop="10dp"
-        android:text="Incomplete" />
+        android:text="@string/incomplete" />
 
     <TextView
         android:id="@+id/textView4"
@@ -75,7 +75,7 @@
         android:layout_below="@+id/btnInprog"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="In Progress" />
+        android:text="@string/inprogress" />
 
     <TextView
         android:id="@+id/textView5"
@@ -85,7 +85,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="39dp"
-        android:text="Complete" />
+        android:text="@string/complete" />
 
     <Button
         android:id="@+id/btnSave"
@@ -98,7 +98,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="0dp"
         android:backgroundTint="@color/vlGreen"
-        android:text="Add"
+        android:text="@string/add"
         android:textColor="@color/plainWhite" />
 
 

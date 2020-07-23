@@ -72,7 +72,6 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.ViewHolder> 
             tvGoal.setText(goal.getGoal());
 
             final String status = goal.getStatus();
-            Log.d(TAG, status);
             if (status.equals("complete")) {
                 btnDone.setImageResource(R.drawable.ic_baseline_check_box_24);
             } else if (status.equals("intermediate")) {
@@ -96,8 +95,8 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.ViewHolder> 
                         goal.setStatus("intermediate");
                         btnDone.setImageResource(R.drawable.ic_baseline_indeterminate_check_box_24);
                     }
-                    saveGoal(goal);
-                    saveUser();
+                    goal.saveInBackground();
+                    ParseUser.getCurrentUser().saveInBackground();
                 }
             });
         }
@@ -113,32 +112,6 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.ViewHolder> 
     public void addAll(List<Goal> listGoals) {
         goals.addAll(listGoals);
         notifyDataSetChanged();
-    }
-
-    private void saveGoal(Goal goal) {
-        goal.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving goal info", e);
-                } else {
-                    Log.i(TAG, "Success saving goal info");
-                }
-            }
-        });
-    }
-
-    private void saveUser() {
-        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving post info", e);
-                } else {
-                    Log.i(TAG, "Success saving post info");
-                }
-            }
-        });
     }
 
 }

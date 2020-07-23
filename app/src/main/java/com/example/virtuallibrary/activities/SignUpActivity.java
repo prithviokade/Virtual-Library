@@ -159,7 +159,6 @@ public class SignUpActivity extends AppCompatActivity {
                         if (e == null) {
                             goMainActivity();
                         } else {
-                            Log.e("SignUpActivity", "Error while signing up", e);
                             return;
                         }
                     }

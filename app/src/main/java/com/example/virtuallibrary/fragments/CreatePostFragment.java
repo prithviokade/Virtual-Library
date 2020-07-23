@@ -89,7 +89,7 @@ public class CreatePostFragment extends Fragment {
                     return;
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(caption, currentUser, photoFile);
+                saveNewPost(caption, currentUser, photoFile);
             }
         });
 
@@ -100,9 +100,7 @@ public class CreatePostFragment extends Fragment {
         // Get safe storage directory for photos
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
         // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-            Log.d(TAG, "failed to create directory");
-        }
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){ }
         // Return the file target for the photo based on filename
         File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
         return file;
@@ -139,23 +137,12 @@ public class CreatePostFragment extends Fragment {
         }
     }
 
-    private void savePost(String caption, ParseUser user, File photoFile) {
+    private void saveNewPost(String caption, ParseUser user, File photoFile) {
         Post post = new Post();
         post.setCaption(caption);
         post.setImage(new ParseFile(photoFile));
         post.setUser(user);
-        post.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving new post", e);
-                } else {
-                    Log.i(TAG, "Success saving new post");
-                    etCaption.setText("");
-                    ivPhoto.setImageResource(0);
-                }
-            }
-        });
+        post.saveInBackground();
     }
 
 }

@@ -99,25 +99,12 @@ public class CreateGoalFragment extends Fragment {
                 addGoal.setGoal(goal);
                 addGoal.setStatus(status);
                 UserUtils.addGoal(ParseUser.getCurrentUser(), addGoal);
-                saveGoal(addGoal);
-                UserUtils.saveUser(ParseUser.getCurrentUser());
+                addGoal.saveInBackground();
+                ParseUser.getCurrentUser().saveInBackground();
                 etGoal.setText("");
                 btnComp.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
                 btnInprog.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
                 btnIncomp.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
-            }
-        });
-    }
-
-    private void saveGoal(Goal goal) {
-        goal.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving goal info", e);
-                } else {
-                    Log.i(TAG, "Success saving goal info");
-                }
             }
         });
     }

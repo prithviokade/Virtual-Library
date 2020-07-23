@@ -64,7 +64,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         View view = binding.getRoot();
         setContentView(view);
 
-        table = (Table) Parcels.unwrap(getIntent().getParcelableExtra("TABLE"));
+        table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
 
         tvSize = binding.tvSize;
         tvMembers = binding.tvMembers;
@@ -93,7 +93,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         tvSize.setText(Integer.toString(size));
         Fragment tableFragment = TableUtils.getTableFragment(size);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("TABLE", table);
+        bundle.putParcelable(TableUtils.TAG, table);
         tableFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.flContainer, tableFragment).commit();
 
@@ -104,23 +104,19 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
             members += UserUtils.getUsername(user);
             members += ", ";
         }
-        if (!members.isEmpty()) { members = members.substring(0, members.length() - 2); }
-        else { members = "None"; }
-        tvMembers.setText(members);
-
-        // SpannableString ssMembers = new SpannableString(members);
-
+        if (!members.isEmpty()) { tvMembers.setText(members.substring(0, members.length() - 2)); }
+        else { tvMembers.setText(R.string.none); }
 
         if (table.getVisiting()) {
-            tvVisitors.setText("allowed");
+            tvVisitors.setText(R.string.allowed);
         } else {
-            tvVisitors.setText("not allowed");
+            tvVisitors.setText(R.string.not_allowed);
         }
 
         String topic = table.getTopic();
         String type = table.getType();
         String description = table.getDescription();
-        String fullDescription = "This is a " + type + " table, focusing on " + topic + ".\n" + description;
+        String fullDescription = getString(R.string.description_pt1) + " " + type + " " + getString(R.string.description_pt2) + " " + topic + ".\n" + description;
         tvDescription.setText(fullDescription);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -130,9 +126,9 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                 Message newMessage = new Message();
                 newMessage.setText(text);
                 newMessage.setSender(ParseUser.getCurrentUser());
-                saveMessage(newMessage);
+                newMessage.saveInBackground();
                 table.addChat(newMessage);
-                TableUtils.saveTable(table);
+                table.saveInBackground();
                 etCompose.setText("");
                 adapter.add(newMessage);
             }
@@ -146,7 +142,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
 
         isMember = table.containsUser(ParseUser.getCurrentUser());
         if (isMember) { // current table
-            btnJoin.setText("Leave");
+            btnJoin.setText(R.string.leave);
             rvMessages.setVisibility(View.VISIBLE);
             etCompose.setVisibility(View.VISIBLE);
             btnSend.setVisibility(View.VISIBLE);
@@ -171,26 +167,24 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
                     UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);
-                    btnJoin.setText("Leave");
-                    TableUtils.saveTable(table);
-                    UserUtils.saveUser(ParseUser.getCurrentUser());
+                    btnJoin.setText(R.string.leave);
+                    table.saveInBackground();
+                    ParseUser.getCurrentUser().saveInBackground();
                 } else { // left table
                     rvMessages.setVisibility(View.INVISIBLE);
                     etCompose.setVisibility(View.INVISIBLE);
                     btnSend.setVisibility(View.INVISIBLE);
                     String members = tvMembers.getText().toString();
-                    Log.d(TAG, members);
                     members = members.replaceAll("\\, \\@" + ParseUser.getCurrentUser().getUsername(), "");
                     members = members.replaceAll("\\@" + ParseUser.getCurrentUser().getUsername(), "");
-                    Log.d(TAG, ", @" + ParseUser.getCurrentUser().getUsername());
                     tvMembers.setText(members);
                     spnStatus.setEnabled(false);
                     btnInvite.setVisibility(View.INVISIBLE);
 
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     UserUtils.removeCurrentTable(ParseUser.getCurrentUser());
-                    UserUtils.saveUser(ParseUser.getCurrentUser());
-                    btnJoin.setText("Join");
+                    ParseUser.getCurrentUser().saveInBackground();
+                    btnJoin.setText(R.string.join);
                 }
                 isMember = !isMember;
             }
@@ -210,23 +204,10 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         adapter.addAll(foundMessage);
     }
 
-    private void saveMessage(Message message) {
-        message.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving new message", e);
-                } else {
-                    Log.i(TAG, "Success saving new message");
-                }
-            }
-        });
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         table.setStatus(parent.getItemAtPosition(pos).toString());
-        TableUtils.saveTable(table);
+        table.saveInBackground();
     }
 
     @Override

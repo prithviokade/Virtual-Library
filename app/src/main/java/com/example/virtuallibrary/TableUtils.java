@@ -22,6 +22,8 @@ import java.util.List;
 
 public class TableUtils {
 
+    public static final String TAG = "TABLE";
+
     public static int getTableImage(int size) {
         if (size == 1) { return R.drawable.onetable; }
         if (size == 2) { return R.drawable.twotable; }
@@ -52,12 +54,8 @@ public class TableUtils {
                 }
             }
             currentTable.setMates(newMates);
-            saveTable(currentTable);
+            currentTable.saveInBackground();
         }
-    }
-
-    public static void saveTable(Table table) {
-        table.saveInBackground();
     }
 
     public static void saveNewTable(String topic, String description, int size, String type, Boolean locked, Boolean visitors) {
@@ -72,7 +70,7 @@ public class TableUtils {
         table.setVisiting(visitors);
         table.setDescription(description);
         table.setLocked(locked);
-        TableUtils.saveTable(table);
+        table.saveInBackground();
         TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
         UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);
     }

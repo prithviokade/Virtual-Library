@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- table details -->
+    <string name="size">Size: </string>
+    <string name="status">Status: </string>
+    <string name="members">Members: </string>
+    <string name="visitors">Visitors: </string>
+    <string name="description">Description: </string>
+    <string name="join">Join</string>
+    <string name="curr_table">Current Table</string>
+    <string name="allowed">allowed</string>
+    <string name="not_allowed">not allowed</string>
+    <string name="none">None</string>
+    <string name="leave">Leave</string>
+    <string name="description_pt1">This is a</string>
+    <string name="description_open_pt1">This is an open,</string>
+    <string name="description_closed_pt1">This is an invite-only,</string>
+    <string name="description_pt2">table, focusing on</string>
+
+    <!-- login -->
+    <string name="login">Log In</string>
+    <string name="password">Password</string>
+    <string name="login_username">Phone number, username, or email</string>
+    <string name="login_account_question">Don\'t have an account?</string>
+    <string name="login_to_signup"> Sign up.</string>
+    <string name="or">OR</string>
+    <string name="logout">Log Out</string>
+
+    <!--sign up -->
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="signup_account_question">Already have an account?</string>
+    <string name="signup_to_login"> Log in.</string>
+    <string name="signup">Sign Up</string>
+
+    <!-- main -->
+    <string name="cancel">Cancel</string>
+
+    <!-- create goal -->
+    <string name="goal">Goal</string>
+    <string name="select_goal_status">Select status:</string>
+    <string name="incomplete">Incomplete</string>
+    <string name="inprogress">In Progress</string>
+    <string name="complete">Complete</string>
+    <string name="add">Add</string>
+
+    <!-- create post -->
+    <string name="post">Post</string>
+    <string name="take_post">Take Photo/Video</string>
+    <string name="caption">Caption</string>
+
+    <!-- create table -->
+    <string name="visitors_question">Visitors?</string>
+    <string name="create">Create</string>
+    <string name="type">Type:</string>
+    <string name="topic">Topic:</string>
+
+    <!-- search -->
+    <string name="search">Search</string>
+
+</resources>

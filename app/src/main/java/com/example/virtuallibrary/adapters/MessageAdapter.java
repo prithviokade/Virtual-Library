@@ -98,7 +98,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Log.d(TAG, time.toString() + message.getText());
             DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
             String dateString = dateFormat.format(time);
             if (dateString.charAt(0) == '0') {tvTime.setText(dateString.substring(1)); }
