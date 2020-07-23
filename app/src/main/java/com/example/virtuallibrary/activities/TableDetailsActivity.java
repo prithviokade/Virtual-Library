@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.adapters.MessageAdapter;
 import com.example.virtuallibrary.databinding.ActivityTableDetailsBinding;
 import com.example.virtuallibrary.models.Message;
@@ -100,12 +101,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         String members = "";
         for (ParseUser user : mates) {
             members += "@";
-            try {
-                members += user.fetch().getUsername();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Log.d("members", members);
+            members += UserUtils.getUsername(user);
             members += ", ";
         }
         if (!members.isEmpty()) { members = members.substring(0, members.length() - 2); }
@@ -174,10 +170,10 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
 
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
-                    ParseUser.getCurrentUser().put("current", table);
+                    UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);
                     btnJoin.setText("Leave");
                     TableUtils.saveTable(table);
-                    saveUser();
+                    UserUtils.saveUser(ParseUser.getCurrentUser());
                 } else { // left table
                     rvMessages.setVisibility(View.INVISIBLE);
                     etCompose.setVisibility(View.INVISIBLE);
@@ -192,8 +188,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     btnInvite.setVisibility(View.INVISIBLE);
 
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
-                    ParseUser.getCurrentUser().remove("current");
-                    saveUser();
+                    UserUtils.removeCurrentTable(ParseUser.getCurrentUser());
+                    UserUtils.saveUser(ParseUser.getCurrentUser());
                     btnJoin.setText("Join");
                 }
                 isMember = !isMember;
@@ -222,19 +218,6 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     Log.e(TAG, "Error while saving new message", e);
                 } else {
                     Log.i(TAG, "Success saving new message");
-                }
-            }
-        });
-    }
-
-    private void saveUser() {
-        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving user info", e);
-                } else {
-                    Log.i(TAG, "Success saving user info");
                 }
             }
         });

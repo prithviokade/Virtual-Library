@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.LoginActivity;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
@@ -79,23 +80,23 @@ public class GoalsFragment extends Fragment {
         rvChecklist.setLayoutManager(linearLayoutManager);
         queryGoals();
 
-        ParseFile profile = ParseUser.getCurrentUser().getParseFile("picture");
+        ParseFile profile = UserUtils.getProfilePicture(ParseUser.getCurrentUser());
         if (profile != null) {
             Glide.with(getContext()).load(profile.getUrl()).transform(new CircleCrop()).into(ivProfPic);
         } else {
             Glide.with(getContext()).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(ivProfPic);
         }
 
-        tvUsername.setText("@" + ParseUser.getCurrentUser().getUsername());
+        tvUsername.setText("@" + UserUtils.getUsername(ParseUser.getCurrentUser()));
 
-        String name = ParseUser.getCurrentUser().getString("name");
+        String name = UserUtils.getName(ParseUser.getCurrentUser());
         if (name != null) {
             tvName.setText(name);
         } else {
             tvName.setText("");
         }
 
-        String bio = ParseUser.getCurrentUser().getString("bio");
+        String bio = UserUtils.getBio(ParseUser.getCurrentUser());
         if (bio != null) {
             tvBio.setText(bio);
         } else {
@@ -107,6 +108,7 @@ public class GoalsFragment extends Fragment {
             public void onClick(View view) {
                 LoginManager.getInstance().logOut();
                 ParseUser.logOut();
+                // go to login activity
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
             }
@@ -115,7 +117,7 @@ public class GoalsFragment extends Fragment {
     }
 
     private void queryGoals() {
-        List<Goal> foundGoals = (List<Goal>) ParseUser.getCurrentUser().get("goals");
+        List<Goal> foundGoals = UserUtils.getGoals(ParseUser.getCurrentUser());
         adapter.clear();
         adapter.addAll(foundGoals);
     }

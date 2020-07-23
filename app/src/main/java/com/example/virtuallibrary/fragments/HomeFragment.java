@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.adapters.TableAdapter;
 import com.example.virtuallibrary.databinding.FragmentHomeBinding;
@@ -73,12 +74,7 @@ public class HomeFragment extends Fragment {
         tvDescription = binding.tvDescription;
         tvCurrentTableText = binding.tvCurrentTableText;
 
-        Table currTable = null;
-        try {
-            currTable = (Table) ParseUser.getCurrentUser().fetch().get("current");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Table currTable = UserUtils.getCurrentTable(ParseUser.getCurrentUser());
         if (currTable == null) {
             ivCurrTable.setVisibility(View.GONE);
             tvCurrentTableText.setVisibility(View.INVISIBLE);
@@ -151,7 +147,7 @@ public class HomeFragment extends Fragment {
                 int i = 0;
                 List<Table> filteredTables = new ArrayList<>();
                 for (Table table : retreivedTables) {
-                    if (table.equals( (Table) ParseUser.getCurrentUser().get("current"))) {
+                    if (table.equals( UserUtils.getCurrentTable(ParseUser.getCurrentUser()) )) {
                         continue;
                     }
                     if (table.getLocked()) {

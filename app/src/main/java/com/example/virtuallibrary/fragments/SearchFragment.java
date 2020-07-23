@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.MainActivity;
 import com.example.virtuallibrary.adapters.TableAdapter;
 import com.example.virtuallibrary.adapters.UserAdapter;
@@ -104,7 +105,7 @@ public class SearchFragment extends Fragment {
         List<ParseUser> searchedUsers = new ArrayList<>();
 
         for (ParseUser user : users) {
-            if (user.getUsername().toLowerCase().contains(searched.toLowerCase())) {
+            if (UserUtils.getUsername(user).toLowerCase().contains(searched.toLowerCase())) {
                 searchedUsers.add(user);
             }
         }
@@ -128,7 +129,7 @@ public class SearchFragment extends Fragment {
                     return;
                 }
                 for (int i = 0; i < retreivedUsers.size(); i++) {
-                    if (retreivedUsers.get(i).getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                    if (UserUtils.equals(retreivedUsers.get(i), ParseUser.getCurrentUser())) {
                         retreivedUsers.remove(i);
                         break;
                     }

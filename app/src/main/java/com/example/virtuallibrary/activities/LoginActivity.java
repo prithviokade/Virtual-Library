@@ -102,9 +102,7 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
                     }
 
                     @Override
-                    public void onError(FacebookException e) {
-                        Log.e(TAG, "help", e);
-                    }
+                    public void onError(FacebookException e) { }
                 });
 
         etUsername = binding.etUsername;
@@ -129,13 +127,13 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
                 if (!(etUsername.getText().toString().isEmpty()) && !(etPassword.getText().toString().isEmpty())) {
                     // set login button color and enable
                     Log.d(TAG, "detected");
-                    btnLogin.setBackgroundColor(0xFF55BD7E);
-                    btnLogin.setTextColor(0xffffffff);
+                    btnLogin.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.vlGreen));
+                    btnLogin.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.plainWhite));
                     btnLogin.setEnabled(true);
                 } else {
                     btnLogin.setEnabled(false);
-                    btnLogin.setBackgroundColor(0x4A038132);
-                    btnLogin.setTextColor(0xFFEBF4FB);
+                    btnLogin.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.lightGreen));
+                    btnLogin.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.lightGrey));
                 }
             }
 

@@ -16,9 +16,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.databinding.FragmentCreateGoalBinding;
 import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
 import com.example.virtuallibrary.models.Goal;
+import com.example.virtuallibrary.models.User;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -96,9 +98,9 @@ public class CreateGoalFragment extends Fragment {
                 Goal addGoal = new Goal();
                 addGoal.setGoal(goal);
                 addGoal.setStatus(status);
-                ParseUser.getCurrentUser().add("goals", addGoal);
+                UserUtils.addGoal(ParseUser.getCurrentUser(), addGoal);
                 saveGoal(addGoal);
-                saveUser();
+                UserUtils.saveUser(ParseUser.getCurrentUser());
                 etGoal.setText("");
                 btnComp.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
                 btnInprog.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);
@@ -120,16 +122,4 @@ public class CreateGoalFragment extends Fragment {
         });
     }
 
-    private void saveUser() {
-        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving post info", e);
-                } else {
-                    Log.i(TAG, "Success saving post info");
-                }
-            }
-        });
-    }
 }

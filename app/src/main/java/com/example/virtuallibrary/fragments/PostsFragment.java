@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.adapters.PostsAdapter;
 import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
 import com.example.virtuallibrary.databinding.FragmentPostsBinding;
@@ -75,7 +76,7 @@ public class PostsFragment extends Fragment {
                     return;
                 }
                 for (Post post : retreivedPosts) {
-                    Log.i(TAG, post.getUser().getString("name"));
+                    Log.i(TAG, UserUtils.getName(post.getUser()));
                 }
                 adapter.clear();
                 adapter.addAll(retreivedPosts);

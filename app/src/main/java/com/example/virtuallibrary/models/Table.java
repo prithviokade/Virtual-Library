@@ -2,6 +2,7 @@ package com.example.virtuallibrary.models;
 
 import androidx.annotation.Nullable;
 
+import com.example.virtuallibrary.UserUtils;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -36,15 +37,6 @@ public class Table extends ParseObject {
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    public String getCreatorUsername() {
-        try {
-            return getCreator().fetch().getUsername();
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "";
         }
     }
 
@@ -188,14 +180,11 @@ public class Table extends ParseObject {
 
     public boolean containsUser(ParseUser user) {
         for (ParseUser mate : this.getMates()) {
-            try {
-                if (mate.fetch().getUsername().equals(user.fetch().getUsername())) {
-                    return true;
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (UserUtils.equals(user, mate)) {
+                return true;
             }
         }
         return false;
     }
+
 }

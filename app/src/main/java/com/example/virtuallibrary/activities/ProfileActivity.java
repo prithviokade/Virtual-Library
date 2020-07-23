@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.databinding.ActivityProfileBinding;
 import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
@@ -59,28 +60,27 @@ public class ProfileActivity extends AppCompatActivity {
 
         adapter = new GoalsAdapter(this, goals);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-
         rvChecklist.setAdapter(adapter);
         rvChecklist.setLayoutManager(linearLayoutManager);
         queryGoals();
 
-        ParseFile profile = user.getParseFile("picture");
+        ParseFile profile = UserUtils.getProfilePicture(user);
         if (profile != null) {
             Glide.with(this).load(profile.getUrl()).transform(new CircleCrop()).into(ivProfPic);
         } else {
             Glide.with(this).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(ivProfPic);
         }
 
-        tvUsername.setText("@" + user.getUsername());
+        tvUsername.setText("@" + UserUtils.getUsername(user));
 
-        String name = user.getString("name");
+        String name = UserUtils.getName(user);
         if (name != null) {
             tvName.setText(name);
         } else {
             tvName.setText("");
         }
 
-        String bio = user.getString("bio");
+        String bio = UserUtils.getBio(user);
         if (bio != null) {
             tvBio.setText(bio);
         } else {
@@ -89,7 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void queryGoals() {
-        List<Goal> foundGoals = (List<Goal>) user.get("goals");
+        List<Goal> foundGoals = UserUtils.getGoals(user);
         adapter.clear();
         adapter.addAll(foundGoals);
     }

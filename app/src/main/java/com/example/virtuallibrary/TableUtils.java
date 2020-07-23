@@ -60,6 +60,23 @@ public class TableUtils {
         table.saveInBackground();
     }
 
+    public static void saveNewTable(String topic, String description, int size, String type, Boolean locked, Boolean visitors) {
+        Table table = new Table();
+        table.setCreator(ParseUser.getCurrentUser());
+        table.setMates(new ArrayList<ParseUser>());
+        table.addMate(ParseUser.getCurrentUser());
+        table.setStatus("working");
+        table.setSize(size);
+        table.setTopic(topic);
+        table.setType(type);
+        table.setVisiting(visitors);
+        table.setDescription(description);
+        table.setLocked(locked);
+        TableUtils.saveTable(table);
+        TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
+        UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);
+    }
+
     public static Fragment getTableFragment(int size) {
         if (size == 1) { return new Table1Fragment(); }
         if (size == 2) { return new Table2Fragment();}

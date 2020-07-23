@@ -117,37 +117,11 @@ public class CreateTableFragment extends Fragment {
                 }
                 String topic = etTopic.getText().toString();
                 String description = etDescription.getText().toString();
-                saveTable(topic, description);
+                TableUtils.saveNewTable(topic, description, size, type, locked, visitors);
+                etDescription.setText("");
+                etTopic.setText("");
             }
         });
-    }
-
-    private void saveTable(String topic, String description) {
-        Table table = new Table();
-        table.setCreator(ParseUser.getCurrentUser());
-        table.setMates(new ArrayList<ParseUser>());
-        table.addMate(ParseUser.getCurrentUser());
-        table.setStatus("working");
-        table.setSize(size);
-        table.setTopic(topic);
-        table.setType(type);
-        table.setVisiting(visitors);
-        table.setDescription(description);
-        table.setLocked(locked);
-        table.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving new post", e);
-                } else {
-                    Log.i(TAG, "Success saving new post");
-                    etDescription.setText("");
-                    etTopic.setText("");
-                }
-            }
-        });
-        TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
-        ParseUser.getCurrentUser().put("current", table);
     }
 
     @Override public void onDestroyView() {

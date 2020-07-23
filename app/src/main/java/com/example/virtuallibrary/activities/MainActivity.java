@@ -125,13 +125,5 @@ public class MainActivity extends AppCompatActivity {
                 btnCancel.setVisibility(View.INVISIBLE);
             }
         });
-
     }
-
-    private void goLoginActivity() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
 }
