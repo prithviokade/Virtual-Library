@@ -1,6 +1,8 @@
 package com.example.virtuallibrary.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,7 +39,6 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
     public static final String TAG = "TableDetailsActivity";
 
     Table table;
-    ImageView ivTable;
     TextView tvSize;
     TextView tvMembers;
     TextView tvVisitors;
@@ -51,9 +52,9 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
 
     List<Message> messages;
     MessageAdapter adapter;
+    final FragmentManager fragmentManager = getSupportFragmentManager();
 
     boolean isMember;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,6 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
 
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra("TABLE"));
 
-        ivTable = binding.ivTable;
         tvSize = binding.tvSize;
         tvMembers = binding.tvMembers;
         tvVisitors = binding.tvVisitors;
@@ -90,7 +90,11 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
 
         int size = table.getSize();
         tvSize.setText(Integer.toString(size));
-        ivTable.setImageResource(TableUtils.getTableImage(size));
+        Fragment tableFragment = TableUtils.getTableFragment(size);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("TABLE", table);
+        tableFragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.flContainer, tableFragment).commit();
 
         List<ParseUser> mates = table.getMates();
         String members = "";

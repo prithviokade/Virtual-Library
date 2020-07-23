@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.table_fragments.Table8Fragment">
+
+    <ImageView
+        android:id="@+id/ivTable"
+        android:layout_width="wrap_content"
+        android:layout_height="209dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/eighttable" />
+
+    <ImageView
+        android:id="@+id/ivPerson2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/ivTable"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="25dp"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivPerson5"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/ivTable"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="185dp"
+        android:layout_marginTop="26dp"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivPerson3"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/ivTable"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="183dp"
+        android:layout_marginTop="147dp"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivPerson8"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/ivTable"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="147dp"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivPerson7"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/ivTable"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="25dp"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivPerson4"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/ivTable"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="295dp"
+        android:layout_marginTop="87dp"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivPerson6"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/ivTable"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="148dp"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivPerson1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/ivTable"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="85dp"
+        tools:src="@tools:sample/avatars" />
+
+</RelativeLayout>
