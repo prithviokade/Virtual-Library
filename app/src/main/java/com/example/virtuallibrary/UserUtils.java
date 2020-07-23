@@ -11,7 +11,6 @@ import java.util.List;
 
 public class UserUtils {
 
-
     public static ParseFile getProfilePicture(ParseUser user) {
         try {
             return user.fetch().getParseFile("picture");
@@ -20,7 +19,6 @@ public class UserUtils {
             return null;
         }
     }
-
 
     public static void addGoal(ParseUser user, Goal goal) {
         user.add("goals", goal);

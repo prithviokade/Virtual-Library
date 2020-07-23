@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.OnSwipeTouchListener;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.models.Message;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -74,13 +75,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
 
         public void bind(Message message) {
-            String senderUsername = "";
-            try {
-                senderUsername = message.getSender().fetchIfNeeded().getUsername();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if (ParseUser.getCurrentUser().getUsername().equals(senderUsername)) { // user is sender
+            if (UserUtils.equals(ParseUser.getCurrentUser(), message.getSender())) { // user is sender
                 tvRecieved.setVisibility(View.INVISIBLE);
                 ivRecieved.setVisibility(View.INVISIBLE);
 
@@ -89,7 +84,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             } else { // user is reciever
                 tvSent.setVisibility(View.INVISIBLE);
 
-                ParseFile profile = message.getSender().getParseFile("picture");
+                ParseFile profile = UserUtils.getProfilePicture(message.getSender());
                 if (profile != null) {
                     Glide.with(context).load(profile.getUrl()).transform(new CircleCrop()).into(ivRecieved);
                 } else {
@@ -109,9 +104,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             if (dateString.charAt(0) == '0') {tvTime.setText(dateString.substring(1)); }
             else {tvTime.setText(dateString); }
             container.setOnTouchListener(new OnSwipeTouchListener(context) {
-                public void onSwipeTop() {
-                    Toast.makeText(context, "top", Toast.LENGTH_SHORT).show();
-                }
                 public void onSwipeRight() {
                     tvTime.animate().translationX(0);
                     tvRecieved.animate().translationX(0);
@@ -123,9 +115,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                     tvRecieved.animate().translationX(-125);
                     tvSent.animate().translationX(-125);
                     ivRecieved.animate().translationX(-125);
-                }
-                public void onSwipeBottom() {
-                    Toast.makeText(context, "bottom", Toast.LENGTH_SHORT).show();
                 }
             });
 

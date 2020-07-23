@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -71,10 +72,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }
 
         public void bind(final Post post) {
-            tvScreenName.setText(post.getUser().getUsername());
-            tvCaption.setText(Html.fromHtml("<b>" + post.getUser().getUsername() + "</b> " + post.getCaption()));
+            tvScreenName.setText(UserUtils.getUsername(post.getUser()));
+            tvCaption.setText(Html.fromHtml("<b>" + UserUtils.getUsername(post.getUser()) + "</b> " + post.getCaption()));
             tvCreated.setText(post.getCreatedAt().toString());
-            ParseFile profile = post.getUser().getParseFile("picture");
+            ParseFile profile = UserUtils.getProfilePicture(post.getUser());
             if (profile != null) {
                 Glide.with(context).load(profile.getUrl()).transform(new CircleCrop()).into(ivProfile);
             } else {
