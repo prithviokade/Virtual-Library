@@ -46,7 +46,7 @@ public class TableUtils {
         }
     }
 
-    public static void saveNewTable(String topic, String description, int size, String type, Boolean locked, Boolean visitors) {
+    public static Table saveNewTable(String topic, String description, int size, String type, Boolean locked, Boolean visitors) {
         Table table = new Table();
         table.setCreator(ParseUser.getCurrentUser());
         table.setMates(new ArrayList<ParseUser>());
@@ -61,6 +61,7 @@ public class TableUtils {
         table.saveInBackground();
         TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
         UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);
+        return table;
     }
 
     public static List<Integer> getTableMargins(int size) {

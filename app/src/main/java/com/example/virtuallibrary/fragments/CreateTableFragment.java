@@ -1,5 +1,6 @@
 package com.example.virtuallibrary.fragments;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -25,11 +26,14 @@ import android.widget.Toast;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
+import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
 import com.example.virtuallibrary.models.Table;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,9 +121,15 @@ public class CreateTableFragment extends Fragment {
                 }
                 String topic = etTopic.getText().toString();
                 String description = etDescription.getText().toString();
-                TableUtils.saveNewTable(topic, description, size, type, locked, visitors);
+                Table createdTable = TableUtils.saveNewTable(topic, description, size, type, locked, visitors);
                 etDescription.setText("");
                 etTopic.setText("");
+                spinSize.setSelection(0);
+                spinType.setSelection(0);
+                switchVisitors.setChecked(false);
+                Intent intent = new Intent(getContext(), TableDetailsActivity.class);
+                intent.putExtra(TableUtils.TAG, Parcels.wrap(createdTable));
+                startActivity(intent);
             }
         });
     }
@@ -150,7 +160,7 @@ public class CreateTableFragment extends Fragment {
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
-            size = 0;
+            size = 1;
         }
     }
 }

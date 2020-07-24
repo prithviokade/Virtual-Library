@@ -71,7 +71,7 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.ViewHolder> 
 
         public void bind(final Goal goal) {
             tvGoal.setText(goal.getGoal());
-            
+
             btnDone.setEnabled(true);
             if (!UserUtils.equals(goal.getUser(), ParseUser.getCurrentUser())) {
                 btnDone.setEnabled(false);
