@@ -108,9 +108,9 @@ public class TableFragment extends Fragment {
             // set profile image
             ParseFile profile = UserUtils.getProfilePicture(mates.get(i));
             if (profile != null) {
-                Glide.with(getContext()).load(profile.getUrl()).transform(new CircleCrop()).into(profileImage);
+                Glide.with(getContext()).load(profile.getUrl()).into(profileImage);
             } else {
-                Glide.with(getContext()).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(profileImage);
+                Glide.with(getContext()).load(R.drawable.ic_baseline_people_alt_24).into(profileImage);
             }
 
             final int finalI = i;

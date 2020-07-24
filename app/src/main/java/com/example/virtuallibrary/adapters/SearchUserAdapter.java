@@ -2,9 +2,11 @@ package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,21 +26,21 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.ViewHolder> {
 
     Context context;
     List<ParseUser> users;
 
-    public UserAdapter(Context context, List<ParseUser> users) {
+    public SearchUserAdapter(Context context, List<ParseUser> users) {
         this.context = context;
         this.users = users;
     }
 
     @NonNull
     @Override
-    public UserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false);
-        return new UserAdapter.ViewHolder(view);
+    public SearchUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_search_user, parent, false);
+        return new SearchUserAdapter.ViewHolder(view);
     }
 
     @Override
@@ -58,6 +60,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         TextView tvUsername;
         TextView tvName;
         RelativeLayout container;
+        ImageButton btnAddFriend;
+        boolean areFriends;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,10 +71,35 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvName = itemView.findViewById(R.id.tvName);
             container = itemView.findViewById(R.id.container);
+            btnAddFriend = itemView.findViewById(R.id.btnAddFriend);
 
         }
 
         public void bind(final ParseUser user) {
+
+            areFriends = false;
+
+            if (UserUtils.userContained(UserUtils.getFriends(ParseUser.getCurrentUser()), user)) {
+                btnAddFriend.setImageResource(R.drawable.ic_baseline_person_24);
+                areFriends = true;
+            }
+            btnAddFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (areFriends) {
+                        Log.d("HIIIISIR", UserUtils.getUsername(user));
+                        UserUtils.removeFriend(ParseUser.getCurrentUser(), user);
+                        ParseUser.getCurrentUser().saveInBackground();
+                        btnAddFriend.setImageResource(R.drawable.ic_baseline_person_add_24);
+                    }
+                    else {
+                        UserUtils.addFriend(ParseUser.getCurrentUser(), user);
+                        ParseUser.getCurrentUser().saveInBackground();
+                        btnAddFriend.setImageResource(R.drawable.ic_baseline_person_24);
+                    }
+                    areFriends = !areFriends;
+                }
+            });
 
             ParseFile profile = UserUtils.getProfilePicture(user);
             if (profile != null) {

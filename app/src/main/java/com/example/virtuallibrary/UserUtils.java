@@ -1,6 +1,9 @@
 package com.example.virtuallibrary;
 
+import android.util.Log;
+
 import com.example.virtuallibrary.models.Goal;
+import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Table;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -92,10 +95,12 @@ public class UserUtils {
     }
 
     public static void removeFriend(ParseUser self, ParseUser user) {
-        List<ParseUser> friends = UserUtils.getFriends(user);
+        List<ParseUser> friends = UserUtils.getFriends(self);
         List<ParseUser> remainingFriends = new ArrayList<>();
         for (ParseUser friend : friends) {
+            Log.d(TAG, UserUtils.getUsername(friend));
             if (UserUtils.equals(friend, user)) {
+                Log.d(TAG, UserUtils.getUsername(friend));
                 continue;
             }
             remainingFriends.add(friend);
@@ -114,5 +119,29 @@ public class UserUtils {
             }
         }
         return false;
+    }
+
+    public static List<Invite> getInvite(ParseUser self) {
+        try {
+            return (List<Invite>) self.fetch().get("invites");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static void addInvite(ParseUser self, Invite invite) {
+        self.add("invites", invite);
+    }
+
+    public static void removeInvite(ParseUser self, ParseUser from, Table table) {
+        List<Invite> invites = getInvite(self);
+        List<Invite> remainingInvites = new ArrayList<>();
+        for (Invite invite : invites) {
+            if (UserUtils.equals(invite.getFrom(), from) && table.equals(invite.getTable())) {
+                continue;
+            }
+            remainingInvites.add(invite);
+        }
     }
 }

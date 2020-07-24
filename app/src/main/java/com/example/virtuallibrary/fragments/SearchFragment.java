@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +20,7 @@ import android.widget.TextView;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.MainActivity;
-import com.example.virtuallibrary.adapters.TableAdapter;
-import com.example.virtuallibrary.adapters.UserAdapter;
-import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
+import com.example.virtuallibrary.adapters.SearchUserAdapter;
 import com.example.virtuallibrary.databinding.FragmentSearchBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -46,7 +43,7 @@ public class SearchFragment extends Fragment {
     TextView tvCancel;
     RecyclerView rvUsers;
     List<ParseUser> users;
-    UserAdapter adapter;
+    SearchUserAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +63,7 @@ public class SearchFragment extends Fragment {
         rvUsers = binding.rvUsers;
 
         users = new ArrayList<>();
-        adapter = new UserAdapter(getContext(), users);
+        adapter = new SearchUserAdapter(getContext(), users);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvUsers.setAdapter(adapter);
         rvUsers.setLayoutManager(linearLayoutManager);
