@@ -3,6 +3,7 @@ package com.example.virtuallibrary;
 import android.app.Application;
 
 import com.example.virtuallibrary.models.Goal;
+import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Post;
 import com.example.virtuallibrary.models.Table;
@@ -20,6 +21,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Goal.class);
         ParseObject.registerSubclass(Message.class);
+        ParseObject.registerSubclass(Invite.class);
 
 
         // set applicationId, and server server based on the values in the Heroku settings.

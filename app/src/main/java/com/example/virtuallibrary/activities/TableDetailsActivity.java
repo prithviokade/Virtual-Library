@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -189,7 +190,9 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         btnInvite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(TableDetailsActivity.this, InviteActivity.class);
+                intent.putExtra(TableUtils.TAG, Parcels.wrap(table));
+                startActivity(intent);
             }
         });
     }

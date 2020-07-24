@@ -119,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
                     ParseUser.getCurrentUser().saveInBackground();
                     btnAddFriend.setImageResource(R.drawable.ic_baseline_person_24);
                 }
-                areFriends = !areFriends; 
+                areFriends = !areFriends;
             }
         });
 
