@@ -1,23 +1,11 @@
 package com.example.virtuallibrary;
 
-import android.util.Log;
-
-import androidx.fragment.app.Fragment;
-
-import com.example.virtuallibrary.fragments.table_fragments.Table10Fragment;
-import com.example.virtuallibrary.fragments.table_fragments.Table1Fragment;
-import com.example.virtuallibrary.fragments.table_fragments.Table2Fragment;
-import com.example.virtuallibrary.fragments.table_fragments.Table3Fragment;
-import com.example.virtuallibrary.fragments.table_fragments.Table4Fragment;
-import com.example.virtuallibrary.fragments.table_fragments.Table5Fragment;
-import com.example.virtuallibrary.fragments.table_fragments.Table6Fragment;
-import com.example.virtuallibrary.fragments.table_fragments.Table8Fragment;
 import com.example.virtuallibrary.models.Table;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TableUtils {
@@ -75,15 +63,16 @@ public class TableUtils {
         UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);
     }
 
-    public static Fragment getTableFragment(int size) {
-        if (size == 1) { return new Table1Fragment(); }
-        if (size == 2) { return new Table2Fragment();}
-        if (size == 3) { return new Table3Fragment(); }
-        if (size == 4) { return new Table4Fragment(); }
-        if (size == 5) { return new Table5Fragment(); }
-        if (size == 6) { return new Table6Fragment();}
-        if (size == 7 || size == 8) { return new Table8Fragment(); }
-        if (size == 9 || size == 10) { return new Table10Fragment();}
-        return new Table6Fragment();
+    public static List<Integer> getTableMargins(int size) {
+        if (size == 1) { return Arrays.asList(155, 50); }
+        if (size == 2) { return Arrays.asList(40, 87, 300, 87); }
+        if (size == 3) { return Arrays.asList(145, 25, 253, 87, 145, 155); }
+        if (size == 4) { return Arrays.asList(120, 25, 230, 135, 230, 25, 125, 135); }
+        if (size == 5) { return Arrays.asList(105, 72, 200, 15, 200, 130, 250, 130, 250, 15); }
+        if (size == 6) { return Arrays.asList(80, 85, 145, 20, 205, 155, 270, 85, 205, 20, 145, 155); }
+        if (size == 7 || size == 8) { return Arrays.asList(65, 90, 125, 25, 170, 150, 290, 90, 170, 25, 125, 150, 215, 25, 215, 150); }
+        if (size == 9 || size == 10) { return Arrays.asList(175, 10, 175, 165, 125, 25, 225, 25, 100, 65, 255, 65, 100, 110, 255, 115, 125, 150, 225, 150); }
+        return new ArrayList<>();
     }
+
 }

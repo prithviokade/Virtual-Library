@@ -7,15 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,11 +21,10 @@ import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.adapters.MessageAdapter;
 import com.example.virtuallibrary.databinding.ActivityTableDetailsBinding;
+import com.example.virtuallibrary.fragments.TableFragment;
 import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Table;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -91,7 +87,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
 
         int size = table.getSize();
         tvSize.setText(Integer.toString(size));
-        Fragment tableFragment = TableUtils.getTableFragment(size);
+        Fragment tableFragment = new TableFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(TableUtils.TAG, table);
         tableFragment.setArguments(bundle);
