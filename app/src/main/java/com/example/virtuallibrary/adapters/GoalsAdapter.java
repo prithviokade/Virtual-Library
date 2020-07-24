@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.models.Goal;
 import com.example.virtuallibrary.models.Post;
 import com.parse.Parse;
@@ -70,6 +71,11 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.ViewHolder> 
 
         public void bind(final Goal goal) {
             tvGoal.setText(goal.getGoal());
+            
+            btnDone.setEnabled(true);
+            if (!UserUtils.equals(goal.getUser(), ParseUser.getCurrentUser())) {
+                btnDone.setEnabled(false);
+            }
 
             final String status = goal.getStatus();
             if (status.equals("complete")) {
@@ -84,7 +90,6 @@ public class GoalsAdapter extends RecyclerView.Adapter<GoalsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     String status = goal.getStatus();
-                    ParseUser user = ParseUser.getCurrentUser();
                     if (status.equals("complete")) {
                         goal.setStatus("incomplete");
                         btnDone.setImageResource(R.drawable.ic_baseline_check_box_outline_blank_24);

@@ -21,6 +21,7 @@ import com.example.virtuallibrary.databinding.FragmentCreateGoalBinding;
 import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
 import com.example.virtuallibrary.models.Goal;
 import com.example.virtuallibrary.models.User;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -98,6 +99,7 @@ public class CreateGoalFragment extends Fragment {
                 Goal addGoal = new Goal();
                 addGoal.setGoal(goal);
                 addGoal.setStatus(status);
+                addGoal.setUser(ParseUser.getCurrentUser());
                 UserUtils.addGoal(ParseUser.getCurrentUser(), addGoal);
                 addGoal.saveInBackground();
                 ParseUser.getCurrentUser().saveInBackground();

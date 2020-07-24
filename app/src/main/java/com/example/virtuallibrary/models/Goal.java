@@ -20,6 +20,7 @@ public class Goal extends ParseObject {
 
     public static final String KEY_GOAL = "goal";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_USER = "user";
 
     public String getGoal() {
         try {
@@ -45,6 +46,19 @@ public class Goal extends ParseObject {
 
     public void setStatus(String status) {
         put(KEY_STATUS, status);
+    }
+
+    public ParseUser getUser() {
+        try {
+            return fetchIfNeeded().getParseUser(KEY_USER);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setUser(ParseUser user) {
+        put(KEY_USER, user);
     }
 
 }
