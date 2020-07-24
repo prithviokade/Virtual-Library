@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.example.virtuallibrary.databinding.ActivityProfileBinding;
 import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
 import com.example.virtuallibrary.models.Goal;
 import com.example.virtuallibrary.models.Table;
+import com.facebook.login.LoginManager;
 import com.parse.Parse;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -38,9 +40,11 @@ public class ProfileActivity extends AppCompatActivity {
     TextView tvBio;
     RecyclerView rvChecklist;
     ImageButton btnAddFriend;
+    Button btnLogOut;
     List<Goal> goals;
     GoalsAdapter adapter;
     ParseUser user;
+    boolean areFriends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,22 @@ public class ProfileActivity extends AppCompatActivity {
         tvBio = binding.tvBio;
         rvChecklist = binding.rvChecklist;
         btnAddFriend = binding.btnAddFriend;
+        btnLogOut = binding.btnLogOut;
+        btnLogOut.setEnabled(false);
+        btnLogOut.setVisibility(View.GONE);
+        if (UserUtils.equals(user, ParseUser.getCurrentUser())) {
+            btnAddFriend.setEnabled(false);
+            btnAddFriend.setVisibility(View.GONE);
+            btnLogOut.setVisibility(View.VISIBLE);
+            btnLogOut.setEnabled(true);
+        }
         goals = new ArrayList<>();
+        areFriends = false;
+
+        if (UserUtils.userContained(UserUtils.getFriends(ParseUser.getCurrentUser()), user)) {
+            btnAddFriend.setImageResource(R.drawable.ic_baseline_person_24);
+            areFriends = true;
+        }
 
         adapter = new GoalsAdapter(this, goals);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -86,6 +105,34 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             tvBio.setText("");
         }
+
+        btnAddFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (areFriends) {
+                    UserUtils.removeFriend(ParseUser.getCurrentUser(), user);
+                    ParseUser.getCurrentUser().saveInBackground();
+                    btnAddFriend.setImageResource(R.drawable.ic_baseline_person_add_24);
+                }
+                else {
+                    UserUtils.addFriend(ParseUser.getCurrentUser(), user);
+                    ParseUser.getCurrentUser().saveInBackground();
+                    btnAddFriend.setImageResource(R.drawable.ic_baseline_person_24);
+                }
+                areFriends = !areFriends; 
+            }
+        });
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.getInstance().logOut();
+                ParseUser.logOut();
+                // go to login activity
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void queryGoals() {

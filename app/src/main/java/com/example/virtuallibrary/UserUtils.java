@@ -82,4 +82,37 @@ public class UserUtils {
     public static boolean equals(ParseUser self, ParseUser other) {
         return self.getObjectId().equals(other.getObjectId());
     }
+
+    public static void addFriend(ParseUser self, ParseUser friend) {
+        self.add("friends", friend);
+    }
+
+    public static void setFriends(ParseUser self, List<ParseUser> friends) {
+        self.put("friends", friends);
+    }
+
+    public static void removeFriend(ParseUser self, ParseUser user) {
+        List<ParseUser> friends = UserUtils.getFriends(user);
+        List<ParseUser> remainingFriends = new ArrayList<>();
+        for (ParseUser friend : friends) {
+            if (UserUtils.equals(friend, user)) {
+                continue;
+            }
+            remainingFriends.add(friend);
+        }
+        UserUtils.setFriends(self, remainingFriends);
+    }
+
+    public static List<ParseUser> getFriends(ParseUser user) {
+        return (List<ParseUser>) user.get("friends");
+    }
+
+    public static boolean userContained(List<ParseUser> friends, ParseUser user) {
+        for (ParseUser friend : friends) {
+            if (UserUtils.equals(friend, user)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
