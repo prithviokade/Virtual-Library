@@ -1,6 +1,8 @@
 package com.example.virtuallibrary.models;
 
 
+import androidx.annotation.Nullable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -58,4 +60,18 @@ public class Invite extends ParseObject {
         put(KEY_TABLE, table);
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!Invite.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final Invite other = (Invite) obj;
+        if (!(this.getObjectId().equals(other.getObjectId()))) {
+            return false;
+        }
+        return true;
+    }
 }

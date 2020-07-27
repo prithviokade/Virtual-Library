@@ -4,9 +4,12 @@ import android.util.Log;
 
 import com.example.virtuallibrary.models.Goal;
 import com.example.virtuallibrary.models.Invite;
+import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Table;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -121,27 +124,31 @@ public class UserUtils {
         return false;
     }
 
-    public static List<Invite> getInvite(ParseUser self) {
-        try {
-            return (List<Invite>) self.fetch().get("invites");
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
-    public static void addInvite(ParseUser self, Invite invite) {
-        self.add("invites", invite);
-    }
-
-    public static void removeInvite(ParseUser self, ParseUser from, Table table) {
-        List<Invite> invites = getInvite(self);
-        List<Invite> remainingInvites = new ArrayList<>();
-        for (Invite invite : invites) {
-            if (UserUtils.equals(invite.getFrom(), from) && table.equals(invite.getTable())) {
-                continue;
+    public static List<Invite> queryInvites() {
+        ParseQuery<Invite> query = ParseQuery.getQuery(Invite.class);
+        query.include(Invite.KEY_TO);
+        query.include(Invite.KEY_TABLE);
+        query.include(Invite.KEY_FROM);
+        query.addDescendingOrder(Table.KEY_CREATED_AT);
+        final List <Invite> invites = new ArrayList<>();
+        query.findInBackground(new FindCallback<Invite>() {
+            @Override
+            public void done(List<Invite> retreivedInvites, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                invites.addAll(retreivedInvites);
             }
-            remainingInvites.add(invite);
+        });
+        return invites;
+    }
+
+    public static boolean userInviteContained(List<Invite> invites, ParseUser to, ParseUser from) {
+        for (Invite invite : invites) {
+            if (UserUtils.equals(invite.getTo(), to) && UserUtils.equals(invite.getFrom(), from)) {
+                return true;
+            }
         }
+        return false;
     }
 }

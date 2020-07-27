@@ -30,6 +30,7 @@ public class Table extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_LOCKED = "locked";
     public static final String KEY_CHAT = "chat";
+    public static final String KEY_INVITES = "invites";
 
     public ParseUser getCreator() {
         try {
@@ -161,6 +162,23 @@ public class Table extends ParseObject {
 
     public void addChat(Message message) {
         add(KEY_CHAT, message);
+    }
+
+    public List<Invite> getInvites() {
+        try {
+            return (List<Invite>) fetch().get(KEY_INVITES);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public void setInvites(List<Invite> invites) {
+        put(KEY_INVITES, invites);
+    }
+
+    public void addInvite(Invite invite) {
+        add(KEY_INVITES, invite);
     }
 
     @Override

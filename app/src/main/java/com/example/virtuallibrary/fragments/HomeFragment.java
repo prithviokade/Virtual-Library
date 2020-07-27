@@ -136,6 +136,7 @@ public class HomeFragment extends Fragment {
         query.include(Table.KEY_MATES);
         query.include(Table.KEY_CHAT);
         query.include(Table.KEY_CHAT + "." + Message.KEY_SENDER);
+        query.include(Table.KEY_INVITES);
         query.setLimit(20);
         query.addDescendingOrder(Table.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Table>() {

@@ -2,6 +2,7 @@ package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.ProfileActivity;
 import com.example.virtuallibrary.models.Invite;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -101,22 +105,14 @@ public class InviteUserAdapter  extends RecyclerView.Adapter<InviteUserAdapter.V
                 public void onClick(View view) {
                     if (invited) {
                         btnInvite.setImageResource(R.drawable.circle);
-                        UserUtils.removeInvite(friend, ParseUser.getCurrentUser(), UserUtils.getCurrentTable(ParseUser.getCurrentUser()));
-                        friend.saveInBackground();
+                        TableUtils.removeInvite(friend, ParseUser.getCurrentUser(), UserUtils.getCurrentTable(ParseUser.getCurrentUser()));
                     } else {
                         btnInvite.setImageResource(R.drawable.ic_baseline_check_circle_24);
-                        Invite newInvite = new Invite();
-                        newInvite.setFrom(ParseUser.getCurrentUser());
-                        newInvite.setTo(friend);
-                        newInvite.setTable(UserUtils.getCurrentTable(ParseUser.getCurrentUser()));
-                        newInvite.saveInBackground();
-                        UserUtils.addInvite(friend, newInvite);
-                        friend.saveInBackground();
+                        TableUtils.addInvite(friend, ParseUser.getCurrentUser(), UserUtils.getCurrentTable(ParseUser.getCurrentUser()));
                     }
                     invited = !invited;
                 }
             });
-
         }
     }
 

@@ -1,5 +1,8 @@
 package com.example.virtuallibrary;
 
+import android.util.Log;
+
+import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Table;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -76,4 +79,33 @@ public class TableUtils {
         return new ArrayList<>();
     }
 
+    public static void removeInvite(ParseUser to, ParseUser from, Table table) {
+        List<Invite> currInvites = table.getInvites();
+        List<Invite> remainingInvites = new ArrayList<>();
+        for (Invite invite : currInvites) {
+            if (UserUtils.equals(invite.getTo(), to) && UserUtils.equals(invite.getFrom(), from)) {
+                continue;
+            }
+            remainingInvites.add(invite);
+        }
+        Log.d(TAG, Integer.toString(remainingInvites.size()));
+        table.setInvites(remainingInvites);
+        table.saveInBackground();
+    }
+
+    public static void addInvite(ParseUser to, ParseUser from, Table table) {
+        List<Invite> currInvites = table.getInvites();
+        for (Invite invite : currInvites) {
+            if (UserUtils.equals(invite.getTo(), to) && UserUtils.equals(invite.getFrom(), from)) {
+                return;
+            }
+        }
+        Invite newInvite = new Invite();
+        newInvite.setFrom(from);
+        newInvite.setTo(to);
+        newInvite.setTable(UserUtils.getCurrentTable(ParseUser.getCurrentUser()));
+        newInvite.saveInBackground();
+        table.addInvite(newInvite);
+        table.saveInBackground();
+    }
 }
