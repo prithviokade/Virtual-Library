@@ -185,7 +185,7 @@ public class Table extends ParseObject {
         List<Invite> currInvites = getInvites();
         List<Invite> remainingInvites = new ArrayList<>();
         for (Invite inv : currInvites) {
-            if (inv.equals(invite)) {
+            if (UserUtils.equals(inv.getTo(), ParseUser.getCurrentUser())) {
                 continue;
             }
             remainingInvites.add(inv);

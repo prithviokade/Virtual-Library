@@ -107,7 +107,6 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                     clear();
                     fragment.dismiss();
                     invite.getTable().removeInvite(invite);
-                    invite.getTable().saveInBackground();
                     ParseUser.getCurrentUser().saveInBackground();
                     Intent intent = new Intent(context, TableDetailsActivity.class);
                     intent.putExtra(TableUtils.TAG, Parcels.wrap(invite.getTable()));
@@ -122,6 +121,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                     invites.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, invites.size());
+                    invite.getTable().removeInvite(invite);
                     if (invites.size() == 0) {
                         fragment.dismiss();
                     }
@@ -129,7 +129,6 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                     if (invites.size() == 1) {
                         fragment.tvNotification.setText(context.getString(R.string.you_have) + " " + Integer.toString(invites.size()) + " " + context.getString(R.string.notification_singular));
                     }
-                    invite.getTable().removeInvite(invite);
                 }
             });
         }
