@@ -8,18 +8,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.virtuallibrary.R;
-import com.example.virtuallibrary.UserUtils;
-import com.example.virtuallibrary.adapters.PostsAdapter;
-import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
-import com.example.virtuallibrary.databinding.FragmentPostsBinding;
+import com.example.virtuallibrary.adapters.ResourceAdapter;
+import com.example.virtuallibrary.databinding.FragmentResourceBinding;
 import com.example.virtuallibrary.models.Post;
-import com.example.virtuallibrary.models.Table;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -27,16 +22,16 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostsFragment extends Fragment {
+public class ResourcesFragment extends Fragment {
 
-    FragmentPostsBinding binding;
+    FragmentResourceBinding binding;
 
     public static final String TAG = "PostsFragment";
     RecyclerView rvPosts;
     List<Post> posts;
-    PostsAdapter adapter;
+    ResourceAdapter adapter;
 
-    public PostsFragment() {
+    public ResourcesFragment() {
         // Required empty public constructor
     }
 
@@ -44,7 +39,7 @@ public class PostsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentPostsBinding.inflate(getLayoutInflater());
+        binding = FragmentResourceBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         return view;
     }
@@ -54,7 +49,7 @@ public class PostsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvPosts = binding.rvPosts;
         posts = new ArrayList<>();
-        adapter = new PostsAdapter(getContext(), posts);
+        adapter = new ResourceAdapter(getContext(), posts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
         rvPosts.setAdapter(adapter);

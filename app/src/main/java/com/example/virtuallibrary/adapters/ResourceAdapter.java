@@ -2,7 +2,6 @@ package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,18 +17,16 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.models.Post;
-import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.SaveCallback;
 
 import java.util.List;
 
-public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
+public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHolder> {
 
     Context context;
     List<Post> posts;
 
-    public PostsAdapter(Context context, List<Post> posts) {
+    public ResourceAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
     }
@@ -37,7 +34,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_resource, parent, false);
         return new ViewHolder(view);
     }
 

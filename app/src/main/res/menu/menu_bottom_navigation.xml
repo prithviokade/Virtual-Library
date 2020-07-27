@@ -20,6 +20,6 @@
     <item
         android:id="@+id/actionPosts"
         android:icon="@drawable/ic_baseline_people_alt_24"
-        android:title="Posts"
+        android:title="Resources"
         app:showAsAction="always" />
 </menu>

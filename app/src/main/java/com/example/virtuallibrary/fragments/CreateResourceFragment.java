@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,32 +25,40 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.virtuallibrary.R;
-import com.example.virtuallibrary.databinding.FragmentCreatePostBinding;
-import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
+import com.example.virtuallibrary.databinding.FragmentCreateResourceBinding;
 import com.example.virtuallibrary.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 
-public class CreatePostFragment extends Fragment {
+public class CreateResourceFragment extends Fragment {
 
-    FragmentCreatePostBinding binding;
+    FragmentCreateResourceBinding binding;
 
     public static final String TAG = "CreatePostFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 112;
+    public static final int PICKFILE_RESULT_CODE = 113;
     public String photoFileName = "photo.jpg";
     File photoFile;
     EditText etCaption;
+    EditText etSubject;
     Button btnCamera;
     Button btnPost;
+    Button btnLink;
+    Button btnFile;
+    ImageButton btnAttach;
     ImageView ivPhoto;
+    EditText etLink;
+    TextView tvFilename;
 
-    public CreatePostFragment() {
+    public CreateResourceFragment() {
         // Required empty public constructor
     }
 
@@ -56,7 +66,7 @@ public class CreatePostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentCreatePostBinding.inflate(getLayoutInflater());
+        binding = FragmentCreateResourceBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         return view;
     }
@@ -68,6 +78,23 @@ public class CreatePostFragment extends Fragment {
         btnCamera = binding.btnCamera;
         btnPost = binding.btnPost;
         ivPhoto = binding.ivPhoto;
+        etLink = binding.etLink;
+        etSubject = binding.etSubject;
+        tvFilename = binding.tvFilename;
+        btnLink = binding.btnLink;
+        btnFile = binding.btnFile;
+        btnAttach = binding.btnAttach;
+
+        initializeView();
+
+        btnAttach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnCamera.setVisibility(View.VISIBLE);
+                btnLink.setVisibility(View.VISIBLE);
+                btnFile.setVisibility(View.VISIBLE);
+            }
+        });
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,23 +103,56 @@ public class CreatePostFragment extends Fragment {
             }
         });
 
+        btnLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etLink.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("file/*");
+                startActivityForResult(intent, PICKFILE_RESULT_CODE);
+            }
+        });
+
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String caption = etCaption.getText().toString();
                 if (caption.isEmpty()) {
-                    Toast.makeText(getContext(), "Caption cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (photoFile == null || ivPhoto.getDrawable() == null) {
-                    Toast.makeText(getContext(), "Image cannot be empty", Toast.LENGTH_SHORT).show();
+                String subject = etSubject.getText().toString();
+                if (subject.isEmpty()) {
+                    Toast.makeText(getContext(), "Subject cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (ivPhoto.getDrawable() == null) { photoFile = null; }
+                String link = etLink.getText().toString();
+                String filepath = tvFilename.getText().toString();
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                saveNewPost(caption, currentUser, photoFile);
+                saveNewPost(caption, subject, currentUser, photoFile, link, filepath);
+                initializeView();
             }
         });
 
+    }
+
+    private void initializeView() {
+        etCaption.setText("");
+        etSubject.setText("");
+        etLink.setText("");
+        btnFile.setVisibility(View.INVISIBLE);
+        btnLink.setVisibility(View.INVISIBLE);
+        btnCamera.setVisibility(View.INVISIBLE);
+        ivPhoto.setVisibility(View.GONE);
+        etLink.setVisibility(View.GONE);
+        tvFilename.setVisibility(View.GONE);
     }
 
     // Returns the File for a photo stored on disk given the fileName
@@ -130,17 +190,32 @@ public class CreatePostFragment extends Fragment {
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // Load the taken image into a preview
+                ivPhoto.setVisibility(View.VISIBLE);
                 ivPhoto.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
+        } else if (resultCode == PICKFILE_RESULT_CODE) {
+            if (resultCode == RESULT_OK) {
+                String FilePath = data.getData().getPath();
+                tvFilename.setVisibility(View.VISIBLE);
+                tvFilename.setText(FilePath);
+            } else {
+                Toast.makeText(getContext(), "File wasn't attatched!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    private void saveNewPost(String caption, ParseUser user, File photoFile) {
+    private void saveNewPost(String caption, String subject, ParseUser user, File photoFile, String link, String filepath) {
         Post post = new Post();
         post.setCaption(caption);
-        post.setImage(new ParseFile(photoFile));
+        post.setSubject(subject);
+        if (photoFile != null) { post.setImage(new ParseFile(photoFile)); }
+        if (!link.isEmpty()) { post.setLink(link); }
+        if (!filepath.isEmpty()) {
+            File file = new File(filepath);
+            post.setFile(new ParseFile(file));
+        }
         post.setUser(user);
         post.saveInBackground();
     }

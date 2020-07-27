@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,11 +14,11 @@ import android.widget.ImageButton;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.databinding.ActivityMainBinding;
 import com.example.virtuallibrary.fragments.CreateGoalFragment;
-import com.example.virtuallibrary.fragments.CreatePostFragment;
+import com.example.virtuallibrary.fragments.CreateResourceFragment;
 import com.example.virtuallibrary.fragments.CreateTableFragment;
 import com.example.virtuallibrary.fragments.GoalsFragment;
 import com.example.virtuallibrary.fragments.HomeFragment;
-import com.example.virtuallibrary.fragments.PostsFragment;
+import com.example.virtuallibrary.fragments.ResourcesFragment;
 import com.example.virtuallibrary.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -57,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.actionPosts:
                         btnAdd.setVisibility(View.VISIBLE);
-                        selectedFragmentTag = PostsFragment.TAG;
-                        fragment = new PostsFragment();
+                        selectedFragmentTag = ResourcesFragment.TAG;
+                        fragment = new ResourcesFragment();
                         break;
                     case R.id.actionSearch:
                         selectedFragmentTag = SearchFragment.TAG;
@@ -90,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
                     case GoalsFragment.TAG:
                         fragment = new CreateGoalFragment();
                         break;
-                    case PostsFragment.TAG:
-                        fragment = new CreatePostFragment();
+                    case ResourcesFragment.TAG:
+                        fragment = new CreateResourceFragment();
                         break;
                     case HomeFragment.TAG:
                     default:
@@ -117,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
                     case GoalsFragment.TAG:
                         fragment = new GoalsFragment();
                         break;
-                    case PostsFragment.TAG:
-                        fragment = new PostsFragment();
+                    case ResourcesFragment.TAG:
+                        fragment = new ResourcesFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();

@@ -47,8 +47,11 @@
 
     <!-- create post -->
     <string name="post">Post</string>
-    <string name="take_post">Take Photo/Video</string>
-    <string name="caption">Caption</string>
+    <string name="photo_video">Photo/Video</string>
+    <string name="description_nocolon">Description</string>
+    <string name="link">Link</string>
+    <string name="file">File</string>
+    <string name="subject">Subject</string>
 
     <!-- create table -->
     <string name="visitors_question">Visitors?</string>
