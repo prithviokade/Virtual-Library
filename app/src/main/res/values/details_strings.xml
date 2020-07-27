@@ -59,4 +59,9 @@
     <!-- search -->
     <string name="search">Search</string>
 
+    <!-- loading -->
+    <string name="loading">Loading...</string>
+    <string name="wait">Table data loading, please wait...</string>
+
+
 </resources>

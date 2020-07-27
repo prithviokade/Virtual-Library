@@ -1,5 +1,6 @@
 package com.example.virtuallibrary.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
     TextView tvVisitors;
     TextView tvDescription;
     TextView tvCurrentTableText;
+    ProgressDialog progressDialog;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -74,6 +76,11 @@ public class HomeFragment extends Fragment {
         tvVisitors = binding.tvVisitors;
         tvDescription = binding.tvDescription;
         tvCurrentTableText = binding.tvCurrentTableText;
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle(getString(R.string.loading));
+        progressDialog.setMessage(getString(R.string.wait));
+        progressDialog.setCancelable(false);
 
         Table currTable = UserUtils.getCurrentTable(ParseUser.getCurrentUser());
         if (currTable == null) {
@@ -126,8 +133,18 @@ public class HomeFragment extends Fragment {
 
         rvTables.setAdapter(adapter);
         rvTables.setLayoutManager(linearLayoutManager);
+        showLoading();
         queryTables();
+    }
 
+    protected void showLoading() {
+        progressDialog.show();
+    }
+
+    protected void dismissLoading() {
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     protected void queryTables() {
@@ -158,6 +175,7 @@ public class HomeFragment extends Fragment {
                 }
                 adapter.clear();
                 adapter.addAll(filteredTables);
+                dismissLoading();
             }
         });
     }
