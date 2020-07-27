@@ -63,5 +63,14 @@
     <string name="loading">Loading...</string>
     <string name="wait">Table data loading, please wait...</string>
 
+    <!-- invites -->
+    <string name="join_size">Join our size</string>
+    <string name="table_working_on">table working on</string>
+    <string name="from">Invite from</string>
+
+    <!-- notifications -->
+    <string name="you_have">You have</string>
+    <string name="notification_plural">notifications.</string>
+    <string name="notification_singular">notification.</string>
 
 </resources>

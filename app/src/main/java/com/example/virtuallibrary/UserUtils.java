@@ -124,28 +124,22 @@ public class UserUtils {
         return false;
     }
 
-    public static List<Invite> queryInvites() {
-        ParseQuery<Invite> query = ParseQuery.getQuery(Invite.class);
-        query.include(Invite.KEY_TO);
-        query.include(Invite.KEY_TABLE);
-        query.include(Invite.KEY_FROM);
-        query.addDescendingOrder(Table.KEY_CREATED_AT);
-        final List <Invite> invites = new ArrayList<>();
-        query.findInBackground(new FindCallback<Invite>() {
-            @Override
-            public void done(List<Invite> retreivedInvites, ParseException e) {
-                if (e != null) {
-                    return;
+    public static List<Invite> queryInvites(List<Table> tables, ParseUser user) {
+        List<Invite> invites = new ArrayList<>();
+        for (Table table : tables) {
+            List<Invite> tableInvites = table.getInvites();
+            for (Invite invite : tableInvites) {
+                if (UserUtils.equals(invite.getTo(), user)) {
+                    invites.add(invite);
                 }
-                invites.addAll(retreivedInvites);
             }
-        });
+        }
         return invites;
     }
 
     public static boolean userInviteContained(List<Invite> invites, ParseUser to, ParseUser from) {
         for (Invite invite : invites) {
-            if (UserUtils.equals(invite.getTo(), to) && UserUtils.equals(invite.getFrom(), from)) {
+            if (UserUtils.equals(invite.getTo(), to)) {
                 return true;
             }
         }

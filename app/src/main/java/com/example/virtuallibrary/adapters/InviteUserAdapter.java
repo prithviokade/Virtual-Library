@@ -30,7 +30,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-public class InviteUserAdapter  extends RecyclerView.Adapter<InviteUserAdapter.ViewHolder> {
+public class InviteUserAdapter extends RecyclerView.Adapter<InviteUserAdapter.ViewHolder> {
 
     Context context;
     List<ParseUser> friends;

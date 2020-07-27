@@ -181,6 +181,19 @@ public class Table extends ParseObject {
         add(KEY_INVITES, invite);
     }
 
+    public void removeInvite(Invite invite) {
+        List<Invite> currInvites = getInvites();
+        List<Invite> remainingInvites = new ArrayList<>();
+        for (Invite inv : currInvites) {
+            if (inv.equals(invite)) {
+                continue;
+            }
+            remainingInvites.add(inv);
+        }
+        setInvites(remainingInvites);
+        saveInBackground();
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj == null) {
@@ -204,5 +217,4 @@ public class Table extends ParseObject {
         }
         return false;
     }
-
 }

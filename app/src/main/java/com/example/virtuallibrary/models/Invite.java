@@ -17,13 +17,14 @@ public class Invite extends ParseObject {
     // empty constructor needed by the Parceler library
     public Invite() { }
 
+    public static final String TAG = "INVITE";;
     public static final String KEY_FROM = "from";
     public static final String KEY_TO = "to";
     public static final String KEY_TABLE = "table";
 
     public ParseUser getFrom() {
         try {
-            return fetchIfNeeded().getParseUser(KEY_FROM);
+            return fetch().getParseUser(KEY_FROM);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -36,7 +37,7 @@ public class Invite extends ParseObject {
 
     public ParseUser getTo() {
         try {
-            return fetchIfNeeded().getParseUser(KEY_TO);
+            return fetch().getParseUser(KEY_TO);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -47,9 +48,9 @@ public class Invite extends ParseObject {
         put(KEY_TO, to);
     }
 
-    public ParseUser getTable() {
+    public Table getTable() {
         try {
-            return fetchIfNeeded().getParseUser(KEY_TABLE);
+            return (Table) fetch().get(KEY_TABLE);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;

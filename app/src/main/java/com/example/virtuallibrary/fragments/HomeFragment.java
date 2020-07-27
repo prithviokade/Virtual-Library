@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,7 @@ import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.adapters.TableAdapter;
 import com.example.virtuallibrary.databinding.FragmentHomeBinding;
+import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Table;
 import com.parse.FindCallback;
@@ -51,6 +53,7 @@ public class HomeFragment extends Fragment {
     TextView tvDescription;
     TextView tvCurrentTableText;
     ProgressDialog progressDialog;
+    List<Invite> invites;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -130,10 +133,10 @@ public class HomeFragment extends Fragment {
         tables = new ArrayList<>();
         adapter = new TableAdapter(getContext(), tables);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-
         rvTables.setAdapter(adapter);
         rvTables.setLayoutManager(linearLayoutManager);
         showLoading();
+        invites = new ArrayList<>();
         queryTables();
     }
 
@@ -147,6 +150,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private void showInviteDialog() {
+        FragmentManager fm = getFragmentManager();
+        UserInvitesFragment userInvitesFragment = UserInvitesFragment.newInstance(invites);
+        userInvitesFragment.show(fm, "fragment_user_invites");
+    }
+
     protected void queryTables() {
         ParseQuery<Table> query = ParseQuery.getQuery(Table.class);
         query.include(Table.KEY_CREATOR);
@@ -154,11 +163,16 @@ public class HomeFragment extends Fragment {
         query.include(Table.KEY_CHAT);
         query.include(Table.KEY_CHAT + "." + Message.KEY_SENDER);
         query.include(Table.KEY_INVITES);
+        query.include(Table.KEY_INVITES + "." + Invite.KEY_TO);
+        query.include(Table.KEY_INVITES + "." + Invite.KEY_FROM);
+        query.include(Table.KEY_INVITES + "." + Invite.KEY_TABLE);
         query.setLimit(20);
         query.addDescendingOrder(Table.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Table>() {
             @Override
             public void done(List<Table> retreivedTables, ParseException e) {
+                invites.clear();
+                invites.addAll(UserUtils.queryInvites(retreivedTables, ParseUser.getCurrentUser()));
                 if (e != null) {
                     return;
                 }
@@ -176,6 +190,9 @@ public class HomeFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(filteredTables);
                 dismissLoading();
+                if (invites.size() > 0) {
+                    showInviteDialog();
+                }
             }
         });
     }
