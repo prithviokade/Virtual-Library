@@ -7,8 +7,6 @@ import com.parse.ParseUser;
 
 import org.parceler.Parcel;
 
-import java.io.File;
-
 @Parcel(analyze={Post.class})
 @ParseClassName("Post")
 public class Post extends ParseObject {

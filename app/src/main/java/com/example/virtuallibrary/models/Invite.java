@@ -1,6 +1,5 @@
 package com.example.virtuallibrary.models;
 
-
 import androidx.annotation.Nullable;
 
 import com.parse.ParseClassName;

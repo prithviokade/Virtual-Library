@@ -3,7 +3,6 @@ package com.example.virtuallibrary.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +93,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
             if (profile != null) {
                 Glide.with(context).load(profile.getUrl()).transform(new CircleCrop()).into(ivProfile);
             } else {
-                Glide.with(context).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(ivProfile);
+                Glide.with(context).load(R.drawable.ic_baseline_person_24_black).transform(new CircleCrop()).into(ivProfile);
             }
             if (post.getImage() != null) {
                 ivPost.setVisibility(View.VISIBLE);

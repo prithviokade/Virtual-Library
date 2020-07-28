@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +23,10 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
-import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.databinding.FragmentCreateResourceBinding;
 import com.example.virtuallibrary.models.Post;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 

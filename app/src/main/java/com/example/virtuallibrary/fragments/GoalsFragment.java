@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,17 +22,11 @@ import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.LoginActivity;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
-import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
 import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
 import com.example.virtuallibrary.models.Goal;
 import com.facebook.login.LoginManager;
-import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +77,7 @@ public class GoalsFragment extends Fragment {
         if (profile != null) {
             Glide.with(getContext()).load(profile.getUrl()).transform(new CircleCrop()).into(ivProfPic);
         } else {
-            Glide.with(getContext()).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(ivProfPic);
+            Glide.with(getContext()).load(R.drawable.ic_baseline_person_24_black).transform(new CircleCrop()).into(ivProfPic);
         }
 
         tvUsername.setText("@" + UserUtils.getUsername(ParseUser.getCurrentUser()));

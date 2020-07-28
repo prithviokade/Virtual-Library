@@ -1,15 +1,11 @@
 package com.example.virtuallibrary.models;
 
-
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.parceler.Parcel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Parcel(analyze={Goal.class})
 @ParseClassName("Goal")

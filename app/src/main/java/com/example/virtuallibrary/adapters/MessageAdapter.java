@@ -1,14 +1,12 @@
 package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -88,7 +86,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 if (profile != null) {
                     Glide.with(context).load(profile.getUrl()).transform(new CircleCrop()).into(ivRecieved);
                 } else {
-                    Glide.with(context).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(ivRecieved);
+                    Glide.with(context).load(R.drawable.ic_baseline_person_24_black).transform(new CircleCrop()).into(ivRecieved);
                 }
                 tvRecieved.setText(message.getText());
             }

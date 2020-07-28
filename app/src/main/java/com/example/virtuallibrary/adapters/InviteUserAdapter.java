@@ -2,7 +2,6 @@ package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,8 @@ import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.ProfileActivity;
-import com.example.virtuallibrary.models.Invite;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -85,7 +81,7 @@ public class InviteUserAdapter extends RecyclerView.Adapter<InviteUserAdapter.Vi
             if (profile != null) {
                 Glide.with(context).load(profile.getUrl()).transform(new CircleCrop()).into(ivProfilePic);
             } else {
-                Glide.with(context).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(ivProfilePic);
+                Glide.with(context).load(R.drawable.ic_baseline_person_24_black).transform(new CircleCrop()).into(ivProfilePic);
             }
 
             tvUsername.setText("@"+UserUtils.getUsername(friend));

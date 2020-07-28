@@ -1,6 +1,5 @@
 package com.example.virtuallibrary;
 
-
 /*
  * Copyright (c) 2017-present, Facebook, Inc. All rights reserved.
  */
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.HttpMethod;
-
 
 public class UserRequest {
     private static final String ME_ENDPOINT = "/me";

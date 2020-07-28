@@ -1,31 +1,19 @@
 package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.models.Goal;
-import com.example.virtuallibrary.models.Post;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.List;
 

@@ -18,11 +18,8 @@ import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.databinding.ActivityProfileBinding;
-import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
 import com.example.virtuallibrary.models.Goal;
-import com.example.virtuallibrary.models.Table;
 import com.facebook.login.LoginManager;
-import com.parse.Parse;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -87,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (profile != null) {
             Glide.with(this).load(profile.getUrl()).transform(new CircleCrop()).into(ivProfPic);
         } else {
-            Glide.with(this).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(ivProfPic);
+            Glide.with(this).load(R.drawable.ic_baseline_person_24_black).transform(new CircleCrop()).into(ivProfPic);
         }
 
         tvUsername.setText("@" + UserUtils.getUsername(user));

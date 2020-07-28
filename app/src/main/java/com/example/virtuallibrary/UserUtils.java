@@ -1,15 +1,10 @@
 package com.example.virtuallibrary;
 
-import android.util.Log;
-
 import com.example.virtuallibrary.models.Goal;
 import com.example.virtuallibrary.models.Invite;
-import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Table;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -101,9 +96,7 @@ public class UserUtils {
         List<ParseUser> friends = UserUtils.getFriends(self);
         List<ParseUser> remainingFriends = new ArrayList<>();
         for (ParseUser friend : friends) {
-            Log.d(TAG, UserUtils.getUsername(friend));
             if (UserUtils.equals(friend, user)) {
-                Log.d(TAG, UserUtils.getUsername(friend));
                 continue;
             }
             remainingFriends.add(friend);

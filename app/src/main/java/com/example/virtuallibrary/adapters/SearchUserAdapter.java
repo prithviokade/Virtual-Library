@@ -2,7 +2,6 @@ package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +86,6 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     if (areFriends) {
-                        Log.d("HIIIISIR", UserUtils.getUsername(user));
                         UserUtils.removeFriend(ParseUser.getCurrentUser(), user);
                         ParseUser.getCurrentUser().saveInBackground();
                         btnAddFriend.setImageResource(R.drawable.ic_baseline_person_add_24);
@@ -105,7 +103,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
             if (profile != null) {
                 Glide.with(context).load(profile.getUrl()).transform(new CircleCrop()).into(ivProfilePic);
             } else {
-                Glide.with(context).load(R.drawable.ic_baseline_people_alt_24).transform(new CircleCrop()).into(ivProfilePic);
+                Glide.with(context).load(R.drawable.ic_baseline_person_24_black).transform(new CircleCrop()).into(ivProfilePic);
             }
 
             tvUsername.setText("@"+UserUtils.getUsername(user));

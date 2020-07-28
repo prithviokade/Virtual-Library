@@ -1,7 +1,5 @@
 package com.example.virtuallibrary;
 
-import android.util.Log;
-
 import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Table;
 import com.parse.ParseException;
@@ -88,7 +86,6 @@ public class TableUtils {
             }
             remainingInvites.add(invite);
         }
-        Log.d(TAG, Integer.toString(remainingInvites.size()));
         table.setInvites(remainingInvites);
         table.saveInBackground();
     }

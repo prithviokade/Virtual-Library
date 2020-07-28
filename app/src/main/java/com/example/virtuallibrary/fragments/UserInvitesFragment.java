@@ -5,11 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +17,6 @@ import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.adapters.InviteAdapter;
 import com.example.virtuallibrary.databinding.FragmentUserInvitesBinding;
 import com.example.virtuallibrary.models.Invite;
-
-import org.parceler.Parcel;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
