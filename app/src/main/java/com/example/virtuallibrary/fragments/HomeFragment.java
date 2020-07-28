@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
+import com.example.virtuallibrary.activities.MainActivity;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.adapters.TableAdapter;
 import com.example.virtuallibrary.databinding.FragmentHomeBinding;
@@ -79,6 +81,20 @@ public class HomeFragment extends Fragment {
         tvVisitors = binding.tvVisitors;
         tvDescription = binding.tvDescription;
         tvCurrentTableText = binding.tvCurrentTableText;
+
+        ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_notification);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        ImageView ivNotifications = actionBar.getCustomView().findViewById(R.id.ivNotification);
+        ivNotifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInviteDialog();
+            }
+        });
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setTitle(getString(R.string.loading));
@@ -190,8 +206,9 @@ public class HomeFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(filteredTables);
                 dismissLoading();
-                if (invites.size() > 0) {
+                if (invites.size() > 0 && first_open) {
                     showInviteDialog();
+                    first_open = false;
                 }
             }
         });

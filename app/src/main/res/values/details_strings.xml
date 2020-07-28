@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- menu items -->
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="progress">Progress</string>
+    <string name="resources">Resources</string>
+
     <!-- table details -->
     <string name="size">Size: </string>
     <string name="status">Status: </string>
@@ -59,9 +66,6 @@
     <string name="type">Type:</string>
     <string name="topic">Topic:</string>
 
-    <!-- search -->
-    <string name="search">Search</string>
-
     <!-- loading -->
     <string name="loading">Loading...</string>
     <string name="wait">Table data loading, please wait...</string>
@@ -70,6 +74,7 @@
     <string name="join_size">Join our size</string>
     <string name="table_working_on">table working on</string>
     <string name="from">Invite from</string>
+    <string name="permanent">Permanent</string>
     <string name="alert_dialog_text">You have created a private table. Would you like to set users who can permanently join this table at any time?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

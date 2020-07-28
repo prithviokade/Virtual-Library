@@ -1,5 +1,6 @@
 package com.example.virtuallibrary.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +50,9 @@ public class ProfileActivity extends AppCompatActivity {
         ActivityProfileBinding binding = ActivityProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_default);
 
         user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra(UserUtils.TAG));
         ivProfPic = binding.ivProfile;

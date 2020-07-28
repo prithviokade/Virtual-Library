@@ -1,5 +1,6 @@
 package com.example.virtuallibrary.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +44,9 @@ public class InviteActivity extends AppCompatActivity {
         ActivityInviteBinding binding = ActivityInviteBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_default);
 
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
         type = getIntent().getStringExtra(TableUtils.TYPE_TAG);

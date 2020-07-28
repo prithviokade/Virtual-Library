@@ -1,7 +1,9 @@
 package com.example.virtuallibrary.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
     ImageButton btnAdd;
     Button btnCancel;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         btnAdd = binding.btnAdd;
         btnCancel = binding.btnCancel;
         bottomNavigation = binding.bottomNavigation;
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_notification);
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -49,22 +54,26 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.actionProgress:
+                        getSupportActionBar().setCustomView(R.layout.actionbar_default);
                         btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = GoalsFragment.TAG;
                         fragment = new GoalsFragment();
                         break;
                     case R.id.actionPosts:
+                        getSupportActionBar().setCustomView(R.layout.actionbar_default);
                         btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = ResourcesFragment.TAG;
                         fragment = new ResourcesFragment();
                         break;
                     case R.id.actionSearch:
+                        getSupportActionBar().setCustomView(R.layout.actionbar_default);
                         selectedFragmentTag = SearchFragment.TAG;
                         fragment = new SearchFragment();
                         btnAdd.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.actionHome:
                     default:
+                        getSupportActionBar().setCustomView(R.layout.actionbar_notification);
                         btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = HomeFragment.TAG;
                         fragment =  new HomeFragment();
@@ -81,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getSupportActionBar().setCustomView(R.layout.actionbar_default);
                 btnCancel.setVisibility(View.VISIBLE);
                 Fragment fragment;
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment

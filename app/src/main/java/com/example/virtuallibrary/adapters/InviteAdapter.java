@@ -73,6 +73,9 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
         public void bind(final Invite invite) {
 
             tvFrom.setText(context.getString(R.string.from) + " @" + invite.getFrom().getUsername());
+            if (invite.getType().equals(Invite.TYPE_PERMANENT)) {
+                tvFrom.setText(context.getString(R.string.permanent) + " " + context.getString(R.string.from) + " @" + invite.getFrom().getUsername());
+            }
             tvFrom.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

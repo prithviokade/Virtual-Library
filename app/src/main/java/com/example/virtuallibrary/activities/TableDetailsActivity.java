@@ -1,5 +1,6 @@
 package com.example.virtuallibrary.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -60,6 +61,9 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         ActivityTableDetailsBinding binding = ActivityTableDetailsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_notification);
 
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
 
