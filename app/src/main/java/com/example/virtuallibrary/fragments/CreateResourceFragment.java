@@ -57,6 +57,7 @@ public class CreateResourceFragment extends Fragment {
     ImageView ivPhoto;
     EditText etLink;
     TextView tvFilename;
+    String filename;
 
     public CreateResourceFragment() {
         // Required empty public constructor
@@ -198,6 +199,7 @@ public class CreateResourceFragment extends Fragment {
         } else if (resultCode == PICKFILE_RESULT_CODE) {
             if (resultCode == RESULT_OK) {
                 String FilePath = data.getData().getPath();
+                filename = data.getData().getLastPathSegment();
                 tvFilename.setVisibility(View.VISIBLE);
                 tvFilename.setText(FilePath);
             } else {
@@ -213,6 +215,8 @@ public class CreateResourceFragment extends Fragment {
         if (photoFile != null) { post.setImage(new ParseFile(photoFile)); }
         if (!link.isEmpty()) { post.setLink(link); }
         if (!filepath.isEmpty()) {
+            post.setFilePath(filepath);
+            post.setFileName(filename);
             File file = new File(filepath);
             post.setFile(new ParseFile(file));
         }

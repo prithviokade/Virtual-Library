@@ -22,6 +22,8 @@ public class Post extends ParseObject {
     public static final String KEY_SUBJECT = "subject";
     public static final String KEY_LINK = "link";
     public static final String KEY_FILE = "file";
+    public static final String KEY_FILEPATH = "filepath";
+    public static final String KEY_FILENAME = "filename";
 
     public String getCaption() {
         return getString(KEY_CAPTION);
@@ -67,7 +69,24 @@ public class Post extends ParseObject {
         return getParseFile(KEY_FILE);
     }
 
-    public void setFile(ParseFile filepath) {
-        put(KEY_FILE, filepath);
+    public void setFile(ParseFile file) {
+        put(KEY_FILE, file);
     }
+
+    public String getFileName() {
+        return getString(KEY_FILENAME);
+    }
+
+    public void setFileName(String filepath) {
+        put(KEY_FILENAME, filepath);
+    }
+
+    public String getFilePath() {
+        return getString(KEY_FILEPATH);
+    }
+
+    public void setFilePath(String filepath) {
+        put(KEY_FILEPATH, filepath);
+    }
+
 }
