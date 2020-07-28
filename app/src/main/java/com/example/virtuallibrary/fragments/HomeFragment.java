@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
 
     public static final String TAG = "HomeFragment";
+    boolean first_open = true;
     List<Table> tables;
     TableAdapter adapter;
     RecyclerView rvTables;

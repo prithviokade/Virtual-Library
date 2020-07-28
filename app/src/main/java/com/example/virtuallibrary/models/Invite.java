@@ -20,6 +20,8 @@ public class Invite extends ParseObject {
     public static final String KEY_FROM = "from";
     public static final String KEY_TO = "to";
     public static final String KEY_TABLE = "table";
+    public static final String KEY_TYPE = "type";
+    public static final String TYPE_PERMANENT = "permanent";
 
     public ParseUser getFrom() {
         try {
@@ -58,6 +60,19 @@ public class Invite extends ParseObject {
 
     public void setTable(Table table) {
         put(KEY_TABLE, table);
+    }
+
+    public String getType() {
+        try {
+            return fetch().getString(KEY_TYPE);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public void setType(String type) {
+        put(KEY_TYPE, type);
     }
 
     @Override

@@ -103,9 +103,14 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     invite.getTable().addMate(ParseUser.getCurrentUser());
                     UserUtils.setCurrentTable(ParseUser.getCurrentUser(), invite.getTable());
-                    clear();
+                    if (!invite.getType().equals(Invite.TYPE_PERMANENT)) {
+                        int position = getAdapterPosition();
+                        invites.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, invites.size());
+                        invite.getTable().removeInvite(invite);
+                    }
                     fragment.dismiss();
-                    invite.getTable().removeInvite(invite);
                     ParseUser.getCurrentUser().saveInBackground();
                     Intent intent = new Intent(context, TableDetailsActivity.class);
                     intent.putExtra(TableUtils.TAG, Parcels.wrap(invite.getTable()));
@@ -120,7 +125,9 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                     invites.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, invites.size());
-                    invite.getTable().removeInvite(invite);
+                    if (!invite.getType().equals(Invite.TYPE_PERMANENT)) {
+                        invite.getTable().removeInvite(invite);
+                    }
                     if (invites.size() == 0) {
                         fragment.dismiss();
                     }

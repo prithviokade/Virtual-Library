@@ -31,6 +31,7 @@ public class Table extends ParseObject {
     public static final String KEY_LOCKED = "locked";
     public static final String KEY_CHAT = "chat";
     public static final String KEY_INVITES = "invites";
+    public static final String KEY_ALLOWED = "allowed";
 
     public ParseUser getCreator() {
         try {
@@ -193,6 +194,7 @@ public class Table extends ParseObject {
         setInvites(remainingInvites);
         saveInBackground();
     }
+
 
     @Override
     public boolean equals(@Nullable Object obj) {

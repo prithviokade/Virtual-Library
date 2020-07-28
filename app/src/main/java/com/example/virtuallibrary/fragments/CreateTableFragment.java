@@ -1,5 +1,8 @@
 package com.example.virtuallibrary.fragments;
 
+import android.app.AlertDialog;
+import android.app.TaskStackBuilder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,8 +26,10 @@ import android.widget.Toast;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
+import com.example.virtuallibrary.activities.InviteActivity;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.databinding.FragmentCreateTableBinding;
+import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Table;
 
 import org.parceler.Parcels;
@@ -42,6 +47,8 @@ public class CreateTableFragment extends Fragment {
     EditText etDescription;
     Spinner spinSize;
     Switch switchVisitors;
+    AlertDialog alertDialog;
+    Table table;
 
     int size;
     boolean visitors;
@@ -72,6 +79,35 @@ public class CreateTableFragment extends Fragment {
         etDescription = binding.etDescription;
         spinSize = binding.spinSize;
         switchVisitors = binding.switchVisitors;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(R.string.alert_dialog_text);
+        builder.setCancelable(true);
+        builder.setPositiveButton(
+                R.string.yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(getContext(), TableDetailsActivity.class);
+                        intent.putExtra(TableUtils.TAG, Parcels.wrap(table));
+                        startActivity(intent);
+                        Intent intent2 = new Intent(getContext(), InviteActivity.class);
+                        intent2.putExtra(TableUtils.TAG, Parcels.wrap(table));
+                        intent2.putExtra(TableUtils.TYPE_TAG, Invite.TYPE_PERMANENT);
+                        startActivity(intent2);
+                    }
+                });
+
+        builder.setNegativeButton(
+                R.string.no,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        Intent intent = new Intent(getContext(), TableDetailsActivity.class);
+                        intent.putExtra(TableUtils.TAG, Parcels.wrap(table));
+                        startActivity(intent);
+                    }
+                });
+        alertDialog = builder.create();
 
         ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(getContext(), R.array.tabletypes_array, android.R.layout.simple_spinner_item);
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -113,14 +149,20 @@ public class CreateTableFragment extends Fragment {
                 String topic = etTopic.getText().toString();
                 String description = etDescription.getText().toString();
                 Table createdTable = TableUtils.saveNewTable(topic, description, size, type, locked, visitors);
+                table = createdTable;
                 etDescription.setText("");
                 etTopic.setText("");
                 spinSize.setSelection(0);
                 spinType.setSelection(0);
                 switchVisitors.setChecked(false);
-                Intent intent = new Intent(getContext(), TableDetailsActivity.class);
-                intent.putExtra(TableUtils.TAG, Parcels.wrap(createdTable));
-                startActivity(intent);
+
+                if (locked) {
+                    alertDialog.show();
+                } else {
+                    Intent intent = new Intent(getContext(), TableDetailsActivity.class);
+                    intent.putExtra(TableUtils.TAG, Parcels.wrap(createdTable));
+                    startActivity(intent);
+                }
             }
         });
     }

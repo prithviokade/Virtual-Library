@@ -30,10 +30,12 @@ public class InviteUserAdapter extends RecyclerView.Adapter<InviteUserAdapter.Vi
 
     Context context;
     List<ParseUser> friends;
+    String type;
 
-    public InviteUserAdapter(Context context, List<ParseUser> friends) {
+    public InviteUserAdapter(Context context, List<ParseUser> friends, String type) {
         this.context = context;
         this.friends = friends;
+        this.type = type;
     }
 
     @NonNull
@@ -101,10 +103,10 @@ public class InviteUserAdapter extends RecyclerView.Adapter<InviteUserAdapter.Vi
                 public void onClick(View view) {
                     if (invited) {
                         btnInvite.setImageResource(R.drawable.circle);
-                        TableUtils.removeInvite(friend, ParseUser.getCurrentUser(), UserUtils.getCurrentTable(ParseUser.getCurrentUser()));
+                        TableUtils.removeInvite(friend, ParseUser.getCurrentUser(), UserUtils.getCurrentTable(ParseUser.getCurrentUser()), type);
                     } else {
                         btnInvite.setImageResource(R.drawable.ic_baseline_check_circle_24);
-                        TableUtils.addInvite(friend, ParseUser.getCurrentUser(), UserUtils.getCurrentTable(ParseUser.getCurrentUser()));
+                        TableUtils.addInvite(friend, ParseUser.getCurrentUser(), UserUtils.getCurrentTable(ParseUser.getCurrentUser()), type);
                     }
                     invited = !invited;
                 }

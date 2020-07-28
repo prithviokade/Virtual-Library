@@ -70,6 +70,9 @@
     <string name="join_size">Join our size</string>
     <string name="table_working_on">table working on</string>
     <string name="from">Invite from</string>
+    <string name="alert_dialog_text">You have created a private table. Would you like to set users who can permanently join this table at any time?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- notifications -->
     <string name="you_have">You have</string>

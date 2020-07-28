@@ -12,6 +12,7 @@ import java.util.List;
 public class TableUtils {
 
     public static final String TAG = "TABLE";
+    public static final String TYPE_TAG = "TYPE";
 
     public static int getTableImage(int size) {
         if (size == 1) { return R.drawable.onetable; }
@@ -77,11 +78,11 @@ public class TableUtils {
         return new ArrayList<>();
     }
 
-    public static void removeInvite(ParseUser to, ParseUser from, Table table) {
+    public static void removeInvite(ParseUser to, ParseUser from, Table table, String type) {
         List<Invite> currInvites = table.getInvites();
         List<Invite> remainingInvites = new ArrayList<>();
         for (Invite invite : currInvites) {
-            if (UserUtils.equals(invite.getTo(), to) && UserUtils.equals(invite.getFrom(), from)) {
+            if (UserUtils.equals(invite.getTo(), to) && UserUtils.equals(invite.getFrom(), from) && invite.getType().equals(type)) {
                 continue;
             }
             remainingInvites.add(invite);
@@ -90,7 +91,7 @@ public class TableUtils {
         table.saveInBackground();
     }
 
-    public static void addInvite(ParseUser to, ParseUser from, Table table) {
+    public static void addInvite(ParseUser to, ParseUser from, Table table, String type) {
         List<Invite> currInvites = table.getInvites();
         for (Invite invite : currInvites) {
             if (UserUtils.equals(invite.getTo(), to) && UserUtils.equals(invite.getFrom(), from)) {
@@ -101,6 +102,7 @@ public class TableUtils {
         newInvite.setFrom(from);
         newInvite.setTo(to);
         newInvite.setTable(UserUtils.getCurrentTable(ParseUser.getCurrentUser()));
+        newInvite.setType(type);
         newInvite.saveInBackground();
         table.addInvite(newInvite);
         table.saveInBackground();

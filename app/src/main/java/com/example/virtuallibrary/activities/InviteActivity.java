@@ -29,6 +29,7 @@ import java.util.List;
 public class InviteActivity extends AppCompatActivity {
 
     Table table;
+    String type;
     List<ParseUser> friends;
     RecyclerView rvUsers;
     InviteUserAdapter adapter;
@@ -44,13 +45,17 @@ public class InviteActivity extends AppCompatActivity {
         setContentView(view);
 
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
+        type = getIntent().getStringExtra(TableUtils.TYPE_TAG);
+        if (type == null || !type.equals(Invite.TYPE_PERMANENT)) {
+            type = "";
+        }
         rvUsers = binding.rvUsers;
         etSearch = binding.etSearch;
         tvCancel = binding.tvCancel;
         btnSend = binding.btnSend;
 
         friends = new ArrayList<>();
-        adapter = new InviteUserAdapter(this, friends);
+        adapter = new InviteUserAdapter(this, friends, type);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvUsers.setAdapter(adapter);
         rvUsers.setLayoutManager(linearLayoutManager);
