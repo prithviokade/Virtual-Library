@@ -13,10 +13,17 @@ import java.util.List;
 public class UserUtils {
 
     public static final String TAG = "USER";
+    public static final String KEY_PICTURE = "picture";
+    public static final String KEY_GOALS = "goals";
+    public static final String KEY_CURRENT_TABLE = "current";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_BIO = "bio";
+    public static final String KEY_FRIENDS = "friends";
+
 
     public static ParseFile getProfilePicture(ParseUser user) {
         try {
-            return user.fetch().getParseFile("picture");
+            return user.fetch().getParseFile(KEY_PICTURE);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -24,16 +31,16 @@ public class UserUtils {
     }
 
     public static void addGoal(ParseUser user, Goal goal) {
-        user.add("goals", goal);
+        user.add(KEY_GOALS, goal);
     }
 
     public static void setCurrentTable(ParseUser user, Table table) {
-        user.put("current", table);
+        user.put(KEY_CURRENT_TABLE, table);
     }
 
     public static Table getCurrentTable(ParseUser user) {
         try {
-            return (Table) user.fetch().get("current");
+            return (Table) user.fetch().get(KEY_CURRENT_TABLE);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -41,7 +48,7 @@ public class UserUtils {
     }
 
     public static void removeCurrentTable(ParseUser user) {
-        user.remove("current");
+        user.remove(KEY_CURRENT_TABLE);
     }
 
     public static String getUsername(ParseUser user) {
@@ -55,7 +62,7 @@ public class UserUtils {
 
     public static String getName(ParseUser user) {
         try {
-            return user.fetch().getString("name");
+            return user.fetch().getString(KEY_NAME);
         } catch (ParseException e) {
             e.printStackTrace();
             return "";
@@ -64,7 +71,7 @@ public class UserUtils {
 
     public static String getBio(ParseUser user) {
         try {
-            return user.fetch().getString("bio");
+            return user.fetch().getString(KEY_BIO);
         } catch (ParseException e) {
             e.printStackTrace();
             return "";
@@ -73,7 +80,7 @@ public class UserUtils {
 
     public static List<Goal> getGoals(ParseUser user) {
         try {
-            return (List<Goal>) user.fetch().get("goals");
+            return (List<Goal>) user.fetch().get(KEY_GOALS);
         } catch (ParseException e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -85,11 +92,11 @@ public class UserUtils {
     }
 
     public static void addFriend(ParseUser self, ParseUser friend) {
-        self.add("friends", friend);
+        self.add(KEY_FRIENDS, friend);
     }
 
     public static void setFriends(ParseUser self, List<ParseUser> friends) {
-        self.put("friends", friends);
+        self.put(KEY_FRIENDS, friends);
     }
 
     public static void removeFriend(ParseUser self, ParseUser user) {
@@ -105,7 +112,7 @@ public class UserUtils {
     }
 
     public static List<ParseUser> getFriends(ParseUser user) {
-        return (List<ParseUser>) user.get("friends");
+        return (List<ParseUser>) user.get(KEY_FRIENDS);
     }
 
     public static boolean userContained(List<ParseUser> friends, ParseUser user) {
