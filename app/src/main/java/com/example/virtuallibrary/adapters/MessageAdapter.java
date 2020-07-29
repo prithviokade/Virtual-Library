@@ -74,13 +74,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         public void bind(Message message) {
             if (UserUtils.equals(ParseUser.getCurrentUser(), message.getSender())) { // user is sender
-                tvRecieved.setVisibility(View.INVISIBLE);
-                ivRecieved.setVisibility(View.INVISIBLE);
+                tvRecieved.setVisibility(View.GONE);
+                ivRecieved.setVisibility(View.GONE);
+                tvSent.setVisibility(View.VISIBLE);
 
                 tvSent.setText(message.getText());
 
             } else { // user is reciever
-                tvSent.setVisibility(View.INVISIBLE);
+                tvSent.setVisibility(View.GONE);
+                tvRecieved.setVisibility(View.VISIBLE);
+                ivRecieved.setVisibility(View.VISIBLE);
 
                 ParseFile profile = UserUtils.getProfilePicture(message.getSender());
                 if (profile != null) {
@@ -128,11 +131,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void addAll(List<Message> addMessages) {
         messages.addAll(addMessages);
         notifyDataSetChanged();
-    }
-
-    public void add(Message newMessage) {
-        messages.add(newMessage);
-        notifyItemInserted(messages.size() - 1);
     }
 
 }

@@ -90,7 +90,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         rvMessages.setAdapter(adapter);
         rvMessages.setLayoutManager(linearLayoutManager);
         getMessages();
-        if (messages.size() > 0) { rvMessages.smoothScrollToPosition(messages.size() - 1); }
+        if (messages.size() > 0) { rvMessages.scrollToPosition(messages.size() - 1); }
         ArrayAdapter<CharSequence> spnAdapter = ArrayAdapter.createFromResource(this, R.array.statustypes_array, R.layout.spinneritem);
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnStatus.setAdapter(spnAdapter);
@@ -108,20 +108,19 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                 Handler refresh = new Handler(Looper.getMainLooper());
                 refresh.post(new Runnable() {
                     public void run() {
+                        // handle message created
                         if (event == SubscriptionHandling.Event.CREATE) {
                             Log.d(TAG, message.getText());
-                            if (UserUtils.getCurrentTable(message.getSender()).equals(table)) {
-                                adapter.add(message);
+                            if (!UserUtils.equals(ParseUser.getCurrentUser(), message.getSender()) && UserUtils.getCurrentTable(message.getSender()).equals(table)) {
+                                messages.add(message);
                                 adapter.notifyItemInserted(messages.size() - 1);
+                                rvMessages.smoothScrollToPosition(messages.size() - 1);
                             }
-                            // Handle new parseObjectSubclass here
                         }
                     }
                 });
             }
         });
-
-
 
         int size = table.getSize();
         tvSize.setText(Integer.toString(size));
@@ -164,7 +163,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                 table.addChat(newMessage);
                 table.saveInBackground();
                 etCompose.setText("");
-                adapter.add(newMessage);
+                messages.add(newMessage);
+                adapter.notifyItemInserted(messages.size() - 1);
                 rvMessages.smoothScrollToPosition(messages.size() - 1);
             }
         });
