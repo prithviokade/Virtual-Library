@@ -183,6 +183,8 @@
         android:layout_marginStart="0dp"
         android:divider="@color/cardview_dark_background"
         android:dividerHeight="1dp"
+        android:listSelector="@color/transparentVLGreen"
+        android:drawSelectorOnTop="true"
         android:layout_toEndOf="@+id/imageView2" />
 
 </RelativeLayout>

@@ -8,4 +8,5 @@
     <color name="lightGrey">#FFEBF4FB</color>
     <color name="vlGreen">#FF55BD7E</color>
     <color name="black">#FF000000</color>
+    <color name="transparentVLGreen">#7055BD7E</color>
 </resources>

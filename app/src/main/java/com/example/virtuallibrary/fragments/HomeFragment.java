@@ -123,6 +123,7 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 String text = parent.getItemAtPosition(position).toString();
                 tables = TableUtils.sortTable(tables, text);
+                view.setBackgroundColor(getResources().getColor(R.color.vlGreen));
                 adapter.notifyDataSetChanged();
                 lvSort.setVisibility(View.GONE);
             }
