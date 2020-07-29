@@ -125,6 +125,7 @@ public class HomeFragment extends Fragment {
                 tables = TableUtils.sortTable(tables, text);
                 view.setBackgroundColor(getResources().getColor(R.color.vlGreen));
                 adapter.notifyDataSetChanged();
+                rvTables.smoothScrollToPosition(0);
                 lvSort.setVisibility(View.GONE);
             }
         });
@@ -215,7 +216,6 @@ public class HomeFragment extends Fragment {
         query.include(Table.KEY_INVITES + "." + Invite.KEY_TO);
         query.include(Table.KEY_INVITES + "." + Invite.KEY_FROM);
         query.include(Table.KEY_INVITES + "." + Invite.KEY_TABLE);
-        query.setLimit(20);
         query.addDescendingOrder(Table.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Table>() {
             @Override

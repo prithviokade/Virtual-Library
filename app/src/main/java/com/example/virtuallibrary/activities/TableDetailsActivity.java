@@ -84,7 +84,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         rvMessages.setAdapter(adapter);
         rvMessages.setLayoutManager(linearLayoutManager);
         getMessages();
-
+        if (messages.size() > 0) { rvMessages.smoothScrollToPosition(messages.size() - 1); } 
         ArrayAdapter<CharSequence> spnAdapter = ArrayAdapter.createFromResource(this, R.array.statustypes_array, R.layout.spinneritem);
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnStatus.setAdapter(spnAdapter);
