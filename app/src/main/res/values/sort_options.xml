@@ -7,8 +7,10 @@
         <item>Friends</item>
         <item>Size: Low to High</item>
         <item>Size: High to Low</item>
+        <!--
         <item>Status: working</item>
         <item>Status: on break</item>
         <item>Status: socializing</item>
+        -->
     </string-array>
 </resources>

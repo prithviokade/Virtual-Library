@@ -122,7 +122,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 String text = parent.getItemAtPosition(position).toString();
-                TableUtils.sortTable(tables, text);
+                tables = TableUtils.sortTable(tables, text);
+                adapter.notifyDataSetChanged();
+                lvSort.setVisibility(View.GONE);
             }
         });
 

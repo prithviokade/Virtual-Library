@@ -1,5 +1,7 @@
 package com.example.virtuallibrary;
 
+import android.util.Log;
+
 import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Table;
 import com.parse.ParseException;
@@ -7,6 +9,8 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class TableUtils {
@@ -78,6 +82,17 @@ public class TableUtils {
         return new ArrayList<>();
     }
 
+    public static int getNumberFriends(Table table) {
+        List<ParseUser> mates = table.getMates();
+        int count = 0;
+        for (ParseUser user : mates) {
+            if (UserUtils.userContained(UserUtils.getFriends(ParseUser.getCurrentUser()), user)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public static void removeInvite(ParseUser to, ParseUser from, Table table, String type) {
         List<Invite> currInvites = table.getInvites();
         List<Invite> remainingInvites = new ArrayList<>();
@@ -108,6 +123,57 @@ public class TableUtils {
         table.saveInBackground();
     }
 
-    public static void sortTable(List<Table> tables, String text) {
+    public static List<Table> sortTable(List<Table> tables, String text) {
+        Comparator<Table> compareByLastUpdated = new Comparator<Table>() {
+            @Override
+            public int compare(Table o1, Table o2) {
+                return o1.getUpdatedAt().compareTo(o2.getUpdatedAt());
+            }
+        };
+
+        Comparator<Table> compareByCreatedAt = new Comparator<Table>() {
+            @Override
+            public int compare(Table o1, Table o2) {
+                return o1.getCreatedAt().compareTo(o2.getCreatedAt());
+            }
+        };
+
+        Comparator<Table> compareBySize = new Comparator<Table>() {
+            @Override
+            public int compare(Table o1, Table o2) {
+                return Integer.compare(o1.getSize(), o2.getSize());
+            }
+        };
+
+        Comparator<Table> compareByFriends = new Comparator<Table>() {
+            @Override
+            public int compare(Table o1, Table o2) {
+                return Integer.compare(TableUtils.getNumberFriends(o1), TableUtils.getNumberFriends(o2));
+            }
+        };
+
+         if (text.equals("Last Updated")) {
+             Log.d(TAG, "LAST UPDATED");
+             Collections.sort(tables, compareByLastUpdated);
+        } else if (text.equals("Created Date")) {
+             Log.d(TAG, "CREATED DATE");
+            Collections.sort(tables, compareByCreatedAt);
+        } else if (text.equals("Friends")) {
+             Log.d(TAG, "FRIENDS");
+             Collections.sort(tables, compareByFriends);
+        } else if (text.equals("Size: Low to High")) {
+             Log.d(TAG, "SIZE L TO H");
+             Collections.sort(tables, compareBySize);
+        } else if (text.equals("Size: High to Low")) {
+             Log.d(TAG, "SIZE H TO L");
+             Collections.sort(tables, Collections.reverseOrder(compareBySize));
+        } else { } // TO DO: Recommended
+
+        for (Table table : tables) {
+            Log.d(TAG, Integer.toString(table.getSize()));
+        }
+
+        return tables;
     }
+
 }
