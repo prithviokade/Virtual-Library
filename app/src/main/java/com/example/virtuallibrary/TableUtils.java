@@ -1,7 +1,5 @@
 package com.example.virtuallibrary;
 
-import android.util.Log;
-
 import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Table;
 import com.parse.ParseException;
@@ -153,25 +151,16 @@ public class TableUtils {
         };
 
          if (text.equals("Last Updated")) {
-             Log.d(TAG, "LAST UPDATED");
              Collections.sort(tables, compareByLastUpdated);
         } else if (text.equals("Created Date")) {
-             Log.d(TAG, "CREATED DATE");
             Collections.sort(tables, compareByCreatedAt);
         } else if (text.equals("Friends")) {
-             Log.d(TAG, "FRIENDS");
              Collections.sort(tables, compareByFriends);
         } else if (text.equals("Size: Low to High")) {
-             Log.d(TAG, "SIZE L TO H");
              Collections.sort(tables, compareBySize);
         } else if (text.equals("Size: High to Low")) {
-             Log.d(TAG, "SIZE H TO L");
              Collections.sort(tables, Collections.reverseOrder(compareBySize));
         } else { } // TO DO: Recommended
-
-        for (Table table : tables) {
-            Log.d(TAG, Integer.toString(table.getSize()));
-        }
 
         return tables;
     }

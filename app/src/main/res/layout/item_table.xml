@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -8,12 +9,14 @@
     card_view:cardElevation="8dp"
     android:layout_margin="5dp"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground">
 
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/tvDescription"
