@@ -96,31 +96,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         spnStatus.setAdapter(spnAdapter);
         spnStatus.setOnItemSelectedListener(this);
 
-        // Make sure the Parse server is setup to configured for live queries
-        ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient();
-
-        ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
-
-        // Connect to Parse server
-        parseLiveQueryClient.subscribe(parseQuery).handleEvents(new SubscriptionHandling.HandleEventsCallback<Message>() {
-            @Override
-            public void onEvents(ParseQuery<Message> query, final SubscriptionHandling.Event event, final Message message) {
-                Handler refresh = new Handler(Looper.getMainLooper());
-                refresh.post(new Runnable() {
-                    public void run() {
-                        // handle message created
-                        if (event == SubscriptionHandling.Event.CREATE) {
-                            Log.d(TAG, message.getText());
-                            if (!UserUtils.equals(ParseUser.getCurrentUser(), message.getSender()) && UserUtils.getCurrentTable(message.getSender()).equals(table)) {
-                                messages.add(message);
-                                adapter.notifyItemInserted(messages.size() - 1);
-                                rvMessages.smoothScrollToPosition(messages.size() - 1);
-                            }
-                        }
-                    }
-                });
-            }
-        });
+        liveQuery();
 
         int size = table.getSize();
         tvSize.setText(Integer.toString(size));
@@ -231,6 +207,34 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                 Intent intent = new Intent(TableDetailsActivity.this, InviteActivity.class);
                 intent.putExtra(TableUtils.TAG, Parcels.wrap(table));
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void liveQuery() {
+        // Make sure the Parse server is setup to configured for live queries
+        ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient();
+
+        ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
+
+        // Connect to Parse server
+        parseLiveQueryClient.subscribe(parseQuery).handleEvents(new SubscriptionHandling.HandleEventsCallback<Message>() {
+            @Override
+            public void onEvents(ParseQuery<Message> query, final SubscriptionHandling.Event event, final Message message) {
+                Handler refresh = new Handler(Looper.getMainLooper());
+                refresh.post(new Runnable() {
+                    public void run() {
+                        // handle message created
+                        if (event == SubscriptionHandling.Event.CREATE) {
+                            Log.d(TAG, message.getText());
+                            if (!UserUtils.equals(ParseUser.getCurrentUser(), message.getSender()) && UserUtils.getCurrentTable(message.getSender()).equals(table)) {
+                                messages.add(message);
+                                adapter.notifyItemInserted(messages.size() - 1);
+                                rvMessages.smoothScrollToPosition(messages.size() - 1);
+                            }
+                        }
+                    }
+                });
             }
         });
     }
