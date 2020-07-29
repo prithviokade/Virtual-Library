@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -176,12 +177,13 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), TableDetailsActivity.class);
                 intent.putExtra(TableUtils.TAG, Parcels.wrap(finalCurrTable));
-                startActivity(intent);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), (View)ivCurrTable, "table");
+                startActivity(intent, options.toBundle());
             }
         });
 
         tables = new ArrayList<>();
-        adapter = new TableAdapter(getContext(), tables);
+        adapter = new TableAdapter(this, tables);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvTables.setAdapter(adapter);
         rvTables.setLayoutManager(linearLayoutManager);

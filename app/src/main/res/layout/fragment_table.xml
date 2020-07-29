@@ -8,6 +8,7 @@
 
     <ImageView
         android:id="@+id/ivTable"
+        android:transitionName="table"
         android:layout_width="411dp"
         android:layout_height="211dp"
         android:layout_alignParentTop="true"

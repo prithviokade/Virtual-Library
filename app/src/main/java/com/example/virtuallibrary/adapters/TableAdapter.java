@@ -10,10 +10,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
+import com.example.virtuallibrary.activities.MainActivity;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.models.Table;
 
@@ -25,9 +28,11 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
 
     Context context;
     List<Table> tables;
+    Fragment fragment;
 
-    public TableAdapter(Context context, List<Table> tables) {
-        this.context = context;
+    public TableAdapter(Fragment fragment, List<Table> tables) {
+        this.fragment = fragment;
+        this.context = fragment.getContext();;
         this.tables = tables;
     }
 
@@ -75,12 +80,14 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
             int size = table.getSize();
             ivTable.setImageResource(TableUtils.getTableImage(size));
 
+
             container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, TableDetailsActivity.class);
                     intent.putExtra(TableUtils.TAG, Parcels.wrap(table));
-                    context.startActivity(intent);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(fragment.getActivity(), (View)ivTable, "table");
+                    context.startActivity(intent, options.toBundle());
                 }
             });
 

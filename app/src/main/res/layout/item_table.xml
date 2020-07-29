@@ -104,6 +104,7 @@
 
         <ImageView
             android:id="@+id/ivTable"
+            android:transitionName="table"
             android:layout_width="184dp"
             android:layout_height="184dp"
             android:layout_alignParentEnd="true"

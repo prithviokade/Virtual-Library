@@ -153,6 +153,7 @@
 
     <ImageView
         android:id="@+id/ivCurrTable"
+        android:transitionName="table"
         android:layout_width="184dp"
         android:layout_height="184dp"
         android:layout_alignParentTop="true"
