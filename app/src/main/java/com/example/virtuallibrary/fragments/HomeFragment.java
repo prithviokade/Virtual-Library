@@ -15,12 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
+import com.example.virtuallibrary.activities.LoginActivity;
 import com.example.virtuallibrary.activities.MainActivity;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.adapters.TableAdapter;
@@ -56,6 +60,7 @@ public class HomeFragment extends Fragment {
     TextView tvCurrentTableText;
     ProgressDialog progressDialog;
     List<Invite> invites;
+    ListView lvSort;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -81,6 +86,12 @@ public class HomeFragment extends Fragment {
         tvVisitors = binding.tvVisitors;
         tvDescription = binding.tvDescription;
         tvCurrentTableText = binding.tvCurrentTableText;
+        // sort options list
+        lvSort = binding.lvSort;
+        lvSort.setVisibility(View.GONE);
+
+        ArrayAdapter lvAdapter = new ArrayAdapter<>(getContext(), R.layout.simple_list_item_1, getResources().getStringArray(R.array.sort_options_array));
+        lvSort.setAdapter(lvAdapter);
 
         ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
         actionBar.setCustomView(R.layout.actionbar_notification);
@@ -93,6 +104,25 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 showInviteDialog();
+            }
+        });
+        ImageView ivSort = actionBar.getCustomView().findViewById(R.id.ivSort);
+        ivSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { // open and close the sort options
+                if (lvSort.getVisibility() == View.GONE) {
+                    lvSort.setVisibility(View.VISIBLE);
+                } else {
+                    lvSort.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        lvSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                String text = parent.getItemAtPosition(position).toString();
+                TableUtils.sortTable(tables, text);
             }
         });
 

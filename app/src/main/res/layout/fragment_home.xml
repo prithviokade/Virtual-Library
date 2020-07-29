@@ -174,4 +174,15 @@
         android:textColor="#000000"
         android:textStyle="bold" />
 
+    <ListView
+        android:id="@+id/lvSort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:divider="@color/cardview_dark_background"
+        android:dividerHeight="1dp"
+        android:layout_toEndOf="@+id/imageView2" />
+
 </RelativeLayout>

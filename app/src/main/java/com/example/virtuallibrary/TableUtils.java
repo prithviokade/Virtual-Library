@@ -107,4 +107,7 @@ public class TableUtils {
         table.addInvite(newInvite);
         table.saveInBackground();
     }
+
+    public static void sortTable(List<Table> tables, String text) {
+    }
 }
