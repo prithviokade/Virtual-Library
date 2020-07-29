@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +29,10 @@ import com.example.virtuallibrary.databinding.ActivityTableDetailsBinding;
 import com.example.virtuallibrary.fragments.TableFragment;
 import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Table;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.livequery.ParseLiveQueryClient;
+import com.parse.livequery.SubscriptionHandling;
 
 import org.parceler.Parcels;
 
@@ -84,11 +90,38 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         rvMessages.setAdapter(adapter);
         rvMessages.setLayoutManager(linearLayoutManager);
         getMessages();
-        if (messages.size() > 0) { rvMessages.smoothScrollToPosition(messages.size() - 1); } 
+        if (messages.size() > 0) { rvMessages.smoothScrollToPosition(messages.size() - 1); }
         ArrayAdapter<CharSequence> spnAdapter = ArrayAdapter.createFromResource(this, R.array.statustypes_array, R.layout.spinneritem);
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnStatus.setAdapter(spnAdapter);
         spnStatus.setOnItemSelectedListener(this);
+
+        // Make sure the Parse server is setup to configured for live queries
+        ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient();
+
+        ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
+
+        // Connect to Parse server
+        parseLiveQueryClient.subscribe(parseQuery).handleEvents(new SubscriptionHandling.HandleEventsCallback<Message>() {
+            @Override
+            public void onEvents(ParseQuery<Message> query, final SubscriptionHandling.Event event, final Message message) {
+                Handler refresh = new Handler(Looper.getMainLooper());
+                refresh.post(new Runnable() {
+                    public void run() {
+                        if (event == SubscriptionHandling.Event.CREATE) {
+                            Log.d(TAG, message.getText());
+                            if (UserUtils.getCurrentTable(message.getSender()).equals(table)) {
+                                adapter.add(message);
+                                adapter.notifyItemInserted(messages.size() - 1);
+                            }
+                            // Handle new parseObjectSubclass here
+                        }
+                    }
+                });
+            }
+        });
+
+
 
         int size = table.getSize();
         tvSize.setText(Integer.toString(size));
@@ -132,6 +165,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                 table.saveInBackground();
                 etCompose.setText("");
                 adapter.add(newMessage);
+                rvMessages.smoothScrollToPosition(messages.size() - 1);
             }
         });
 

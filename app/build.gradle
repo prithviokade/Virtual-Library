@@ -24,6 +24,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -38,6 +44,7 @@ dependencies {
 
     implementation 'com.github.parse-community.Parse-SDK-Android:parse:1.24.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1' // for logging API calls to LogCat
+    implementation 'com.github.parse-community:ParseLiveQuery-Android:1.2.1'
 
     // bottom navigation
     implementation "androidx.appcompat:appcompat:${appCompatVersion}"
@@ -52,12 +59,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     // messenger
-    implementation 'com.facebook.android:facebook-messenger:5.0.0'
     implementation 'com.facebook.android:facebook-login:[5,6)'
 
     // card view
     implementation "androidx.cardview:cardview:1.0.0"
-
-    // floating action button
-    implementation 'com.google.android.material:material:1.1.0'
 }
