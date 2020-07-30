@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.databinding.ActivityCallBinding;
@@ -28,6 +29,9 @@ public class CallActivity extends AppCompatActivity {
     private static final int PERMISSION_REQ_ID = 22;
     public static final String TAG = "CallActivity";
     private RtcEngine mRtcEngine;
+    private FrameLayout mLocalContainer;
+    private SurfaceView mLocalView;
+
 
     // Ask for Android device permissions at runtime.
     private static final String[] REQUESTED_PERMISSIONS = {
@@ -43,11 +47,14 @@ public class CallActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        mLocalContainer = binding.mLocalContainer;
+
         // If all the permissions are granted, initialize the RtcEngine object and join a channel.
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[2], PERMISSION_REQ_ID)) {
             initializeEngine();
+            setupLocalVideo();
             joinChannel("test", 0);
         }
 
@@ -94,7 +101,19 @@ public class CallActivity extends AppCompatActivity {
         mRtcEngine.joinChannel(accessToken, channel, "OpenVCall", uid);
     }
 
+    private void setupLocalVideo() {
 
+        // Enable the video module.
+        mRtcEngine.enableVideo();
+
+        mLocalView = RtcEngine.CreateRendererView(getBaseContext());
+        mLocalView.setZOrderMediaOverlay(true);
+        mLocalContainer.addView(mLocalView);
+
+        // Set the local video view.
+        VideoCanvas localVideoCanvas = new VideoCanvas(mLocalView, VideoCanvas.RENDER_MODE_HIDDEN, 0);
+        mRtcEngine.setupLocalVideo(localVideoCanvas);
+    }
 
 
 }

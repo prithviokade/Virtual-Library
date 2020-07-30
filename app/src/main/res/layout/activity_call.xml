@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".activities.CallActivity">
 
+    <FrameLayout
+        android:id="@+id/mLocalContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_action_container"
+        android:layout_marginBottom="0dp" />
+
     <RelativeLayout
         android:id="@+id/bottom_action_container"
         android:layout_width="match_parent"
@@ -19,14 +26,15 @@
         android:paddingEnd="8dp"
         android:paddingRight="8dp">
 
-        <ImageView
+        <ImageButton
             android:id="@id/switch_speaker_id"
             android:layout_width="40dp"
             android:layout_height="match_parent"
+            android:backgroundTint="#FFFFFF"
             android:scaleType="center"
             app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/filter"
             android:layout_width="40dp"
             android:layout_height="match_parent"
@@ -34,20 +42,22 @@
             android:layout_marginStart="50dp"
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/switch_speaker_id"
+            android:backgroundTint="#FFFFFF"
             android:scaleType="center"
             app:srcCompat="@drawable/ic_baseline_star_half_24" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btnEndCall"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="0dp"
+            android:backgroundTint="#FFFFFF"
             android:scaleType="center"
             app:srcCompat="@drawable/ic_baseline_cancel_24" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btnOffVideo"
             android:layout_width="40dp"
             android:layout_height="match_parent"
@@ -55,10 +65,11 @@
             android:layout_marginStart="50dp"
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/btnEndCall"
+            android:backgroundTint="#FFFFFF"
             android:scaleType="center"
             app:srcCompat="@drawable/ic_baseline_videocam_off_24" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btnOffSound"
             android:layout_width="40dp"
             android:layout_height="match_parent"
@@ -66,6 +77,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/btnOffVideo"
+            android:backgroundTint="#FFFFFF"
             android:scaleType="center"
             app:srcCompat="@drawable/ic_baseline_mic_off_24" />
 
