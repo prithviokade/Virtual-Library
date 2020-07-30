@@ -54,6 +54,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
     Button btnJoin;
     Spinner spnStatus;
     ImageButton btnInvite;
+    ImageButton btnVideoCall;
 
     List<Message> messages;
     MessageAdapter adapter;
@@ -83,6 +84,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         btnJoin = binding.btnJoin;
         spnStatus = binding.spnStatus;
         btnInvite = binding.btnInvite;
+        btnVideoCall = binding.btnVideoCall;
 
         messages = new ArrayList<>();
         adapter = new MessageAdapter(this, messages);
@@ -206,6 +208,14 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
             public void onClick(View view) {
                 Intent intent = new Intent(TableDetailsActivity.this, InviteActivity.class);
                 intent.putExtra(TableUtils.TAG, Parcels.wrap(table));
+                startActivity(intent);
+            }
+        });
+
+        btnVideoCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TableDetailsActivity.this, CallActivity.class);
                 startActivity(intent);
             }
         });
