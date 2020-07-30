@@ -9,9 +9,16 @@
     <FrameLayout
         android:id="@+id/mLocalContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="349dp"
         android:layout_above="@+id/bottom_action_container"
         android:layout_marginBottom="0dp" />
+
+    <FrameLayout
+        android:id="@+id/mRemoteContainer"
+        android:layout_width="match_parent"
+        android:layout_height="325dp"
+        android:layout_above="@+id/bottom_action_container"
+        android:layout_marginBottom="358dp" />
 
     <RelativeLayout
         android:id="@+id/bottom_action_container"

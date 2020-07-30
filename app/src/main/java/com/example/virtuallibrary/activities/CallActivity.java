@@ -31,6 +31,9 @@ public class CallActivity extends AppCompatActivity {
     private RtcEngine mRtcEngine;
     private FrameLayout mLocalContainer;
     private SurfaceView mLocalView;
+    private FrameLayout mRemoteContainer;
+    private SurfaceView mRemoteView;
+
 
 
     // Ask for Android device permissions at runtime.
@@ -48,6 +51,7 @@ public class CallActivity extends AppCompatActivity {
         setContentView(view);
 
         mLocalContainer = binding.mLocalContainer;
+        mRemoteContainer = binding.mRemoteContainer;
 
         // If all the permissions are granted, initialize the RtcEngine object and join a channel.
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
@@ -77,6 +81,17 @@ public class CallActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.i("agora", "Join channel success, uid: " + (uid & 0xFFFFFFFFL));
+                }
+            });
+        }
+
+        @Override
+        public void onFirstRemoteVideoDecoded(final int uid, int width, int height, int elapsed) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i("agora","First remote video decoded, uid: " + (uid & 0xFFFFFFFFL));
+                    setupRemoteVideo(uid);
                 }
             });
         }
@@ -113,6 +128,14 @@ public class CallActivity extends AppCompatActivity {
         // Set the local video view.
         VideoCanvas localVideoCanvas = new VideoCanvas(mLocalView, VideoCanvas.RENDER_MODE_HIDDEN, 0);
         mRtcEngine.setupLocalVideo(localVideoCanvas);
+    }
+
+    private void setupRemoteVideo(int uid) {
+        mRemoteView = RtcEngine.CreateRendererView(getBaseContext());
+        mRemoteContainer.addView(mRemoteView);
+        // Set the remote video view.
+        mRtcEngine.setupRemoteVideo(new VideoCanvas(mRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
+
     }
 
 
