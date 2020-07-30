@@ -8,7 +8,7 @@
 
 ## Overview
 ### Description
-A group study app where students can check into app, log their day's goals/topics they're studying, and input their preferences for their study environment. Based on this data, they will get recommendations for "tables" they can join; when they join a table, they can chat with others at the table, share screen, socialize, listen to music, etc.
+A group study app where students can check into app, log their day's goals/topics they're studying, and input their preferences for their study environment. Based on this data, they will get recommendations for "tables" they can join; when they join a table, they can text others at the table, video chat to socialize, listen to music, etc.
 
 ### App Evaluation
 
@@ -27,22 +27,23 @@ A group study app where students can check into app, log their day's goals/topic
 
 * [x] User can create a new account
 * [x] User can login
-* [x] User can input their goals and update the status of
+* [x] User can input their current goals and update the status of their goals
 * [x] User can see all tables and join a table
 * [x] User can chat with others at their table
-* [x] User can post a new photo to their feed and view other users' posts
+* [x] User can post a new photo resource to their feed
+* [x] User can view other users' resource posts
+* [x] User can view individual profiles from details view of table and see that user's goals/progress
 * [ ] User can get recommendations for tables they can join
-* [ ] User can view individual profiles and see progress
 
 **Optional Nice-to-have Stories**
 
-* [ ] User can invite friends
-* [ ] User can follow other users
-* [ ] User can listen to the music at their table
+* [x] User can invite friends
+* [x] User can follow other users
+* [x] User can search for other users
+* [x] User can post a new file resource or link to their feed
+* [x] User can choose how to sort the tables
 * [ ] User can video chat with others at their table
-* [ ] User can screen share
-* [ ] User can add a comment/like to a photo
-* [ ] User can tap a photo to view a more detailed photo screen with comments
+* [ ] User can listen to the music at their table
 
 ### 2. Screen Archetypes
 
@@ -55,22 +56,26 @@ A group study app where students can check into app, log their day's goals/topic
    * User plans out their goals
 * Tables Screen
    * User can see all tables, clicking on the table opens a fragment describing its details
-   * User can see the table they're currently at if applicable, clicking on this opens up the current state of the table (chatting, music, etc.)
+   * User can see the table they're currently at if applicable, clicking on this opens up the current state of the table (chatting, status, etc.)
    * User can see recommendations for the table they should join
+   * User can join tables
+   * Users can sort tables
+   * Users can see invites
 * Table Creation
    * User can create their own table for people to join
 * Progress
-   * User can keep track of how much of their goals they've accomplished
+   * User can keep track of how many of their goals they've accomplished
 * Stream
    * User can view a feed of photos
 * Content Creation
-   * User can post a new photo to their feed
+   * User can post a new resource to their feed
 
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
 
 * Home
+* Search
 * Progress
 * Stream
 
@@ -82,8 +87,12 @@ A group study app where students can check into app, log their day's goals/topic
    * Home
 * Home Tab (all Tables, Current Table) ->
    * Details of each Table (on click)
+      * User Profiles (on click)
+* Search Tab ->
+   * User Profiles (on click)
 * Create a Table ->
-   * Home
+   * Details of the created Table
+      * User Profiles (on click)
 * Create a post ->
    * Stream
 * Project progress ->
@@ -97,25 +106,43 @@ A group study app where students can check into app, log their day's goals/topic
 
 ### Models
 * Tables
+    * Creator
     * Users
     * Status
-    * Details
+    * Size
+    * Topic
+    * Type
+    * Visitors allowed
+    * Description
+    * Locked
     * Chat
+    * Invites
 * Goals
     * User
-    * Checklist
-    * Completed
+    * Status
+    * Goal
 * Posts
     * User
-    * Likes
-    * Comments
+    * Caption
+    * Subject
+    * File + File Information
+    * Link
     * Image
-    * Captions
 * Users (to add)
     * Name
     * Profile Picture
-    * Goals and Status of goals
+    * Goals
     * Bio
+    * Current Table
+    * Friends
+* Invite
+    * Sender
+    * Reciever
+    * Table
+    * Type
+* Message
+    * Text
+    * Sender
 
 ### Networking
 * (Read) Query all tables for user to join
@@ -124,3 +151,7 @@ A group study app where students can check into app, log their day's goals/topic
 * (Create) Update user's checklist
 * (Read) Get all posts
 * (Create) Make a post
+* (Read) Get messages for table
+* (Create) New messages
+* (Read) Get all invites to a user
+* (Create) Send an invite
