@@ -6,23 +6,26 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewTreeObserver;
+import android.view.WindowMetrics;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.databinding.ActivityCallBinding;
 
-import io.agora.rtc.Constants;
+import java.util.ArrayList;
+import java.util.List;
+
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtc.video.VideoCanvas;
-import io.agora.rtc.video.VideoEncoderConfiguration;
 
 public class CallActivity extends AppCompatActivity {
 
@@ -32,9 +35,9 @@ public class CallActivity extends AppCompatActivity {
     private FrameLayout mLocalContainer;
     private SurfaceView mLocalView;
     private FrameLayout mRemoteContainer;
-    private SurfaceView mRemoteView;
 
-
+    int usersPresent = 0;
+    List<SurfaceView> remoteUserViews = new ArrayList<>();
 
     // Ask for Android device permissions at runtime.
     private static final String[] REQUESTED_PERMISSIONS = {
@@ -95,6 +98,8 @@ public class CallActivity extends AppCompatActivity {
                 }
             });
         }
+
+
     };
 
     // Initialize the RtcEngine object.
@@ -117,7 +122,6 @@ public class CallActivity extends AppCompatActivity {
     }
 
     private void setupLocalVideo() {
-
         // Enable the video module.
         mRtcEngine.enableVideo();
 
@@ -130,13 +134,59 @@ public class CallActivity extends AppCompatActivity {
         mRtcEngine.setupLocalVideo(localVideoCanvas);
     }
 
-    private void setupRemoteVideo(int uid) {
-        mRemoteView = RtcEngine.CreateRendererView(getBaseContext());
-        mRemoteContainer.addView(mRemoteView);
-        // Set the remote video view.
-        mRtcEngine.setupRemoteVideo(new VideoCanvas(mRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
-
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
+
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    private void setupRemoteVideo(int uid) {
+        usersPresent += 1;
+
+        SurfaceView newRemoteView = RtcEngine.CreateRendererView(getBaseContext());
+        mRemoteContainer.addView(newRemoteView);
+
+        // Set the remote video view.
+        mRtcEngine.setupRemoteVideo(new VideoCanvas(newRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
+        remoteUserViews.add(newRemoteView);
+        resizeRemoteVideos();
+    }
+
+    private void resizeRemoteVideos() {
+        int screen_height = getScreenHeight();
+        int screen_width = getScreenWidth();
+
+        // convert to for loop after testing is done
+        if (usersPresent == 1) {
+            FrameLayout.LayoutParams parms0 = (FrameLayout.LayoutParams) mLocalView.getLayoutParams();
+            parms0.height = 400;
+            parms0.width = 300;
+            parms0.leftMargin = screen_width - 300 - 20;
+            parms0.topMargin = 20;
+            mLocalView.setLayoutParams(parms0);
+
+            FrameLayout.LayoutParams parms = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
+            parms.height = screen_height;
+            parms.width = screen_width;
+            remoteUserViews.get(0).setLayoutParams(parms);
+        }
+
+        if (usersPresent == 2) {
+            FrameLayout.LayoutParams parms0 = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
+            parms0.height = screen_height / 2 - 150;
+            parms0.width = screen_width;
+            remoteUserViews.get(0).setLayoutParams(parms0);
+
+            FrameLayout.LayoutParams parms1 = (FrameLayout.LayoutParams) remoteUserViews.get(1).getLayoutParams();
+            parms1.height = screen_height / 2 - 150;
+            parms1.width = screen_width;
+            parms1.topMargin = screen_height / 2 - 150;
+            remoteUserViews.get(1).setLayoutParams(parms1);
+        }
+    }
+
 
 
 }
