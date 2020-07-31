@@ -66,4 +66,5 @@ dependencies {
 
     // agora
     implementation 'io.agora.rtc:full-sdk:2.9.2'
+    implementation "commons-codec:commons-codec:1.11"
 }

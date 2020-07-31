@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.RtcTokenGenerator;
 import com.example.virtuallibrary.databinding.ActivityCallBinding;
 
 import java.util.ArrayList;
@@ -62,7 +63,8 @@ public class CallActivity extends AppCompatActivity {
                 checkSelfPermission(REQUESTED_PERMISSIONS[2], PERMISSION_REQ_ID)) {
             initializeEngine();
             setupLocalVideo();
-            joinChannel("test", 0);
+
+            joinChannel(RtcTokenGenerator.channelName, 0);
         }
 
     }
@@ -113,7 +115,8 @@ public class CallActivity extends AppCompatActivity {
     }
 
     public final void joinChannel(final String channel, int uid) {
-        String accessToken = getApplicationContext().getString(R.string.agora_access_token);
+        String accessToken = RtcTokenGenerator.getToken();
+        // String accessToken = getApplicationContext().getString(R.string.agora_access_token);
         if (TextUtils.equals(accessToken, "")) {
             accessToken = null; // no token
         }
