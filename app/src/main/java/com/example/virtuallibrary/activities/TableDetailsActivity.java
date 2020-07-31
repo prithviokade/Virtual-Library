@@ -55,6 +55,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
     Spinner spnStatus;
     ImageButton btnInvite;
     ImageButton btnVideoCall;
+    ImageButton btnPlayMusic;
 
     List<Message> messages;
     MessageAdapter adapter;
@@ -85,6 +86,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         spnStatus = binding.spnStatus;
         btnInvite = binding.btnInvite;
         btnVideoCall = binding.btnVideoCall;
+        btnPlayMusic = binding.btnPlayMusic;
 
         messages = new ArrayList<>();
         adapter = new MessageAdapter(this, messages);
@@ -152,6 +154,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         btnSend.setVisibility(View.INVISIBLE);
         spnStatus.setEnabled(false);
         btnInvite.setVisibility(View.INVISIBLE);
+        btnVideoCall.setVisibility(View.INVISIBLE);
+        btnPlayMusic.setVisibility(View.INVISIBLE);
 
         isMember = table.containsUser(ParseUser.getCurrentUser());
         if (isMember) { // current table
@@ -161,6 +165,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
             btnSend.setVisibility(View.VISIBLE);
             spnStatus.setEnabled(true);
             btnInvite.setVisibility(View.VISIBLE);
+            btnVideoCall.setVisibility(View.VISIBLE);
+            btnPlayMusic.setVisibility(View.VISIBLE);
         }
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +182,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     tvMembers.setText(members);
                     spnStatus.setEnabled(true);
                     btnInvite.setVisibility(View.VISIBLE);
+                    btnVideoCall.setVisibility(View.VISIBLE);
+                    btnPlayMusic.setVisibility(View.VISIBLE);
 
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
@@ -193,6 +201,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     tvMembers.setText(members);
                     spnStatus.setEnabled(false);
                     btnInvite.setVisibility(View.INVISIBLE);
+                    btnVideoCall.setVisibility(View.INVISIBLE);
+                    btnPlayMusic.setVisibility(View.INVISIBLE);
 
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     UserUtils.removeCurrentTable(ParseUser.getCurrentUser());

@@ -53,6 +53,7 @@ public class CallActivity extends AppCompatActivity {
     ImageButton btnEndCall;
     ImageButton btnAddFilter;
     ImageView blankProfile;
+    ImageView remoteBlankProfile;
     int volume = 100;
     boolean videoMuted = false;
     boolean filterEnabled = false;
@@ -60,6 +61,8 @@ public class CallActivity extends AppCompatActivity {
     int usersPresent = 0;
     List<SurfaceView> remoteUserViews = new ArrayList<>();
     List<Integer> remoteUserUid = new ArrayList<>();
+    List<ImageView> remoteUserBlankViews = new ArrayList<>();
+    List<Integer> remoteUserBlankUid = new ArrayList<>();
 
     // Ask for Android device permissions at runtime.
     private static final String[] REQUESTED_PERMISSIONS = {
@@ -129,7 +132,7 @@ public class CallActivity extends AppCompatActivity {
                 } else {
                     mRtcEngine.enableVideo();
                     muteVideoResource = R.drawable.ic_baseline_videocam_24;
-                    blankProfile.setVisibility(View.GONE);
+                    blankProfile.setVisibility(View.INVISIBLE);
                 }
                 btnOffVideo.setImageResource(muteVideoResource);
 
@@ -208,37 +211,54 @@ public class CallActivity extends AppCompatActivity {
         @Override
         public void onRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
             super.onRemoteVideoStateChanged(uid, state, reason, elapsed);
-            int userIndex = findUserIndex(uid);
+            int userIndex = findUserIndex(uid, remoteUserUid);
             if (reason == Constants.REMOTE_VIDEO_STATE_REASON_REMOTE_MUTED) {
                 // set the blank image
                 /*
+                Log.d(TAG, "MUTED");
+                SurfaceView userView = remoteUserViews.get(userIndex);
+                userView.setBackgroundColor(getColor(R.color.lightGrey));
+                userView.setBackgroundResource(R.drawable.ic_baseline_person_24_black);
+                userView.notify();
                 SurfaceView userView = remoteUserViews.get(userIndex);
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) userView.getLayoutParams();
-                blankProfile = new ImageView(CallActivity.this);
-                blankProfile.setImageResource(R.drawable.ic_baseline_person_24_black);
-                blankProfile.setLayoutParams(params);
+                params.setMargins(0,0,0,0);
+                Log.d(TAG, Integer.toString(params.height) + " " + params.width);
+                remoteBlankProfile = new ImageView(CallActivity.this);
+                remoteBlankProfile.setImageResource(R.drawable.ic_baseline_person_24_black);
+                remoteBlankProfile.setBackgroundColor(getColor(R.color.lightGrey));
+                remoteBlankProfile.setLayoutParams(params);
+                remoteBlankProfile.setVisibility(View.VISIBLE);
                 userView.setVisibility(View.INVISIBLE);
-
+                mRemoteContainer.addView(remoteBlankProfile);
+                remoteUserBlankViews.add(remoteBlankProfile);
+                remoteUserBlankUid.add(uid);
                  */
             }
 
             if (reason == Constants.REMOTE_VIDEO_STATE_REASON_REMOTE_UNMUTED) {
                 // set the video again
-                /*
-                Log.d(TAG, "HELLO");
-                SurfaceView userView = remoteUserViews.get(userIndex);
-                userView.setVisibility(View.VISIBLE);
-                blankProfile.setVisibility(View.GONE);
+                // Log.d(TAG, "UNMUTED");
+                // SurfaceView userView = remoteUserViews.get(userIndex);
+                // userView.setBackgroundResource(0);
+                // userView.setBackgroundColor(0);
+                // mRtcEngine.setupRemoteVideo(new VideoCanvas(newRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
+                // SurfaceView userView = remoteUserViews.get(userIndex);
+                // int userBlankIndex = findUserIndex(uid, remoteUserBlankUid);
+                // Log.d(TAG, Integer.toString(userBlankIndex));
+                // ImageView remoteBlankProfile = remoteUserBlankViews.get(userBlankIndex);
+                // remoteBlankProfile.setVisibility(View.INVISIBLE);
 
-                 */
+                // remoteUserBlankViews.remove(userBlankIndex);
+                // remoteUserBlankUid.remove(userBlankIndex);
             }
         }
     };
 
-    public int findUserIndex(int uid) {
+    public int findUserIndex(int uid, List<Integer> userUid) {
         int userIndex = 0;
-        for (int i = 0; i < remoteUserUid.size(); i++) {
-            if (remoteUserUid.get(i) == uid) {
+        for (int i = 0; i < userUid.size(); i++) {
+            if (userUid.get(i) == uid) {
                 userIndex = i;
                 break;
             }
@@ -247,7 +267,7 @@ public class CallActivity extends AppCompatActivity {
     }
 
     public void removeUserLeft(int uid) {
-        int userIndex = findUserIndex(uid);
+        int userIndex = findUserIndex(uid, remoteUserUid);
         SurfaceView userLeftView = remoteUserViews.get(userIndex);
         userLeftView.setVisibility(View.GONE);
         remoteUserUid.remove(userIndex);
