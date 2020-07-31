@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 public class TableUtils {
 
@@ -62,6 +63,7 @@ public class TableUtils {
         table.setVisiting(visitors);
         table.setDescription(description);
         table.setLocked(locked);
+        table.setChannel(UUID.randomUUID().toString());
         table.saveInBackground();
         TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
         UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);
