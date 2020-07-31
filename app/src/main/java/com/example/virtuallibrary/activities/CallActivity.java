@@ -29,6 +29,7 @@ import java.util.List;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtc.video.VideoCanvas;
+import io.agora.rtc.video.VideoEncoderConfiguration;
 
 public class CallActivity extends AppCompatActivity {
 
@@ -75,6 +76,7 @@ public class CallActivity extends AppCompatActivity {
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[2], PERMISSION_REQ_ID)) {
             initializeEngine();
+            setupVideoConfig();
             setupLocalVideo();
 
             joinChannel(0);
@@ -115,7 +117,8 @@ public class CallActivity extends AppCompatActivity {
         btnEndCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                leaveChannel();
+                finish();
             }
         });
     }
@@ -176,6 +179,18 @@ public class CallActivity extends AppCompatActivity {
         mRtcEngine.joinChannel(accessToken, channel, "OpenVCall", uid);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        leaveChannel();
+        RtcEngine.destroy();
+    }
+
+    private void leaveChannel() {
+        // Leave the current channel.
+        mRtcEngine.leaveChannel();
+    }
+
     private void setupLocalVideo() {
         // Enable the video module.
         mRtcEngine.enableVideo();
@@ -187,6 +202,16 @@ public class CallActivity extends AppCompatActivity {
         // Set the local video view.
         VideoCanvas localVideoCanvas = new VideoCanvas(mLocalView, VideoCanvas.RENDER_MODE_HIDDEN, 0);
         mRtcEngine.setupLocalVideo(localVideoCanvas);
+    }
+
+    private void setupVideoConfig() {
+        mRtcEngine.enableVideo();
+
+        mRtcEngine.setVideoEncoderConfiguration(new VideoEncoderConfiguration(
+                VideoEncoderConfiguration.VD_640x360,
+                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15,
+                VideoEncoderConfiguration.STANDARD_BITRATE,
+                VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT));
     }
 
     public static int getScreenWidth() {
