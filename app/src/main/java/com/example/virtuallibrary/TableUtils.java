@@ -10,10 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.UUID;
-=======
->>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
 
 public class TableUtils {
 
@@ -66,10 +63,7 @@ public class TableUtils {
         table.setVisiting(visitors);
         table.setDescription(description);
         table.setLocked(locked);
-<<<<<<< HEAD
         table.setChannel(UUID.randomUUID().toString());
-=======
->>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
         table.saveInBackground();
         TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
         UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);

@@ -14,13 +14,10 @@ import java.util.zip.CRC32;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-<<<<<<< HEAD
 /*
 From: https://github.com/AgoraIO/Basic-Video-Call
  */
 
-=======
->>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
 public class AccessToken {
 
     public static final int VERSION_LENGTH = 3;

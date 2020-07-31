@@ -216,10 +216,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TableDetailsActivity.this, CallActivity.class);
-<<<<<<< HEAD
                 intent.putExtra(TableUtils.TAG, Parcels.wrap(table));
-=======
->>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
                 startActivity(intent);
             }
         });

@@ -31,11 +31,8 @@ public class Table extends ParseObject {
     public static final String KEY_LOCKED = "locked";
     public static final String KEY_CHAT = "chat";
     public static final String KEY_INVITES = "invites";
-<<<<<<< HEAD
     public static final String KEY_CHANNEL = "channel";
-=======
     public static final String KEY_ALLOWED = "allowed";
->>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
 
     public ParseUser getCreator() {
         try {
@@ -199,7 +196,6 @@ public class Table extends ParseObject {
         saveInBackground();
     }
 
-<<<<<<< HEAD
     public String getChannel() {
         try {
             return fetch().getString(KEY_CHANNEL);
@@ -212,10 +208,6 @@ public class Table extends ParseObject {
     public void setChannel(String channel) {
         put(KEY_CHANNEL, channel);
     }
-
-
-=======
->>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
 
     @Override
     public boolean equals(@Nullable Object obj) {
