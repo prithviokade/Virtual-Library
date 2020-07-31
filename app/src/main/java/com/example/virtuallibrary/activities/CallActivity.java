@@ -48,6 +48,7 @@ public class CallActivity extends AppCompatActivity {
 
     int usersPresent = 0;
     List<SurfaceView> remoteUserViews = new ArrayList<>();
+    List<Integer> remoteUserUid = new ArrayList<>();
 
     // Ask for Android device permissions at runtime.
     private static final String[] REQUESTED_PERMISSIONS = {
@@ -155,8 +156,38 @@ public class CallActivity extends AppCompatActivity {
             });
         }
 
+        @Override
+        public void onUserOffline(final int uid, int reason) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d(TAG, Integer.toString(uid));
+                    removeUserLeft(uid);
+                }
+            });
+        }
 
     };
+
+    public void removeUserLeft(int uid) {
+        int userIndex = 0;
+        for (int i = 0; i < remoteUserUid.size(); i++) {
+            if (remoteUserUid.get(i) == uid) {
+                userIndex = i;
+                break;
+            }
+        }
+        SurfaceView userLeftView = remoteUserViews.get(userIndex);
+        userLeftView.setVisibility(View.GONE);
+        remoteUserUid.remove(userIndex);
+        remoteUserViews.remove(userIndex);
+        usersPresent--;
+        Log.d(TAG, "usersPresent" + Integer.toString(usersPresent));
+        Log.d(TAG, "userIndex" + Integer.toString(userIndex));
+        Log.d(TAG, "isremoveworking" + Integer.toString(remoteUserUid.size()) + Integer.toString(remoteUserViews.size()));
+        resizeRemoteVideos();
+
+    }
 
     // Initialize the RtcEngine object.
     private void initializeEngine() {
@@ -185,6 +216,8 @@ public class CallActivity extends AppCompatActivity {
         leaveChannel();
         RtcEngine.destroy();
     }
+
+
 
     private void leaveChannel() {
         // Leave the current channel.
@@ -230,6 +263,8 @@ public class CallActivity extends AppCompatActivity {
 
         // Set the remote video view.
         mRtcEngine.setupRemoteVideo(new VideoCanvas(newRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
+
+        remoteUserUid.add(uid);
         remoteUserViews.add(newRemoteView);
         resizeRemoteVideos();
     }
@@ -237,6 +272,14 @@ public class CallActivity extends AppCompatActivity {
     private void resizeRemoteVideos() {
         int screen_height = getScreenHeight();
         int screen_width = getScreenWidth();
+
+        if (usersPresent == 0) {
+            FrameLayout.LayoutParams parms0 = (FrameLayout.LayoutParams) mLocalView.getLayoutParams();
+            parms0.height = screen_height;
+            parms0.width = screen_width;
+            parms0.setMargins(0, 0, 0, 0);
+            mLocalView.setLayoutParams(parms0);
+        }
 
         // convert to for loop after testing is done
         if (usersPresent == 1) {
@@ -248,8 +291,10 @@ public class CallActivity extends AppCompatActivity {
             mLocalView.setLayoutParams(parms0);
 
             FrameLayout.LayoutParams parms = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
+            Log.d(TAG + "UID?",Integer.toString(remoteUserUid.get(0)));
             parms.height = screen_height;
             parms.width = screen_width;
+            parms.setMargins(0, 0, 0, 0);
             remoteUserViews.get(0).setLayoutParams(parms);
         }
 
