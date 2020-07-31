@@ -41,7 +41,9 @@ public class CallActivity extends AppCompatActivity {
     Table table;
     ImageButton btnOffSound;
     ImageButton btnOffVideo;
+    ImageButton btnEndCall;
     int volume = 100;
+    boolean videoMuted = false;
 
     int usersPresent = 0;
     List<SurfaceView> remoteUserViews = new ArrayList<>();
@@ -64,6 +66,7 @@ public class CallActivity extends AppCompatActivity {
         mRemoteContainer = binding.mRemoteContainer;
         btnOffSound = binding.btnOffSound;
         btnOffVideo = binding.btnOffVideo;
+        btnEndCall = binding.btnEndCall;
 
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
 
@@ -96,7 +99,23 @@ public class CallActivity extends AppCompatActivity {
         btnOffVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                int muteVideoResource;
+                videoMuted = !videoMuted;
+                if (videoMuted) {
+                    mRtcEngine.disableVideo();
+                    muteVideoResource = R.drawable.ic_baseline_videocam_off_24;
+                } else {
+                    mRtcEngine.enableVideo();
+                    muteVideoResource = R.drawable.ic_baseline_videocam_24;
+                }
+                btnOffVideo.setImageResource(muteVideoResource);
+            }
+        });
+
+        btnEndCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }

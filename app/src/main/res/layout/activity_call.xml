@@ -75,7 +75,7 @@
             android:layout_toEndOf="@+id/btnEndCall"
             android:backgroundTint="#FFFFFF"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_baseline_videocam_off_24" />
+            app:srcCompat="@drawable/ic_baseline_videocam_24" />
 
         <ImageButton
             android:id="@+id/btnOffSound"
