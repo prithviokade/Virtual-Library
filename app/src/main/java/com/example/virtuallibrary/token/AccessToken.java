@@ -1,4 +1,4 @@
-package com.example.virtuallibrary;
+package com.example.virtuallibrary.token;
 
 import org.apache.commons.codec.binary.Base64;
 

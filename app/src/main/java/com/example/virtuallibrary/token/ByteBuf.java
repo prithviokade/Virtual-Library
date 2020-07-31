@@ -1,4 +1,4 @@
-package com.example.virtuallibrary;
+package com.example.virtuallibrary.token;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

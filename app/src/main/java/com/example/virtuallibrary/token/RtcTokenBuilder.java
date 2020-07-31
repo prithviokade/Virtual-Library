@@ -1,8 +1,10 @@
-package com.example.virtuallibrary;
+package com.example.virtuallibrary.token;
 
 /*
 From: https://github.com/AgoraIO/Basic-Video-Call
  */
+
+import com.example.virtuallibrary.token.AccessToken;
 
 public class RtcTokenBuilder {
     public enum Role {

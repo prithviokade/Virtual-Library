@@ -1,4 +1,4 @@
-package com.example.virtuallibrary;
+package com.example.virtuallibrary.token;
 
 /*
 Modified from: https://github.com/AgoraIO/Basic-Video-Call
@@ -6,6 +6,8 @@ Modified from: https://github.com/AgoraIO/Basic-Video-Call
 
 import android.app.Application;
 import android.content.res.Resources;
+
+import com.example.virtuallibrary.R;
 
 public class RtcTokenGenerator extends Application {
     public static String appId;

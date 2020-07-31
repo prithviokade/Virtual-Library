@@ -8,15 +8,17 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.virtuallibrary.R;
-import com.example.virtuallibrary.RtcTokenGenerator;
+import com.example.virtuallibrary.token.RtcTokenGenerator;
 import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.databinding.ActivityCallBinding;
 import com.example.virtuallibrary.models.Table;
@@ -26,14 +28,20 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
+import io.agora.rtc.video.BeautyOptions;
 import io.agora.rtc.video.VideoCanvas;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
 public class CallActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQ_ID = 22;
+    public static final int DEFAULT_CONTRAST = 1;
+    public static final float DEFAULT_LIGHTNESS = .7f;
+    public static final float DEFAULT_SMOOTHNESS = .5f;
+    public static final float DEFAULT_REDNESS = .1f;
     public static final String TAG = "CallActivity";
     private RtcEngine mRtcEngine;
     private FrameLayout mLocalContainer;
@@ -43,8 +51,11 @@ public class CallActivity extends AppCompatActivity {
     ImageButton btnOffSound;
     ImageButton btnOffVideo;
     ImageButton btnEndCall;
+    ImageButton btnAddFilter;
+    ImageView blankProfile;
     int volume = 100;
     boolean videoMuted = false;
+    boolean filterEnabled = false;
 
     int usersPresent = 0;
     List<SurfaceView> remoteUserViews = new ArrayList<>();
@@ -69,6 +80,7 @@ public class CallActivity extends AppCompatActivity {
         btnOffSound = binding.btnOffSound;
         btnOffVideo = binding.btnOffVideo;
         btnEndCall = binding.btnEndCall;
+        btnAddFilter = binding.btnAddFilter;
 
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
 
@@ -107,11 +119,20 @@ public class CallActivity extends AppCompatActivity {
                 if (videoMuted) {
                     mRtcEngine.disableVideo();
                     muteVideoResource = R.drawable.ic_baseline_videocam_off_24;
+                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mLocalView.getLayoutParams();
+                    blankProfile = new ImageView(CallActivity.this);
+                    blankProfile.setImageResource(R.drawable.ic_baseline_person_24_black);
+                    blankProfile.setBackgroundColor(getColor(R.color.lightGrey));
+                    blankProfile.setLayoutParams(params);
+                    blankProfile.setVisibility(View.VISIBLE);
+                    mLocalContainer.addView(blankProfile);
                 } else {
                     mRtcEngine.enableVideo();
                     muteVideoResource = R.drawable.ic_baseline_videocam_24;
+                    blankProfile.setVisibility(View.GONE);
                 }
                 btnOffVideo.setImageResource(muteVideoResource);
+
             }
         });
 
@@ -127,6 +148,18 @@ public class CallActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mRtcEngine.switchCamera();
+            }
+        });
+
+        btnAddFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterEnabled = !filterEnabled;
+                if (filterEnabled) {
+                    mRtcEngine.setBeautyEffectOptions(true, new BeautyOptions(DEFAULT_CONTRAST, DEFAULT_LIGHTNESS, DEFAULT_SMOOTHNESS, DEFAULT_REDNESS));
+                } else {
+                    mRtcEngine.setBeautyEffectOptions(false, new BeautyOptions(DEFAULT_CONTRAST, DEFAULT_LIGHTNESS, DEFAULT_SMOOTHNESS, DEFAULT_REDNESS));
+                }
             }
         });
     }
@@ -156,6 +189,7 @@ public class CallActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.d(TAG, "triggered");
                     setupRemoteVideo(uid);
                 }
             });
@@ -171,9 +205,37 @@ public class CallActivity extends AppCompatActivity {
             });
         }
 
+        @Override
+        public void onRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
+            super.onRemoteVideoStateChanged(uid, state, reason, elapsed);
+            int userIndex = findUserIndex(uid);
+            if (reason == Constants.REMOTE_VIDEO_STATE_REASON_REMOTE_MUTED) {
+                // set the blank image
+                /*
+                SurfaceView userView = remoteUserViews.get(userIndex);
+                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) userView.getLayoutParams();
+                blankProfile = new ImageView(CallActivity.this);
+                blankProfile.setImageResource(R.drawable.ic_baseline_person_24_black);
+                blankProfile.setLayoutParams(params);
+                userView.setVisibility(View.INVISIBLE);
+
+                 */
+            }
+
+            if (reason == Constants.REMOTE_VIDEO_STATE_REASON_REMOTE_UNMUTED) {
+                // set the video again
+                /*
+                Log.d(TAG, "HELLO");
+                SurfaceView userView = remoteUserViews.get(userIndex);
+                userView.setVisibility(View.VISIBLE);
+                blankProfile.setVisibility(View.GONE);
+
+                 */
+            }
+        }
     };
 
-    public void removeUserLeft(int uid) {
+    public int findUserIndex(int uid) {
         int userIndex = 0;
         for (int i = 0; i < remoteUserUid.size(); i++) {
             if (remoteUserUid.get(i) == uid) {
@@ -181,6 +243,11 @@ public class CallActivity extends AppCompatActivity {
                 break;
             }
         }
+        return userIndex;
+    }
+
+    public void removeUserLeft(int uid) {
+        int userIndex = findUserIndex(uid);
         SurfaceView userLeftView = remoteUserViews.get(userIndex);
         userLeftView.setVisibility(View.GONE);
         remoteUserUid.remove(userIndex);
@@ -216,8 +283,6 @@ public class CallActivity extends AppCompatActivity {
         leaveChannel();
         RtcEngine.destroy();
     }
-
-
 
     private void leaveChannel() {
         // Leave the current channel.
@@ -256,6 +321,10 @@ public class CallActivity extends AppCompatActivity {
     }
 
     private void setupRemoteVideo(int uid) {
+        if (remoteUserUid.contains(uid)) {
+            return;
+        }
+
         usersPresent += 1;
 
         SurfaceView newRemoteView = RtcEngine.CreateRendererView(getBaseContext());
