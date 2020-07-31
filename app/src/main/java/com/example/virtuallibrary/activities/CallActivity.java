@@ -122,6 +122,13 @@ public class CallActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        mLocalView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRtcEngine.switchCamera();
+            }
+        });
     }
 
     private boolean checkSelfPermission(String permission, int requestCode) {
@@ -140,7 +147,6 @@ public class CallActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i("agora", "Join channel success, uid: " + (uid & 0xFFFFFFFFL));
                 }
             });
         }
@@ -150,7 +156,6 @@ public class CallActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i("agora","First remote video decoded, uid: " + (uid & 0xFFFFFFFFL));
                     setupRemoteVideo(uid);
                 }
             });
@@ -161,7 +166,6 @@ public class CallActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d(TAG, Integer.toString(uid));
                     removeUserLeft(uid);
                 }
             });
@@ -182,9 +186,6 @@ public class CallActivity extends AppCompatActivity {
         remoteUserUid.remove(userIndex);
         remoteUserViews.remove(userIndex);
         usersPresent--;
-        Log.d(TAG, "usersPresent" + Integer.toString(usersPresent));
-        Log.d(TAG, "userIndex" + Integer.toString(userIndex));
-        Log.d(TAG, "isremoveworking" + Integer.toString(remoteUserUid.size()) + Integer.toString(remoteUserViews.size()));
         resizeRemoteVideos();
 
     }
@@ -194,7 +195,6 @@ public class CallActivity extends AppCompatActivity {
         try {
             mRtcEngine = RtcEngine.create(getBaseContext(), getString(R.string.agora_app_id), mRtcEventHandler);
         } catch (Exception e) {
-            Log.e(TAG, Log.getStackTraceString(e));
             throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
         }
     }
@@ -291,7 +291,6 @@ public class CallActivity extends AppCompatActivity {
             mLocalView.setLayoutParams(parms0);
 
             FrameLayout.LayoutParams parms = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
-            Log.d(TAG + "UID?",Integer.toString(remoteUserUid.get(0)));
             parms.height = screen_height;
             parms.width = screen_width;
             parms.setMargins(0, 0, 0, 0);

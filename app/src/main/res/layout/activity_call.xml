@@ -35,24 +35,16 @@
         android:paddingRight="8dp">
 
         <ImageButton
-            android:id="@id/switch_speaker_id"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="#FFFFFF"
-            android:scaleType="center"
-            app:srcCompat="@android:drawable/ic_btn_speak_now" />
-
-        <ImageButton
-            android:id="@+id/filter"
+            android:id="@+id/btnOffSound"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="0dp"
-            android:layout_toEndOf="@+id/switch_speaker_id"
+            android:layout_toStartOf="@+id/btnEndCall"
             android:backgroundTint="#FFFFFF"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_baseline_star_half_24" />
+            app:srcCompat="@drawable/ic_baseline_mic_24" />
 
         <ImageButton
             android:id="@+id/btnEndCall"
@@ -76,18 +68,6 @@
             android:backgroundTint="#FFFFFF"
             android:scaleType="center"
             app:srcCompat="@drawable/ic_baseline_videocam_24" />
-
-        <ImageButton
-            android:id="@+id/btnOffSound"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginBottom="0dp"
-            android:layout_toEndOf="@+id/btnOffVideo"
-            android:backgroundTint="#FFFFFF"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_baseline_mic_24" />
 
     </RelativeLayout>
 
