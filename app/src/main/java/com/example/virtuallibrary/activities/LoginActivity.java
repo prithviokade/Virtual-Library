@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,7 +50,13 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
-        goMainActivity();
+        goLoginActivity();
+    }
+
+    private void goLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -89,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         setResult(RESULT_OK);
-                        finish();
+                        Log.d(TAG, "SUCCESS");
                     }
 
                     @Override
@@ -193,6 +200,7 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
 
     @Override
     public void onCompleted(User user) {
+        Log.d(TAG, "onCompletedCalled");
         String username;
         String email = null;
         if (user.getEmail() == null) {
@@ -204,6 +212,7 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
 
         loginUser(username, user.getId());
         if (LOGIN_STATUS == null) {
+            Log.d(TAG, "signedUpUSER");
             // Create the ParseUser
             ParseUser newUser = new ParseUser();
             // Set properties

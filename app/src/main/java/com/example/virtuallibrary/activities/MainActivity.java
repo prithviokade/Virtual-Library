@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+
+
         btnAdd = binding.btnAdd;
         btnCancel = binding.btnCancel;
         bottomNavigation = binding.bottomNavigation;

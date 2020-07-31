@@ -10,12 +10,10 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Display;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.WindowMetrics;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.widget.ImageButton;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.RtcTokenGenerator;
@@ -41,6 +39,9 @@ public class CallActivity extends AppCompatActivity {
     private SurfaceView mLocalView;
     private FrameLayout mRemoteContainer;
     Table table;
+    ImageButton btnOffSound;
+    ImageButton btnOffVideo;
+    int volume = 100;
 
     int usersPresent = 0;
     List<SurfaceView> remoteUserViews = new ArrayList<>();
@@ -61,6 +62,9 @@ public class CallActivity extends AppCompatActivity {
 
         mLocalContainer = binding.mLocalContainer;
         mRemoteContainer = binding.mRemoteContainer;
+        btnOffSound = binding.btnOffSound;
+        btnOffVideo = binding.btnOffVideo;
+
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
 
         // If all the permissions are granted, initialize the RtcEngine object and join a channel.
@@ -73,6 +77,28 @@ public class CallActivity extends AppCompatActivity {
             joinChannel(0);
         }
 
+        btnOffSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int muteButtonResource;
+                if (volume == 0) {
+                    volume = 100;
+                    muteButtonResource = R.drawable.ic_baseline_mic_24;
+                } else {
+                    volume = 0;
+                    muteButtonResource = R.drawable.ic_baseline_mic_off_24;
+                }
+                mRtcEngine.adjustRecordingSignalVolume(volume);
+                btnOffSound.setImageResource(muteButtonResource);
+            }
+        });
+
+        btnOffVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
     }
 
     private boolean checkSelfPermission(String permission, int requestCode) {
