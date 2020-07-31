@@ -1,9 +1,12 @@
 package com.example.virtuallibrary;
 
+<<<<<<< HEAD
 /*
 From: https://github.com/AgoraIO/Basic-Video-Call
  */
 
+=======
+>>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
 public class RtcTokenBuilder {
     public enum Role {
         /**

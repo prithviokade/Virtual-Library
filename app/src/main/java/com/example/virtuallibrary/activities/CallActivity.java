@@ -19,11 +19,15 @@ import android.widget.RelativeLayout;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.RtcTokenGenerator;
+<<<<<<< HEAD
 import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.databinding.ActivityCallBinding;
 import com.example.virtuallibrary.models.Table;
 
 import org.parceler.Parcels;
+=======
+import com.example.virtuallibrary.databinding.ActivityCallBinding;
+>>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +44,10 @@ public class CallActivity extends AppCompatActivity {
     private FrameLayout mLocalContainer;
     private SurfaceView mLocalView;
     private FrameLayout mRemoteContainer;
+<<<<<<< HEAD
     Table table;
+=======
+>>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
 
     int usersPresent = 0;
     List<SurfaceView> remoteUserViews = new ArrayList<>();
@@ -61,7 +68,10 @@ public class CallActivity extends AppCompatActivity {
 
         mLocalContainer = binding.mLocalContainer;
         mRemoteContainer = binding.mRemoteContainer;
+<<<<<<< HEAD
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
+=======
+>>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
 
         // If all the permissions are granted, initialize the RtcEngine object and join a channel.
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
@@ -70,7 +80,11 @@ public class CallActivity extends AppCompatActivity {
             initializeEngine();
             setupLocalVideo();
 
+<<<<<<< HEAD
             joinChannel(0);
+=======
+            joinChannel(RtcTokenGenerator.channelName, 0);
+>>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
         }
 
     }
@@ -120,9 +134,14 @@ public class CallActivity extends AppCompatActivity {
         }
     }
 
+<<<<<<< HEAD
     public final void joinChannel(int uid) {
         String channel = table.getChannel();
         String accessToken = RtcTokenGenerator.getToken(channel);
+=======
+    public final void joinChannel(final String channel, int uid) {
+        String accessToken = RtcTokenGenerator.getToken();
+>>>>>>> ec9d24c34bf22ea91320dd88f25a40d3a6e52ecb
         // String accessToken = getApplicationContext().getString(R.string.agora_access_token);
         if (TextUtils.equals(accessToken, "")) {
             accessToken = null; // no token
