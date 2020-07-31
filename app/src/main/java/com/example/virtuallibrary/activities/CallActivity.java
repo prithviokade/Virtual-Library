@@ -19,7 +19,11 @@ import android.widget.RelativeLayout;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.RtcTokenGenerator;
+import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.databinding.ActivityCallBinding;
+import com.example.virtuallibrary.models.Table;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,7 @@ public class CallActivity extends AppCompatActivity {
     private FrameLayout mLocalContainer;
     private SurfaceView mLocalView;
     private FrameLayout mRemoteContainer;
+    Table table;
 
     int usersPresent = 0;
     List<SurfaceView> remoteUserViews = new ArrayList<>();
@@ -56,6 +61,7 @@ public class CallActivity extends AppCompatActivity {
 
         mLocalContainer = binding.mLocalContainer;
         mRemoteContainer = binding.mRemoteContainer;
+        table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
 
         // If all the permissions are granted, initialize the RtcEngine object and join a channel.
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
@@ -64,7 +70,7 @@ public class CallActivity extends AppCompatActivity {
             initializeEngine();
             setupLocalVideo();
 
-            joinChannel(RtcTokenGenerator.channelName, 0);
+            joinChannel(0);
         }
 
     }
@@ -114,8 +120,9 @@ public class CallActivity extends AppCompatActivity {
         }
     }
 
-    public final void joinChannel(final String channel, int uid) {
-        String accessToken = RtcTokenGenerator.getToken();
+    public final void joinChannel(int uid) {
+        String channel = table.getChannel();
+        String accessToken = RtcTokenGenerator.getToken(channel);
         // String accessToken = getApplicationContext().getString(R.string.agora_access_token);
         if (TextUtils.equals(accessToken, "")) {
             accessToken = null; // no token
