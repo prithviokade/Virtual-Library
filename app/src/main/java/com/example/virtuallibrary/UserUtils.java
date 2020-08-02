@@ -19,6 +19,8 @@ public class UserUtils {
     public static final String KEY_NAME = "name";
     public static final String KEY_BIO = "bio";
     public static final String KEY_FRIENDS = "friends";
+    public static final String KEY_JOINED_SIZES = "joined_sizes";
+    public static final String KEY_JOINED_TYPES = "joined_types";
 
 
     public static ParseFile getProfilePicture(ParseUser user) {
@@ -85,6 +87,32 @@ public class UserUtils {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    public static List<Integer> getJoinedSizes(ParseUser user) {
+        try {
+            return (List<Integer>) user.fetch().get(KEY_JOINED_SIZES);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static List<String> getJoinedTypes(ParseUser user) {
+        try {
+            return (List<String>) user.fetch().get(KEY_JOINED_TYPES);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static void addJoinedSize(ParseUser user, Integer size) {
+        user.add(KEY_JOINED_SIZES, size);
+    }
+
+    public static void addJoinedType(ParseUser user, String type) {
+         user.add(KEY_JOINED_TYPES, type);
     }
 
     public static boolean equals(ParseUser self, ParseUser other) {

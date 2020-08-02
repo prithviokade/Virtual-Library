@@ -188,6 +188,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
                     UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);
+                    UserUtils.addJoinedSize(ParseUser.getCurrentUser(), table.getSize());
+                    UserUtils.addJoinedType(ParseUser.getCurrentUser(), table.getType());
                     btnJoin.setText(R.string.leave);
                     table.saveInBackground();
                     ParseUser.getCurrentUser().saveInBackground();

@@ -1,7 +1,10 @@
 package com.example.virtuallibrary;
 
+import android.util.Log;
+
 import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Table;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -11,6 +14,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+
+import static java.lang.Math.abs;
 
 public class TableUtils {
 
@@ -67,6 +72,9 @@ public class TableUtils {
         table.saveInBackground();
         TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
         UserUtils.setCurrentTable(ParseUser.getCurrentUser(), table);
+        UserUtils.addJoinedSize(ParseUser.getCurrentUser(), table.getSize());
+        UserUtils.addJoinedType(ParseUser.getCurrentUser(), table.getType());
+        ParseUser.getCurrentUser().saveInBackground();
         return table;
     }
 
@@ -91,6 +99,28 @@ public class TableUtils {
             }
         }
         return count;
+    }
+
+    public static int getTableScore(Table table) {
+        int friendScore = getNumberFriends(table);
+
+        List<Integer> joinedSizes = UserUtils.getJoinedSizes(ParseUser.getCurrentUser());
+        int sum = 0;
+        for (int size : joinedSizes) {
+            sum += size;
+        }
+        int average = sum / joinedSizes.size();
+        int sizeScore = 10 - abs(table.getSize() - average);
+
+        List<String> joinedTypes = UserUtils.getJoinedTypes(ParseUser.getCurrentUser());
+        int typeScore = 0;
+        for (String type : joinedTypes) {
+            if (type.equals(table.getType())) {
+                typeScore += 1;
+            }
+        }
+
+        return friendScore + sizeScore + typeScore;
     }
 
     public static void removeInvite(ParseUser to, ParseUser from, Table table, String type) {
@@ -127,14 +157,14 @@ public class TableUtils {
         Comparator<Table> compareByLastUpdated = new Comparator<Table>() {
             @Override
             public int compare(Table o1, Table o2) {
-                return o1.getUpdatedAt().compareTo(o2.getUpdatedAt());
+                return o2.getUpdatedAt().compareTo(o1.getUpdatedAt());
             }
         };
 
         Comparator<Table> compareByCreatedAt = new Comparator<Table>() {
             @Override
             public int compare(Table o1, Table o2) {
-                return o1.getCreatedAt().compareTo(o2.getCreatedAt());
+                return o2.getCreatedAt().compareTo(o1.getCreatedAt());
             }
         };
 
@@ -148,7 +178,14 @@ public class TableUtils {
         Comparator<Table> compareByFriends = new Comparator<Table>() {
             @Override
             public int compare(Table o1, Table o2) {
-                return Integer.compare(TableUtils.getNumberFriends(o1), TableUtils.getNumberFriends(o2));
+                return Integer.compare(TableUtils.getNumberFriends(o2), TableUtils.getNumberFriends(o1));
+            }
+        };
+
+        Comparator<Table> compareByScore = new Comparator<Table>() {
+            @Override
+            public int compare(Table o1, Table o2) {
+                return Integer.compare(TableUtils.getTableScore(o2), TableUtils.getTableScore(o1));
             }
         };
 
@@ -162,8 +199,13 @@ public class TableUtils {
              Collections.sort(tables, compareBySize);
         } else if (text.equals("Size: High to Low")) {
              Collections.sort(tables, Collections.reverseOrder(compareBySize));
-        } else { } // TO DO: Recommended
+        } else { // Recommended
+             Collections.sort(tables, compareByScore);
+        }
 
+         for (Table table : tables) {
+             Log.d(TAG, Integer.toString(TableUtils.getTableScore(table)));
+         }
         return tables;
     }
 
