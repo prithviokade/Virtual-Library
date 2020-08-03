@@ -54,8 +54,8 @@ public class CallActivity extends AppCompatActivity {
     ImageButton btnAddFilter;
     ImageView blankProfile;
     ImageView remoteBlankProfile;
-    int volume = 100;
-    boolean videoMuted = false;
+    boolean audioMuted = false;
+    boolean videoMuted = true;
     boolean filterEnabled = false;
 
     int usersPresent = 0;
@@ -101,16 +101,8 @@ public class CallActivity extends AppCompatActivity {
         btnOffSound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int muteButtonResource;
-                if (volume == 0) {
-                    volume = 100;
-                    muteButtonResource = R.drawable.ic_baseline_mic_24;
-                } else {
-                    volume = 0;
-                    muteButtonResource = R.drawable.ic_baseline_mic_off_24;
-                }
-                mRtcEngine.adjustRecordingSignalVolume(volume);
-                btnOffSound.setImageResource(muteButtonResource);
+                audioMuted = !audioMuted;
+                mRtcEngine.muteLocalAudioStream(audioMuted);
             }
         });
 
@@ -119,8 +111,8 @@ public class CallActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int muteVideoResource;
                 videoMuted = !videoMuted;
-                if (videoMuted) {
-                    mRtcEngine.disableVideo();
+                mRtcEngine.enableLocalVideo(videoMuted);
+                if (!videoMuted) {
                     muteVideoResource = R.drawable.ic_baseline_videocam_off_24;
                     FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mLocalView.getLayoutParams();
                     blankProfile = new ImageView(CallActivity.this);
@@ -130,7 +122,6 @@ public class CallActivity extends AppCompatActivity {
                     blankProfile.setVisibility(View.VISIBLE);
                     mLocalContainer.addView(blankProfile);
                 } else {
-                    mRtcEngine.enableVideo();
                     muteVideoResource = R.drawable.ic_baseline_videocam_24;
                     blankProfile.setVisibility(View.INVISIBLE);
                 }
