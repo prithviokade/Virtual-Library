@@ -103,6 +103,11 @@ public class CallActivity extends AppCompatActivity {
             public void onClick(View view) {
                 audioMuted = !audioMuted;
                 mRtcEngine.muteLocalAudioStream(audioMuted);
+                if (audioMuted) {
+                    btnOffSound.setImageResource(R.drawable.ic_baseline_mic_off_24);
+                } else {
+                    btnOffSound.setImageResource(R.drawable.ic_baseline_mic_24);
+                }
             }
         });
 

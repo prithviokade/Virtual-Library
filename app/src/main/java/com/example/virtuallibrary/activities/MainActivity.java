@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,13 +28,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private String selectedFragmentTag = HomeFragment.TAG;
+    private String selectedFragmentTag = "";
 
     BottomNavigationView bottomNavigation;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     ImageButton btnAdd;
     Button btnCancel;
-    Toolbar toolbar;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-
 
         btnAdd = binding.btnAdd;
         btnCancel = binding.btnCancel;
@@ -53,21 +52,24 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.actionProgress:
+                        if (selectedFragmentTag.equals(GoalsFragment.TAG)) { return true; }
+                        Fragment savedFragment = null;
                         getSupportActionBar().setCustomView(R.layout.actionbar_default);
                         btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = GoalsFragment.TAG;
                         fragment = new GoalsFragment();
                         break;
                     case R.id.actionPosts:
+                        if (selectedFragmentTag.equals(ResourcesFragment.TAG)) { return true; }
                         getSupportActionBar().setCustomView(R.layout.actionbar_default);
                         btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = ResourcesFragment.TAG;
                         fragment = new ResourcesFragment();
                         break;
                     case R.id.actionSearch:
+                        if (selectedFragmentTag.equals(SearchFragment.TAG)) { return true; }
                         getSupportActionBar().setCustomView(R.layout.actionbar_default);
                         selectedFragmentTag = SearchFragment.TAG;
                         fragment = new SearchFragment();
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.actionHome:
                     default:
+                        if (selectedFragmentTag.equals(HomeFragment.TAG)) { return true; }
                         getSupportActionBar().setCustomView(R.layout.actionbar_notification_sort);
                         btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = HomeFragment.TAG;
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 btnCancel.setVisibility(View.INVISIBLE);
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment, selectedFragmentTag).commit();
                 return true;
             }
         });
@@ -94,21 +97,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 getSupportActionBar().setCustomView(R.layout.actionbar_default);
                 btnCancel.setVisibility(View.VISIBLE);
-                Fragment fragment;
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
                 switch (selectedFragmentTag) {
                     case GoalsFragment.TAG:
                         fragment = new CreateGoalFragment();
+                        selectedFragmentTag = CreateGoalFragment.TAG;
                         break;
                     case ResourcesFragment.TAG:
                         fragment = new CreateResourceFragment();
+                        selectedFragmentTag = CreateResourceFragment.TAG;
                         break;
                     case HomeFragment.TAG:
                     default:
                         fragment = new CreateTableFragment();
+                        selectedFragmentTag = CreateTableFragment.TAG;
                         break;
                 }
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment, selectedFragmentTag).commit();
                 btnAdd.setVisibility(View.INVISIBLE);
             }
         });
@@ -120,15 +125,15 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
                 switch (selectedFragmentTag) {
-                    case HomeFragment.TAG:
-                    default:
-                        fragment = new HomeFragment();
-                        break;
                     case GoalsFragment.TAG:
                         fragment = new GoalsFragment();
                         break;
                     case ResourcesFragment.TAG:
                         fragment = new ResourcesFragment();
+                        break;
+                    case HomeFragment.TAG:
+                    default:
+                        fragment = new HomeFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
