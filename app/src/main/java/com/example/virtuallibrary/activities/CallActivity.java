@@ -143,7 +143,7 @@ public class CallActivity extends AppCompatActivity {
             }
         });
 
-        mLocalView.setOnClickListener(new View.OnClickListener() {
+        mLocalContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mRtcEngine.switchCamera();
@@ -204,52 +204,6 @@ public class CallActivity extends AppCompatActivity {
                     removeUserLeft(uid);
                 }
             });
-        }
-
-        @Override
-        public void onRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
-            super.onRemoteVideoStateChanged(uid, state, reason, elapsed);
-            int userIndex = findUserIndex(uid, remoteUserUid);
-            if (reason == Constants.REMOTE_VIDEO_STATE_REASON_REMOTE_MUTED) {
-                // set the blank image
-                Log.d(TAG, "MUTED" + userIndex);
-                  /*
-                SurfaceView userView = remoteUserViews.get(userIndex);
-                userView.setBackgroundColor(getColor(R.color.lightGrey));
-                userView.setBackgroundResource(R.drawable.ic_baseline_person_24_black);
-                userView.notify();
-                SurfaceView userView = remoteUserViews.get(userIndex);
-                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) userView.getLayoutParams();
-                Log.d(TAG, Integer.toString(params.height) + " " + params.width);
-                remoteBlankProfile = new ImageView(CallActivity.this);
-                remoteBlankProfile.setImageResource(R.drawable.ic_baseline_person_24_black);
-                remoteBlankProfile.setBackgroundColor(getColor(R.color.lightGrey));
-                remoteBlankProfile.setLayoutParams(params);
-                remoteBlankProfile.setVisibility(View.VISIBLE);
-                userView.setVisibility(View.INVISIBLE);
-                mRemoteContainer.addView(remoteBlankProfile);
-                remoteUserBlankViews.add(remoteBlankProfile);
-                remoteUserBlankUid.add(uid);
-                   */
-            }
-
-            if (reason == Constants.REMOTE_VIDEO_STATE_REASON_REMOTE_UNMUTED) {
-                // set the video again
-                Log.d(TAG, "UNMUTED" + userIndex);
-               //  SurfaceView userView = remoteUserViews.get(userIndex);
-                // userView.setBackgroundResource(0);
-                // userView.setBackgroundColor(0);
-                // mRtcEngine.setupRemoteVideo(new VideoCanvas(newRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
-                // SurfaceView userView = remoteUserViews.get(userIndex);
-                // int userBlankIndex = findUserIndex(uid, remoteUserBlankUid);
-                // Log.d(TAG, Integer.toString(userBlankIndex));
-                // ImageView remoteBlankProfile = remoteUserBlankViews.get(userBlankIndex);
-                // remoteBlankProfile.setVisibility(View.INVISIBLE);
-                // userView.setVisibility(View.VISIBLE);
-
-                // remoteUserBlankViews.remove(userBlankIndex);
-                // remoteUserBlankUid.remove(userBlankIndex);
-            }
         }
     };
 
@@ -357,7 +311,10 @@ public class CallActivity extends AppCompatActivity {
     }
 
     private void resizeRemoteVideos() {
-        int screen_height = getScreenHeight();
+        float density = Resources.getSystem().getDisplayMetrics().density;
+        int bottomNavBarHeight = (int) (48 * density);
+        int topActionBarHeight = getSupportActionBar().getHeight();
+        int screen_height = getScreenHeight() - bottomNavBarHeight - topActionBarHeight;
         int screen_width = getScreenWidth();
 
         if (usersPresent == 0) {
@@ -368,36 +325,67 @@ public class CallActivity extends AppCompatActivity {
             mLocalView.setLayoutParams(parms0);
         }
 
-        // convert to for loop after testing is done
         if (usersPresent == 1) {
             FrameLayout.LayoutParams parms0 = (FrameLayout.LayoutParams) mLocalView.getLayoutParams();
             parms0.height = 400;
             parms0.width = 300;
-            parms0.leftMargin = screen_width - 300 - 20;
+            int padding = 20;
+            parms0.leftMargin = screen_width - parms0.width - padding;
             parms0.topMargin = 20;
             mLocalView.setLayoutParams(parms0);
 
-            FrameLayout.LayoutParams parms = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
-            parms.height = screen_height;
-            parms.width = screen_width;
-            parms.setMargins(0, 0, 0, 0);
-            remoteUserViews.get(0).setLayoutParams(parms);
+            FrameLayout.LayoutParams parms1 = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
+            parms1.height = screen_height;
+            parms1.width = screen_width;
+            parms1.setMargins(0, 0, 0, 0);
+            remoteUserViews.get(0).setLayoutParams(parms1);
         }
 
         if (usersPresent == 2) {
-            FrameLayout.LayoutParams parms0 = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
-            parms0.height = screen_height / 2 - 150;
-            parms0.width = screen_width;
-            remoteUserViews.get(0).setLayoutParams(parms0);
-
-            FrameLayout.LayoutParams parms1 = (FrameLayout.LayoutParams) remoteUserViews.get(1).getLayoutParams();
-            parms1.height = screen_height / 2 - 150;
+            FrameLayout.LayoutParams parms1 = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
+            parms1.height = screen_height / 2;
             parms1.width = screen_width;
-            parms1.topMargin = screen_height / 2 - 150;
-            remoteUserViews.get(1).setLayoutParams(parms1);
+            remoteUserViews.get(0).setLayoutParams(parms1);
+
+            FrameLayout.LayoutParams parms2 = (FrameLayout.LayoutParams) remoteUserViews.get(1).getLayoutParams();
+            parms2.height = screen_height / 2;
+            parms2.width = screen_width;
+            parms2.topMargin = parms1.height;
+            remoteUserViews.get(1).setLayoutParams(parms2);
         }
+
+        if (usersPresent == 3 || usersPresent == 4) {
+            if (usersPresent == 3) {
+                FrameLayout.LayoutParams parms1 = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
+                parms1.height = screen_height / 2;
+                parms1.width = screen_width;
+                remoteUserViews.get(0).setLayoutParams(parms1);
+            }
+            if (usersPresent == 4) {
+                FrameLayout.LayoutParams parms1 = (FrameLayout.LayoutParams) remoteUserViews.get(0).getLayoutParams();
+                parms1.height = screen_height / 2;
+                parms1.width = screen_width / 2;
+                remoteUserViews.get(0).setLayoutParams(parms1);
+
+                FrameLayout.LayoutParams parms4 = (FrameLayout.LayoutParams) remoteUserViews.get(3).getLayoutParams();
+                parms4.height = screen_height / 2;
+                parms4.width = screen_width / 2;
+                parms4.leftMargin = parms4.width;
+                remoteUserViews.get(3).setLayoutParams(parms4);
+            }
+            FrameLayout.LayoutParams parms2 = (FrameLayout.LayoutParams) remoteUserViews.get(1).getLayoutParams();
+            parms2.height = screen_height / 2;
+            parms2.width = screen_width / 2;
+            parms2.topMargin = parms2.height;
+            remoteUserViews.get(1).setLayoutParams(parms2);
+
+            FrameLayout.LayoutParams parms3 = (FrameLayout.LayoutParams) remoteUserViews.get(2).getLayoutParams();
+            parms3.height = screen_height / 2;
+            parms3.width = screen_width / 2;
+            parms3.leftMargin = parms3.width;
+            parms3.topMargin = parms3.height;
+            remoteUserViews.get(2).setLayoutParams(parms3);
+        }
+
     }
-
-
-
 }
