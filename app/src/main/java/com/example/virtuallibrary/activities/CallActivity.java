@@ -207,15 +207,14 @@ public class CallActivity extends AppCompatActivity {
             int userIndex = findUserIndex(uid, remoteUserUid);
             if (reason == Constants.REMOTE_VIDEO_STATE_REASON_REMOTE_MUTED) {
                 // set the blank image
-                /*
-                Log.d(TAG, "MUTED");
+                Log.d(TAG, "MUTED" + userIndex);
+                  /*
                 SurfaceView userView = remoteUserViews.get(userIndex);
                 userView.setBackgroundColor(getColor(R.color.lightGrey));
                 userView.setBackgroundResource(R.drawable.ic_baseline_person_24_black);
                 userView.notify();
                 SurfaceView userView = remoteUserViews.get(userIndex);
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) userView.getLayoutParams();
-                params.setMargins(0,0,0,0);
                 Log.d(TAG, Integer.toString(params.height) + " " + params.width);
                 remoteBlankProfile = new ImageView(CallActivity.this);
                 remoteBlankProfile.setImageResource(R.drawable.ic_baseline_person_24_black);
@@ -226,13 +225,13 @@ public class CallActivity extends AppCompatActivity {
                 mRemoteContainer.addView(remoteBlankProfile);
                 remoteUserBlankViews.add(remoteBlankProfile);
                 remoteUserBlankUid.add(uid);
-                 */
+                   */
             }
 
             if (reason == Constants.REMOTE_VIDEO_STATE_REASON_REMOTE_UNMUTED) {
                 // set the video again
-                // Log.d(TAG, "UNMUTED");
-                // SurfaceView userView = remoteUserViews.get(userIndex);
+                Log.d(TAG, "UNMUTED" + userIndex);
+               //  SurfaceView userView = remoteUserViews.get(userIndex);
                 // userView.setBackgroundResource(0);
                 // userView.setBackgroundColor(0);
                 // mRtcEngine.setupRemoteVideo(new VideoCanvas(newRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
@@ -241,6 +240,7 @@ public class CallActivity extends AppCompatActivity {
                 // Log.d(TAG, Integer.toString(userBlankIndex));
                 // ImageView remoteBlankProfile = remoteUserBlankViews.get(userBlankIndex);
                 // remoteBlankProfile.setVisibility(View.INVISIBLE);
+                // userView.setVisibility(View.VISIBLE);
 
                 // remoteUserBlankViews.remove(userBlankIndex);
                 // remoteUserBlankUid.remove(userBlankIndex);

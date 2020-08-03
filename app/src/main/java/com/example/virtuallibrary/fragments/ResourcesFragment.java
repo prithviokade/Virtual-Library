@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ public class ResourcesFragment extends Fragment {
     RecyclerView rvPosts;
     List<Post> posts;
     ResourceAdapter adapter;
+    SwipeRefreshLayout swipeContainer;
 
     public ResourcesFragment() {
         // Required empty public constructor
@@ -52,6 +54,23 @@ public class ResourcesFragment extends Fragment {
         adapter = new ResourceAdapter(getContext(), posts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) binding.swipeContainer;
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryPosts();
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
         rvPosts.setAdapter(adapter);
         rvPosts.setLayoutManager(linearLayoutManager);
         queryPosts();
@@ -71,6 +90,7 @@ public class ResourcesFragment extends Fragment {
                 }
                 adapter.clear();
                 adapter.addAll(retreivedPosts);
+                swipeContainer.setRefreshing(false);
             }
         });
     }

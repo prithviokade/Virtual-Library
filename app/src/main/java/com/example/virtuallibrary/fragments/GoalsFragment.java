@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class GoalsFragment extends Fragment {
     Button btnLogOut;
     List<Goal> goals;
     GoalsAdapter adapter;
+    SwipeRefreshLayout swipeContainer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +67,23 @@ public class GoalsFragment extends Fragment {
         rvChecklist = binding.rvChecklist;
         btnLogOut = binding.btnLogOut;
         goals = new ArrayList<>();
+
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) binding.swipeContainer;
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryGoals();
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
 
         adapter = new GoalsAdapter(getContext(), goals);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -114,5 +133,6 @@ public class GoalsFragment extends Fragment {
         List<Goal> foundGoals = UserUtils.getGoals(ParseUser.getCurrentUser());
         adapter.clear();
         adapter.addAll(foundGoals);
+        swipeContainer.setRefreshing(false);
     }
 }
