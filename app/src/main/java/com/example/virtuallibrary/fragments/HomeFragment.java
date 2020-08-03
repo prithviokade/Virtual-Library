@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,8 @@ public class HomeFragment extends Fragment {
     ProgressDialog progressDialog;
     List<Invite> invites;
     ListView lvSort;
+    SwipeRefreshLayout swipeContainer;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -89,6 +92,22 @@ public class HomeFragment extends Fragment {
         // sort options list
         lvSort = binding.lvSort;
         lvSort.setVisibility(View.GONE);
+
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) binding.swipeContainer;
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reloadTables();
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         ArrayAdapter lvAdapter = new ArrayAdapter<>(getContext(), R.layout.simple_list_item_1, getResources().getStringArray(R.array.sort_options_array));
         lvSort.setAdapter(lvAdapter);
@@ -135,39 +154,7 @@ public class HomeFragment extends Fragment {
         progressDialog.setCancelable(false);
 
         Table currTable = UserUtils.getCurrentTable(ParseUser.getCurrentUser());
-        if (currTable == null) {
-            ivCurrTable.setVisibility(View.GONE);
-            tvCurrentTableText.setVisibility(View.INVISIBLE);
-        } else {
-            int size = currTable.getSize();
-            if (size == 1) { ivCurrTable.setImageResource(R.drawable.onetable); }
-            if (size == 2) { ivCurrTable.setImageResource(R.drawable.twotable); }
-            if (size == 3) { ivCurrTable.setImageResource(R.drawable.threetable); }
-            if (size == 4) { ivCurrTable.setImageResource(R.drawable.fourtable); }
-            if (size == 5) { ivCurrTable.setImageResource(R.drawable.fivetable); }
-            if (size == 6) { ivCurrTable.setImageResource(R.drawable.sixtable); }
-            if (size == 8) { ivCurrTable.setImageResource(R.drawable.eighttable); }
-            if (size == 10) { ivCurrTable.setImageResource(R.drawable.tentable); }
-
-            tvCurrentTableText.setVisibility(View.VISIBLE);
-            tvStatus.setText(currTable.getStatus());
-            tvSize.setText(Integer.toString(currTable.getSize()));
-            tvMemberCount.setText(Integer.toString(currTable.getMates().size()));
-            if (currTable.getVisiting()) {
-                tvVisitors.setText(R.string.allowed);
-            } else {
-                tvVisitors.setText(R.string.not_allowed);
-            }
-
-            String topic = currTable.getTopic();
-            String type = currTable.getType();
-            String description = currTable.getDescription();
-            String fullDescription = getString(R.string.description_open_pt1) + " " + type + " " + getString(R.string.description_pt2) + " " + topic + ".\n" + description;
-            if (currTable.getLocked()) {
-                fullDescription = getString(R.string.description_closed_pt1) + " " + type + " " + getString(R.string.description_pt2) + " " + topic + ".\n" + description;
-            }
-            tvDescription.setText(fullDescription);
-        }
+        setUpCurrentTable(currTable);
 
         final Table finalCurrTable = currTable;
         ivCurrTable.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +175,42 @@ public class HomeFragment extends Fragment {
         showLoading();
         invites = new ArrayList<>();
         queryTables();
+    }
+
+    private void setUpCurrentTable(Table currTable) {
+        if (currTable == null) {
+            ivCurrTable.setVisibility(View.GONE);
+            tvCurrentTableText.setVisibility(View.INVISIBLE);
+        } else {
+            int size = currTable.getSize();
+            ivCurrTable.setImageResource(TableUtils.getTableImage(size));
+
+            tvCurrentTableText.setVisibility(View.VISIBLE);
+            tvStatus.setText(currTable.getStatus());
+            tvSize.setText(Integer.toString(currTable.getSize()));
+            tvMemberCount.setText(Integer.toString(currTable.getMates().size()));
+            if (currTable.getVisiting()) {
+                tvVisitors.setText(R.string.allowed);
+            } else {
+                tvVisitors.setText(R.string.not_allowed);
+            }
+
+            String topic = currTable.getTopic();
+            String type = currTable.getType();
+            String description = currTable.getDescription();
+            String fullDescription = getString(R.string.description_open_pt1) + " " + type + " " + getString(R.string.description_pt2) + " " + topic + ".\n" + description;
+            if (currTable.getLocked()) {
+                fullDescription = getString(R.string.description_closed_pt1) + " " + type + " " + getString(R.string.description_pt2) + " " + topic + ".\n" + description;
+            }
+            tvDescription.setText(fullDescription);
+        }
+    }
+
+    private void reloadTables() {
+        Table currTable = UserUtils.getCurrentTable(ParseUser.getCurrentUser());
+        setUpCurrentTable(currTable);
+        queryTables();
+        swipeContainer.setRefreshing(false);
     }
 
     protected void showLoading() {
