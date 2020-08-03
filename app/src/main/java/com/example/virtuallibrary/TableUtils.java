@@ -202,10 +202,6 @@ public class TableUtils {
         } else { // Recommended
              Collections.sort(tables, compareByScore);
         }
-
-         for (Table table : tables) {
-             Log.d(TAG, Integer.toString(TableUtils.getTableScore(table)));
-         }
         return tables;
     }
 

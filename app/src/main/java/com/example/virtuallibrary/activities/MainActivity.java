@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         btnCancel = binding.btnCancel;
         bottomNavigation = binding.bottomNavigation;
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_notification);
+        getSupportActionBar().setCustomView(R.layout.actionbar_notification_sort);
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.actionHome:
                     default:
-                        getSupportActionBar().setCustomView(R.layout.actionbar_notification);
+                        getSupportActionBar().setCustomView(R.layout.actionbar_notification_sort);
                         btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = HomeFragment.TAG;
                         fragment =  new HomeFragment();

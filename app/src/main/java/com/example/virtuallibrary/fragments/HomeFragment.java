@@ -25,7 +25,6 @@ import android.widget.TextView;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
-import com.example.virtuallibrary.activities.LoginActivity;
 import com.example.virtuallibrary.activities.MainActivity;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.adapters.TableAdapter;
@@ -95,7 +94,7 @@ public class HomeFragment extends Fragment {
         lvSort.setAdapter(lvAdapter);
 
         ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
-        actionBar.setCustomView(R.layout.actionbar_notification);
+        actionBar.setCustomView(R.layout.actionbar_notification_sort);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
@@ -124,7 +123,6 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 String text = parent.getItemAtPosition(position).toString();
                 tables = TableUtils.sortTable(tables, text);
-                view.setBackgroundColor(getResources().getColor(R.color.vlGreen));
                 adapter.notifyDataSetChanged();
                 rvTables.smoothScrollToPosition(0);
                 lvSort.setVisibility(View.GONE);
