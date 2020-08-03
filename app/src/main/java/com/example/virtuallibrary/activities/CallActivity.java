@@ -400,7 +400,7 @@ public class CallActivity extends AppCompatActivity {
                 remoteUserViews.get(1).setLayoutParams(parms2);
 
                 FrameLayout.LayoutParams parms3 = (FrameLayout.LayoutParams) remoteUserViews.get(2).getLayoutParams();
-                parms3.height = screen_height / 2;
+                parms3.height = screen_height / 3;
                 parms3.width = screen_width / 2;
                 parms3.topMargin = parms3.height;
                 parms3.leftMargin = parms3.width;
@@ -413,20 +413,20 @@ public class CallActivity extends AppCompatActivity {
                 remoteUserViews.get(1).setLayoutParams(parms2);
 
                 FrameLayout.LayoutParams parms3 = (FrameLayout.LayoutParams) remoteUserViews.get(2).getLayoutParams();
-                parms3.height = screen_height / 2;
+                parms3.height = screen_height / 3;
                 parms3.width = screen_width / 3;
                 parms3.topMargin = parms3.height;
                 parms3.leftMargin = parms3.width;
                 remoteUserViews.get(2).setLayoutParams(parms3);
 
                 FrameLayout.LayoutParams parms7 = (FrameLayout.LayoutParams) remoteUserViews.get(6).getLayoutParams();
-                parms7.height = screen_height / 2;
+                parms7.height = screen_height / 3;
                 parms7.width = screen_width / 3;
                 parms7.topMargin = parms7.height;
                 parms7.leftMargin = parms7.width * 2;
                 remoteUserViews.get(6).setLayoutParams(parms7);
             }
-            if (usersPresent == 6) {
+            if (usersPresent == 5) {
                 FrameLayout.LayoutParams parms4 = (FrameLayout.LayoutParams) remoteUserViews.get(3).getLayoutParams();
                 parms4.height = screen_height / 3;
                 parms4.width = screen_width / 2;
@@ -434,7 +434,7 @@ public class CallActivity extends AppCompatActivity {
                 remoteUserViews.get(3).setLayoutParams(parms4);
 
                 FrameLayout.LayoutParams parms5 = (FrameLayout.LayoutParams) remoteUserViews.get(4).getLayoutParams();
-                parms5.height = screen_height / 2;
+                parms5.height = screen_height / 3;
                 parms5.width = screen_width / 2;
                 parms5.topMargin = parms5.height * 2;
                 parms5.leftMargin = parms5.width;
@@ -447,14 +447,14 @@ public class CallActivity extends AppCompatActivity {
                 remoteUserViews.get(3).setLayoutParams(parms4);
 
                 FrameLayout.LayoutParams parms5 = (FrameLayout.LayoutParams) remoteUserViews.get(4).getLayoutParams();
-                parms5.height = screen_height / 2;
+                parms5.height = screen_height / 3;
                 parms5.width = screen_width / 3;
                 parms5.topMargin = parms5.height * 2;
                 parms5.leftMargin = parms5.width;
                 remoteUserViews.get(4).setLayoutParams(parms5);
 
                 FrameLayout.LayoutParams parms6 = (FrameLayout.LayoutParams) remoteUserViews.get(5).getLayoutParams();
-                parms6.height = screen_height / 2;
+                parms6.height = screen_height / 3;
                 parms6.width = screen_width / 3;
                 parms6.topMargin = parms6.height * 2;
                 parms6.leftMargin = parms6.width * 2;
