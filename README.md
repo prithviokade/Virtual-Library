@@ -33,7 +33,7 @@ A group study app where students can check into app, log their day's goals/topic
 * [x] User can post a new photo resource to their feed
 * [x] User can view other users' resource posts
 * [x] User can view individual profiles from details view of table and see that user's goals/progress
-* [ ] User can get recommendations for tables they can join
+* [x] User can get recommendations for tables they can join
 
 **Optional Nice-to-have Stories**
 
@@ -42,7 +42,7 @@ A group study app where students can check into app, log their day's goals/topic
 * [x] User can search for other users
 * [x] User can post a new file resource or link to their feed
 * [x] User can choose how to sort the tables
-* [ ] User can video chat with others at their table
+* [x] User can video chat with others at their table
 * [ ] User can listen to the music at their table
 
 ### 2. Screen Archetypes
