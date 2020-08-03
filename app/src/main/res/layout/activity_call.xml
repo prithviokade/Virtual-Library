@@ -71,14 +71,14 @@
 
         <ImageButton
             android:id="@+id/btnAddFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="50dp"
             android:layout_toEndOf="@+id/btnOffVideo"
             android:backgroundTint="#FFFFFF"
-            app:srcCompat="@drawable/ic_baseline_star_half_24" />
+            android:scaleType="center"
+            app:srcCompat="@drawable/btn_filter_off" />
 
     </RelativeLayout>
 

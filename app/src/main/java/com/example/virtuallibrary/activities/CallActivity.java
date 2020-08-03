@@ -160,8 +160,10 @@ public class CallActivity extends AppCompatActivity {
                 filterEnabled = !filterEnabled;
                 if (filterEnabled) {
                     mRtcEngine.setBeautyEffectOptions(true, new BeautyOptions(DEFAULT_CONTRAST, DEFAULT_LIGHTNESS, DEFAULT_SMOOTHNESS, DEFAULT_REDNESS));
+                    btnAddFilter.setImageResource(R.drawable.btn_filter);
                 } else {
                     mRtcEngine.setBeautyEffectOptions(false, new BeautyOptions(DEFAULT_CONTRAST, DEFAULT_LIGHTNESS, DEFAULT_SMOOTHNESS, DEFAULT_REDNESS));
+                    btnAddFilter.setImageResource(R.drawable.btn_filter_off);
                 }
             }
         });
