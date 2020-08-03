@@ -43,6 +43,7 @@ import com.parse.ParseUser;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -143,7 +144,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 String text = parent.getItemAtPosition(position).toString();
-                tables = TableUtils.sortTable(tables, text);
+                List<String> options = Arrays.asList(getResources().getStringArray(R.array.sort_options_array));
+                tables = TableUtils.sortTable(tables, text, options);
                 adapter.notifyDataSetChanged();
                 rvTables.smoothScrollToPosition(0);
                 lvSort.setVisibility(View.GONE);

@@ -1,6 +1,12 @@
 package com.example.virtuallibrary;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.res.Resources;
+import android.os.Bundle;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Table;
@@ -17,7 +23,7 @@ import java.util.UUID;
 
 import static java.lang.Math.abs;
 
-public class TableUtils {
+public class TableUtils extends Application {
 
     public static final String TAG = "TABLE";
     public static final String TYPE_TAG = "TYPE";
@@ -153,7 +159,7 @@ public class TableUtils {
         table.saveInBackground();
     }
 
-    public static List<Table> sortTable(List<Table> tables, String text) {
+    public static List<Table> sortTable(List<Table> tables, String text, List<String> options) {
         Comparator<Table> compareByLastUpdated = new Comparator<Table>() {
             @Override
             public int compare(Table o1, Table o2) {
@@ -189,15 +195,15 @@ public class TableUtils {
             }
         };
 
-         if (text.equals("Last Updated")) {
+         if (text.equals(options.get(1))) {
              Collections.sort(tables, compareByLastUpdated);
-        } else if (text.equals("Created Date")) {
+        } else if (text.equals(options.get(2))) {
             Collections.sort(tables, compareByCreatedAt);
-        } else if (text.equals("Friends")) {
+        } else if (text.equals(options.get(3))) {
              Collections.sort(tables, compareByFriends);
-        } else if (text.equals("Size: Low to High")) {
+        } else if (text.equals(options.get(4))) {
              Collections.sort(tables, compareBySize);
-        } else if (text.equals("Size: High to Low")) {
+        } else if (text.equals(options.get(5))) {
              Collections.sort(tables, Collections.reverseOrder(compareBySize));
         } else { // Recommended
              Collections.sort(tables, compareByScore);
