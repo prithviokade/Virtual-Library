@@ -179,7 +179,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
             btnPlayMusic.setVisibility(View.VISIBLE);
             btnVisit.setVisibility(View.INVISIBLE);
         } else if (isVisiting) {
-            btnVisit.setText("End Visit");
+            btnVisit.setText(getString(R.string.end_visit));
             rvMessages.setVisibility(View.VISIBLE);
             etCompose.setVisibility(View.VISIBLE);
             btnSend.setVisibility(View.VISIBLE);
@@ -201,7 +201,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     btnPlayMusic.setVisibility(View.INVISIBLE);
                 } else {
                     UserUtils.setVisiting(ParseUser.getCurrentUser(), table);
-                    btnVisit.setText("End Visit");
+                    btnVisit.setText(getString(R.string.end_visit));
 
                     rvMessages.setVisibility(View.VISIBLE);
                     etCompose.setVisibility(View.VISIBLE);
