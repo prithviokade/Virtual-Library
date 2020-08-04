@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
+import com.example.virtuallibrary.activities.MainActivity;
 import com.example.virtuallibrary.activities.ProfileActivity;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.fragments.UserInvitesFragment;
@@ -126,6 +127,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     invites.remove(position);
+                    MainActivity.invites.remove(position);  
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, invites.size());
                     if (!invite.getType().equals(Invite.TYPE_PERMANENT)) {

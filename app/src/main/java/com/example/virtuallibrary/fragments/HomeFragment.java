@@ -74,14 +74,6 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(final Bundle outState) {
-        Log.d(TAG, "onsaveinstance");
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(TableUtils.TAG, (ArrayList<Table>) tables);
-        outState.putParcelableArrayList(Invite.TAG, (ArrayList<Invite>) invites);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -181,15 +173,12 @@ public class HomeFragment extends Fragment {
                 startActivity(intent, options.toBundle());
             }
         });
-
-        if (savedInstanceState != null) {
-            Log.d(TAG, "onactivitycreated -> savedInstance != null");
-            tables = savedInstanceState.getParcelableArrayList(TableUtils.TAG);
-            invites = savedInstanceState.getParcelableArrayList(Invite.TAG);
-        } else if (((MainActivity) getActivity()).tables != null && ((MainActivity) getActivity()).invites != null) {
+        // if parse data has been saved, load it from memory
+        if (((MainActivity) getActivity()).tables != null && ((MainActivity) getActivity()).invites != null) {
             tables = ((MainActivity) getActivity()).tables;
             invites = ((MainActivity) getActivity()).invites;
-        } else if (tables == null || invites == null) {
+            first_open = false;
+        } else {
             tables = new ArrayList<>();
             invites = new ArrayList<>();
             queryTables();
@@ -269,7 +258,9 @@ public class HomeFragment extends Fragment {
             public void done(List<Table> retreivedTables, ParseException e) {
                 invites.clear();
                 invites.addAll(UserUtils.queryInvites(retreivedTables, ParseUser.getCurrentUser()));
-                ((MainActivity) getActivity()).invites = invites;
+                boolean changes = checkForNewInvites();
+                Log.d(TAG, changes + " ");
+                ((MainActivity) getActivity()).invites = (List<Invite>) (new ArrayList<Invite>(invites));
                 if (e != null) {
                     return;
                 }
@@ -291,8 +282,19 @@ public class HomeFragment extends Fragment {
                 if (invites.size() > 0 && first_open) {
                     showInviteDialog();
                     first_open = false;
+                } else if (invites.size() > 0 && changes) {
+                    showInviteDialog();
                 }
             }
         });
+    }
+
+    private boolean checkForNewInvites() {
+        List<Invite> prevInvites = ((MainActivity) getActivity()).invites;
+        if (prevInvites == null) { return true; }
+        if (!prevInvites.equals(invites)) {
+            return true;
+        }
+        return false;
     }
 }

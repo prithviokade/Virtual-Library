@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnCancel;
     Fragment fragment;
     public List<Table> tables;
-    public List<Invite> invites;
+    public static List<Invite> invites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
