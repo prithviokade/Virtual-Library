@@ -104,13 +104,15 @@ public class ProfileActivity extends AppCompatActivity {
                         fragment = ProfileGoalsFragment.newInstance(user);
                         break;
                     case R.id.action_resources:
-                        fragment = new ProfileResourcesFragment();
+                    default:
+                        fragment = ProfileResourcesFragment.newInstance(user);
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });
+        bottomNavigation.setSelectedItemId(R.id.action_resources);
 
 
         if (UserUtils.userContained(UserUtils.getFriends(ParseUser.getCurrentUser()), user)) {
