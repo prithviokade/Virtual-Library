@@ -196,16 +196,21 @@ public class HomeFragment extends Fragment {
         } else {
             int size = currTable.getSize();
             ivCurrTable.setImageResource(TableUtils.getTableImage(size));
+            ivCurrTable.setVisibility(View.VISIBLE);
 
             tvCurrentTableText.setVisibility(View.VISIBLE);
             tvStatus.setText(currTable.getStatus());
+            tvStatus.setVisibility(View.VISIBLE);
             tvSize.setText(Integer.toString(currTable.getSize()));
+            tvSize.setVisibility(View.VISIBLE);
             tvMemberCount.setText(Integer.toString(currTable.getMates().size()));
+            tvMemberCount.setVisibility(View.VISIBLE);
             if (currTable.getVisiting()) {
                 tvVisitors.setText(R.string.allowed);
             } else {
                 tvVisitors.setText(R.string.not_allowed);
             }
+            tvVisitors.setVisibility(View.VISIBLE);
 
             String topic = currTable.getTopic();
             String type = currTable.getType();
@@ -215,6 +220,7 @@ public class HomeFragment extends Fragment {
                 fullDescription = getString(R.string.description_closed_pt1) + " " + type + " " + getString(R.string.description_pt2) + " " + topic + ".\n" + description;
             }
             tvDescription.setText(fullDescription);
+            tvDescription.setVisibility(View.VISIBLE);
         }
     }
 

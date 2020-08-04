@@ -2,6 +2,7 @@ package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
     Context context;
     List<Invite> invites;
     UserInvitesFragment fragment;
+    public static final String TAG = "InviteAdapter";
 
     public InviteAdapter(UserInvitesFragment fragment, List<Invite> invites) {
         this.context = fragment.getContext();
@@ -106,6 +108,11 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                 public void onClick(View view) {
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     invite.getTable().addMate(ParseUser.getCurrentUser());
+                    for (ParseUser thing : invite.getTable().getMates()) {
+                        if (UserUtils.equals(thing, ParseUser.getCurrentUser())) {
+                            Log.d(TAG, "yike");
+                        }
+                    }
                     UserUtils.setCurrentTable(ParseUser.getCurrentUser(), invite.getTable());
                     if (!invite.getType().equals(Invite.TYPE_PERMANENT)) {
                         int position = getAdapterPosition();
