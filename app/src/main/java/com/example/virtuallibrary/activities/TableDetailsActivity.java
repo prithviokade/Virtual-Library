@@ -57,12 +57,14 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
     ImageButton btnInvite;
     ImageButton btnVideoCall;
     ImageButton btnPlayMusic;
+    Button btnVisit;
 
     List<Message> messages;
     MessageAdapter adapter;
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
     boolean isMember;
+    boolean isVisiting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         btnInvite = binding.btnInvite;
         btnVideoCall = binding.btnVideoCall;
         btnPlayMusic = binding.btnPlayMusic;
+        btnVisit = binding.btnVisit;
 
         messages = new ArrayList<>();
         adapter = new MessageAdapter(this, messages);
@@ -154,11 +157,17 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         etCompose.setVisibility(View.INVISIBLE);
         btnSend.setVisibility(View.INVISIBLE);
         spnStatus.setEnabled(false);
-        btnInvite.setVisibility(View.INVISIBLE);
+        btnInvite.setVisibility(View.GONE);
         btnVideoCall.setVisibility(View.INVISIBLE);
         btnPlayMusic.setVisibility(View.INVISIBLE);
+        if (table.getVisiting()) {
+            btnVisit.setVisibility(View.VISIBLE);
+        } else {
+            btnVisit.setVisibility(View.INVISIBLE);
+        }
 
         isMember = table.containsUser(ParseUser.getCurrentUser());
+        isVisiting = UserUtils.isVisiting(ParseUser.getCurrentUser(), table);
         if (isMember) { // current table
             btnJoin.setText(R.string.leave);
             rvMessages.setVisibility(View.VISIBLE);
@@ -168,7 +177,41 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
             btnInvite.setVisibility(View.VISIBLE);
             btnVideoCall.setVisibility(View.VISIBLE);
             btnPlayMusic.setVisibility(View.VISIBLE);
+            btnVisit.setVisibility(View.INVISIBLE);
+        } else if (isVisiting) {
+            btnVisit.setText("End Visit");
+            rvMessages.setVisibility(View.VISIBLE);
+            etCompose.setVisibility(View.VISIBLE);
+            btnSend.setVisibility(View.VISIBLE);
+            btnVideoCall.setVisibility(View.VISIBLE);
+            btnPlayMusic.setVisibility(View.VISIBLE);
         }
+
+        btnVisit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isVisiting) { // leaving table
+                    UserUtils.removeVisitingTable(ParseUser.getCurrentUser(), table);
+                    btnVisit.setText(getString(R.string.visit));
+
+                    rvMessages.setVisibility(View.INVISIBLE);
+                    etCompose.setVisibility(View.INVISIBLE);
+                    btnSend.setVisibility(View.INVISIBLE);
+                    btnVideoCall.setVisibility(View.INVISIBLE);
+                    btnPlayMusic.setVisibility(View.INVISIBLE);
+                } else {
+                    UserUtils.setVisiting(ParseUser.getCurrentUser(), table);
+                    btnVisit.setText("End Visit");
+
+                    rvMessages.setVisibility(View.VISIBLE);
+                    etCompose.setVisibility(View.VISIBLE);
+                    btnSend.setVisibility(View.VISIBLE);
+                    btnVideoCall.setVisibility(View.VISIBLE);
+                    btnPlayMusic.setVisibility(View.VISIBLE);
+                }
+                isVisiting = !isVisiting;
+            }
+        });
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +228,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     btnInvite.setVisibility(View.VISIBLE);
                     btnVideoCall.setVisibility(View.VISIBLE);
                     btnPlayMusic.setVisibility(View.VISIBLE);
+                    btnVisit.setVisibility(View.INVISIBLE);
+                    UserUtils.removeVisitingTable(ParseUser.getCurrentUser(), table);
 
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     table.addMate(ParseUser.getCurrentUser());
@@ -206,6 +251,10 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     btnInvite.setVisibility(View.INVISIBLE);
                     btnVideoCall.setVisibility(View.INVISIBLE);
                     btnPlayMusic.setVisibility(View.INVISIBLE);
+                    if (table.getVisiting()) {
+                        btnVisit.setVisibility(View.VISIBLE);
+                        btnVisit.setText("Visit");
+                    }
 
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     UserUtils.removeCurrentTable(ParseUser.getCurrentUser());

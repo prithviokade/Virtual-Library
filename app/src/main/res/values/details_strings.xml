@@ -14,6 +14,7 @@
     <string name="visitors">Visitors: </string>
     <string name="description">Description: </string>
     <string name="join">Join</string>
+    <string name="visit">Visit</string>
     <string name="curr_table">Current Table</string>
     <string name="allowed">allowed</string>
     <string name="not_allowed">not allowed</string>

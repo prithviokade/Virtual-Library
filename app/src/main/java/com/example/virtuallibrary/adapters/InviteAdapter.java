@@ -127,7 +127,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     invites.remove(position);
-                    MainActivity.invites.remove(position);  
+                    MainActivity.invites.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, invites.size());
                     if (!invite.getType().equals(Invite.TYPE_PERMANENT)) {

@@ -21,6 +21,7 @@ public class UserUtils {
     public static final String KEY_FRIENDS = "friends";
     public static final String KEY_JOINED_SIZES = "joined_sizes";
     public static final String KEY_JOINED_TYPES = "joined_types";
+    public static final String KEY_VISITING_TABLE = "visiting";
 
 
     public static ParseFile getProfilePicture(ParseUser user) {
@@ -172,5 +173,31 @@ public class UserUtils {
             }
         }
         return false;
+    }
+
+    public static Table getVisiting(ParseUser currentUser) {
+        try {
+            return (Table) currentUser.fetch().get(KEY_VISITING_TABLE);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean isVisiting(ParseUser user, Table table) {
+        if (table.equals(getVisiting(user)))  {
+            return true;
+        }
+        return false;
+    }
+
+    public static void removeVisitingTable(ParseUser user, Table table) {
+        if (isVisiting(user, table)) {
+            user.remove(KEY_VISITING_TABLE);
+        }
+    }
+
+    public static void setVisiting(ParseUser user, Table table) {
+        user.put(KEY_VISITING_TABLE, table);
     }
 }
