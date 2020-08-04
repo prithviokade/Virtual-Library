@@ -108,11 +108,6 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                 public void onClick(View view) {
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     invite.getTable().addMate(ParseUser.getCurrentUser());
-                    for (ParseUser thing : invite.getTable().getMates()) {
-                        if (UserUtils.equals(thing, ParseUser.getCurrentUser())) {
-                            Log.d(TAG, "yike");
-                        }
-                    }
                     UserUtils.setCurrentTable(ParseUser.getCurrentUser(), invite.getTable());
                     if (!invite.getType().equals(Invite.TYPE_PERMANENT)) {
                         int position = getAdapterPosition();
@@ -123,6 +118,12 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                     }
                     fragment.dismiss();
                     ParseUser.getCurrentUser().saveInBackground();
+                    invite.getTable().saveInBackground();
+                    for (ParseUser thing : invite.getTable().getMates()) {
+                        if (UserUtils.equals(thing, ParseUser.getCurrentUser())) {
+                            Log.d(TAG, thing.getUsername());
+                        }
+                    }
                     Intent intent = new Intent(context, TableDetailsActivity.class);
                     intent.putExtra(TableUtils.TAG, Parcels.wrap(invite.getTable()));
                     context.startActivity(intent);

@@ -45,15 +45,7 @@ public class TableUtils extends Application {
         if (currentTable != null) {
             List<ParseUser> newMates = new ArrayList<>();
             for (ParseUser mate : currentTable.getMates()) {
-                String mateUsername = null;
-                String userUsername = null;
-                try {
-                    mateUsername = mate.fetch().getUsername();
-                    userUsername = user.fetch().getUsername();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (!(mateUsername.equals(userUsername))) {
+                if (!UserUtils.equals(mate, user)) {
                     newMates.add(mate);
                 }
             }
