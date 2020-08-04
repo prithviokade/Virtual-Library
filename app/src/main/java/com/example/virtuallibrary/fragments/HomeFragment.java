@@ -66,6 +66,7 @@ public class HomeFragment extends Fragment {
     List<Invite> invites;
     ListView lvSort;
     SwipeRefreshLayout swipeContainer;
+    View rootView;
 
 
     public HomeFragment() {
@@ -73,12 +74,22 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        Log.d(TAG, "onsaveinstance");
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(TableUtils.TAG, (ArrayList<Table>) tables);
+        outState.putParcelableArrayList(Invite.TAG, (ArrayList<Invite>) invites);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        return view;
+        if (rootView == null) {
+            binding = FragmentHomeBinding.inflate(getLayoutInflater());
+            rootView = binding.getRoot();
+        }
+        return rootView;
     }
 
     @Override
@@ -166,19 +177,27 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), TableDetailsActivity.class);
                 intent.putExtra(TableUtils.TAG, Parcels.wrap(finalCurrTable));
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), (View)ivCurrTable, "table");
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), (View) ivCurrTable, "table");
                 startActivity(intent, options.toBundle());
             }
         });
 
-        tables = new ArrayList<>();
+        if (savedInstanceState != null) {
+            Log.d(TAG, "onactivitycreated -> savedInstance != null");
+            tables = savedInstanceState.getParcelableArrayList(TableUtils.TAG);
+            invites = savedInstanceState.getParcelableArrayList(Invite.TAG);
+        } else if (((MainActivity) getActivity()).tables != null && ((MainActivity) getActivity()).invites != null) {
+            tables = ((MainActivity) getActivity()).tables;
+            invites = ((MainActivity) getActivity()).invites;
+        } else if (tables == null || invites == null) {
+            tables = new ArrayList<>();
+            invites = new ArrayList<>();
+            queryTables();
+        }
         adapter = new TableAdapter(this, tables);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvTables.setAdapter(adapter);
         rvTables.setLayoutManager(linearLayoutManager);
-        showLoading();
-        invites = new ArrayList<>();
-        queryTables();
     }
 
     private void setUpCurrentTable(Table currTable) {
@@ -234,6 +253,7 @@ public class HomeFragment extends Fragment {
     }
 
     protected void queryTables() {
+        showLoading();
         ParseQuery<Table> query = ParseQuery.getQuery(Table.class);
         query.include(Table.KEY_CREATOR);
         query.include(Table.KEY_MATES);
@@ -249,6 +269,7 @@ public class HomeFragment extends Fragment {
             public void done(List<Table> retreivedTables, ParseException e) {
                 invites.clear();
                 invites.addAll(UserUtils.queryInvites(retreivedTables, ParseUser.getCurrentUser()));
+                ((MainActivity) getActivity()).invites = invites;
                 if (e != null) {
                     return;
                 }
@@ -265,6 +286,7 @@ public class HomeFragment extends Fragment {
                 }
                 adapter.clear();
                 adapter.addAll(filteredTables);
+                ((MainActivity) getActivity()).tables = filteredTables;
                 dismissLoading();
                 if (invites.size() > 0 && first_open) {
                     showInviteDialog();

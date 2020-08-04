@@ -23,7 +23,11 @@ import com.example.virtuallibrary.fragments.GoalsFragment;
 import com.example.virtuallibrary.fragments.HomeFragment;
 import com.example.virtuallibrary.fragments.ResourcesFragment;
 import com.example.virtuallibrary.fragments.SearchFragment;
+import com.example.virtuallibrary.models.Invite;
+import com.example.virtuallibrary.models.Table;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnAdd;
     Button btnCancel;
     Fragment fragment;
+    public List<Table> tables;
+    public List<Invite> invites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
