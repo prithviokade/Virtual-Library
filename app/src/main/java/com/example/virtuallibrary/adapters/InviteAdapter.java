@@ -2,7 +2,6 @@ package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,11 +118,6 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                     fragment.dismiss();
                     ParseUser.getCurrentUser().saveInBackground();
                     invite.getTable().saveInBackground();
-                    for (ParseUser thing : invite.getTable().getMates()) {
-                        if (UserUtils.equals(thing, ParseUser.getCurrentUser())) {
-                            Log.d(TAG, thing.getUsername());
-                        }
-                    }
                     Intent intent = new Intent(context, TableDetailsActivity.class);
                     intent.putExtra(TableUtils.TAG, Parcels.wrap(invite.getTable()));
                     context.startActivity(intent);

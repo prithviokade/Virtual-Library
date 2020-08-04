@@ -11,12 +11,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserUtils;
+import com.example.virtuallibrary.activities.InviteActivity;
 import com.example.virtuallibrary.activities.ProfileActivity;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -29,9 +32,11 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     Context context;
     List<ParseUser> users;
+    Fragment fragment;
 
-    public SearchUserAdapter(Context context, List<ParseUser> users) {
-        this.context = context;
+    public SearchUserAdapter(Fragment fragment, List<ParseUser> users) {
+        this.fragment = fragment;
+        this.context = fragment.getContext();
         this.users = users;
     }
 
@@ -114,7 +119,8 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ProfileActivity.class);
                     intent.putExtra(UserUtils.TAG, Parcels.wrap(user));
-                    context.startActivity(intent);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(fragment.getActivity(), (View) ivProfilePic, "profilepicture");
+                    context.startActivity(intent, options.toBundle());
                 }
             });
 

@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
-import com.example.virtuallibrary.activities.MainActivity;
 import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.example.virtuallibrary.models.Table;
 

@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +19,9 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
+import com.example.virtuallibrary.activities.InviteActivity;
 import com.example.virtuallibrary.activities.ProfileActivity;
+import com.example.virtuallibrary.activities.TableDetailsActivity;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -89,12 +92,47 @@ public class InviteUserAdapter extends RecyclerView.Adapter<InviteUserAdapter.Vi
             tvUsername.setText("@"+UserUtils.getUsername(friend));
             tvName.setText(UserUtils.getName(friend));
 
-            container.setOnClickListener(new View.OnClickListener() {
+            tvName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ProfileActivity.class);
                     intent.putExtra(UserUtils.TAG, Parcels.wrap(friend));
-                    context.startActivity(intent);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((InviteActivity) context, (View) ivProfilePic, "profilepicture");
+                    context.startActivity(intent, options.toBundle());
+                }
+            });
+
+            tvUsername.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra(UserUtils.TAG, Parcels.wrap(friend));
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((InviteActivity) context, (View) ivProfilePic, "profilepicture");
+                    context.startActivity(intent, options.toBundle());
+                }
+            });
+
+            ivProfilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra(UserUtils.TAG, Parcels.wrap(friend));
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((InviteActivity) context, (View) ivProfilePic, "profilepicture");
+                    context.startActivity(intent, options.toBundle());
+                }
+            });
+
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (invited) {
+                        btnInvite.setImageResource(R.drawable.circle);
+                        TableUtils.removeInvite(friend, ParseUser.getCurrentUser(), UserUtils.getCurrentTable(ParseUser.getCurrentUser()), type);
+                    } else {
+                        btnInvite.setImageResource(R.drawable.ic_baseline_check_circle_24);
+                        TableUtils.addInvite(friend, ParseUser.getCurrentUser(), UserUtils.getCurrentTable(ParseUser.getCurrentUser()), type);
+                    }
+                    invited = !invited;
                 }
             });
 

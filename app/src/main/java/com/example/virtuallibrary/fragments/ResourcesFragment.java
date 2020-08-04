@@ -51,7 +51,7 @@ public class ResourcesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvPosts = binding.rvPosts;
         posts = new ArrayList<>();
-        adapter = new ResourceAdapter(getContext(), posts);
+        adapter = new ResourceAdapter(this, posts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
         // Lookup the swipe container view

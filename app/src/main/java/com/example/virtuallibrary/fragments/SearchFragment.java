@@ -63,7 +63,7 @@ public class SearchFragment extends Fragment {
         rvUsers = binding.rvUsers;
 
         users = new ArrayList<>();
-        adapter = new SearchUserAdapter(getContext(), users);
+        adapter = new SearchUserAdapter(this, users);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvUsers.setAdapter(adapter);
         rvUsers.setLayoutManager(linearLayoutManager);

@@ -31,12 +31,13 @@
         android:textStyle="bold" />
 
     <ImageView
-            android:id="@+id/ivProfPic"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            tools:srcCompat="@tools:sample/avatars" />
+        android:id="@+id/ivProfPic"
+        android:transitionName="profilepicture"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/ivPost"

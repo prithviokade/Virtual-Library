@@ -131,15 +131,18 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
                 switch (selectedFragmentTag) {
-                    case GoalsFragment.TAG:
+                    case CreateGoalFragment.TAG:
                         fragment = new GoalsFragment();
+                        selectedFragmentTag = GoalsFragment.TAG;
                         break;
-                    case ResourcesFragment.TAG:
+                    case CreateResourceFragment.TAG:
                         fragment = new ResourcesFragment();
+                        selectedFragmentTag = ResourcesFragment.TAG;
                         break;
-                    case HomeFragment.TAG:
+                    case CreateTableFragment.TAG:
                     default:
                         fragment = new HomeFragment();
+                        selectedFragmentTag = HomeFragment.TAG;
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();

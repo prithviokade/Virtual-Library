@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -113,12 +114,14 @@ public class TableFragment extends Fragment {
             }
 
             final int finalI = i;
+            ImageView finalProfileImage = profileImage;
             profileImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ProfileActivity.class);
                     intent.putExtra(UserUtils.TAG, Parcels.wrap(mates.get(finalI)));
-                    startActivity(intent);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), (View) finalProfileImage, "profilepicture");
+                    startActivity(intent, options.toBundle());
                 }
             });
         }

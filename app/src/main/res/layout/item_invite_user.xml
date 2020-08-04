@@ -19,6 +19,7 @@
 
     <ImageView
         android:id="@+id/ivProfilePic"
+        android:transitionName="profilepicture"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"

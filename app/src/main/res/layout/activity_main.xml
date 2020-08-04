@@ -34,6 +34,7 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         android:background="@drawable/roundshape"
+        android:elevation="6dp"
         android:src="@drawable/ic_baseline_add_circle_24" />
 
     <Button
