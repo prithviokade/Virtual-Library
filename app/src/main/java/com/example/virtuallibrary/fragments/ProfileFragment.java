@@ -5,12 +5,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,37 +25,40 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.LoginActivity;
+import com.example.virtuallibrary.activities.MainActivity;
+import com.example.virtuallibrary.activities.ProfileActivity;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
-import com.example.virtuallibrary.databinding.FragmentGoalsBinding;
+import com.example.virtuallibrary.databinding.FragmentProfileBinding;
 import com.example.virtuallibrary.models.Goal;
 import com.facebook.login.LoginManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoalsFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
-    FragmentGoalsBinding binding;
+    FragmentProfileBinding binding;
 
     public static final String TAG = "GoalsFragment";
     ImageView ivProfPic;
     TextView tvUsername;
     TextView tvName;
     TextView tvBio;
-    RecyclerView rvChecklist;
-    Button btnLogOut;
     List<Goal> goals;
-    GoalsAdapter adapter;
-    SwipeRefreshLayout swipeContainer;
+    BottomNavigationView bottomNavigation;
+    Fragment fragment;
+    FragmentManager fragmentManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentGoalsBinding.inflate(getLayoutInflater());
+        binding = FragmentProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        fragmentManager = getChildFragmentManager();
         return view;
     }
 
@@ -64,33 +70,38 @@ public class GoalsFragment extends Fragment {
         tvUsername = binding.tvScreenName;
         tvName = binding.tvName;
         tvBio = binding.tvBio;
-        rvChecklist = binding.rvChecklist;
-        btnLogOut = binding.btnLogOut;
+        bottomNavigation = binding.bottomNavigation;
         goals = new ArrayList<>();
 
-        // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) binding.swipeContainer;
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
+        actionBar.setCustomView(R.layout.actionbar_profile);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        Button btnLogOut = actionBar.getCustomView().findViewById(R.id.btnLogout);
+        TextView tvUsername = actionBar.getCustomView().findViewById(R.id.tvUsername);
+        tvUsername.setText("@" + UserUtils.getUsername(ParseUser.getCurrentUser()));
+
+
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onRefresh() {
-                queryGoals();
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_goals:
+                        fragment = ProfileGoalsFragment.newInstance(ParseUser.getCurrentUser());
+                        break;
+                    case R.id.action_resources:
+                    default:
+                        fragment = ProfileResourcesFragment.newInstance(ParseUser.getCurrentUser());
+                        break;
+                }
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
             }
         });
+        bottomNavigation.setSelectedItemId(R.id.action_resources);
 
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
-
-        adapter = new GoalsAdapter(getContext(), goals);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-
-        rvChecklist.setAdapter(adapter);
-        rvChecklist.setLayoutManager(linearLayoutManager);
-        queryGoals();
 
         ParseFile profile = UserUtils.getProfilePicture(ParseUser.getCurrentUser());
         if (profile != null) {
@@ -98,8 +109,6 @@ public class GoalsFragment extends Fragment {
         } else {
             Glide.with(getContext()).load(R.drawable.ic_baseline_person_24_black).transform(new CircleCrop()).into(ivProfPic);
         }
-
-        tvUsername.setText("@" + UserUtils.getUsername(ParseUser.getCurrentUser()));
 
         String name = UserUtils.getName(ParseUser.getCurrentUser());
         if (name != null) {
@@ -129,10 +138,4 @@ public class GoalsFragment extends Fragment {
 
     }
 
-    private void queryGoals() {
-        List<Goal> foundGoals = UserUtils.getGoals(ParseUser.getCurrentUser());
-        adapter.clear();
-        adapter.addAll(foundGoals);
-        swipeContainer.setRefreshing(false);
-    }
 }

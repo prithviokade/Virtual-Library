@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ public class ProfileResourcesFragment extends Fragment {
     List<Post> resources;
     ProfileResourceAdapter adapter;
     ParseUser user;
+    SwipeRefreshLayout swipeContainer;
 
     public ProfileResourcesFragment() {
         // Required empty public constructor
@@ -71,6 +73,23 @@ public class ProfileResourcesFragment extends Fragment {
         rvResources.setAdapter(adapter);
         rvResources.setLayoutManager(staggeredGridLayoutManager);
         queryResources();
+
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) binding.swipeContainer;
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryResources();
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
     }
 
     protected void queryResources() {
@@ -88,6 +107,7 @@ public class ProfileResourcesFragment extends Fragment {
                 }
                 adapter.clear();
                 adapter.addAll(retreivedPosts);
+                if (swipeContainer != null) { swipeContainer.setRefreshing(false); }
             }
         });
     }

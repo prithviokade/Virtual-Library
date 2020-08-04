@@ -3,11 +3,9 @@ package com.example.virtuallibrary.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +17,7 @@ import com.example.virtuallibrary.databinding.ActivityMainBinding;
 import com.example.virtuallibrary.fragments.CreateGoalFragment;
 import com.example.virtuallibrary.fragments.CreateResourceFragment;
 import com.example.virtuallibrary.fragments.CreateTableFragment;
-import com.example.virtuallibrary.fragments.GoalsFragment;
+import com.example.virtuallibrary.fragments.ProfileFragment;
 import com.example.virtuallibrary.fragments.HomeFragment;
 import com.example.virtuallibrary.fragments.ResourcesFragment;
 import com.example.virtuallibrary.fragments.SearchFragment;
@@ -60,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.actionProgress:
-                        if (selectedFragmentTag.equals(GoalsFragment.TAG)) { return true; }
+                        if (selectedFragmentTag.equals(ProfileFragment.TAG)) { return true; }
                         getSupportActionBar().setCustomView(R.layout.actionbar_default);
                         btnAdd.setVisibility(View.VISIBLE);
-                        selectedFragmentTag = GoalsFragment.TAG;
-                        fragment = new GoalsFragment();
+                        selectedFragmentTag = ProfileFragment.TAG;
+                        fragment = new ProfileFragment();
                         break;
                     case R.id.actionPosts:
                         if (selectedFragmentTag.equals(ResourcesFragment.TAG)) { return true; }
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 btnCancel.setVisibility(View.VISIBLE);
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
                 switch (selectedFragmentTag) {
-                    case GoalsFragment.TAG:
+                    case ProfileFragment.TAG:
                         fragment = new CreateGoalFragment();
                         selectedFragmentTag = CreateGoalFragment.TAG;
                         break;
@@ -131,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
                 switch (selectedFragmentTag) {
                     case CreateGoalFragment.TAG:
-                        fragment = new GoalsFragment();
-                        selectedFragmentTag = GoalsFragment.TAG;
+                        fragment = new ProfileFragment();
+                        selectedFragmentTag = ProfileFragment.TAG;
                         break;
                     case CreateResourceFragment.TAG:
                         fragment = new ResourcesFragment();

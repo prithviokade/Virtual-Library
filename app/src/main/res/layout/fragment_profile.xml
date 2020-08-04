@@ -4,7 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.GoalsFragment">
+    tools:context=".fragments.ProfileFragment">
+
+    <FrameLayout
+        android:id="@+id/flContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bottomNavigation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp">
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/ivProfile"
@@ -36,26 +46,6 @@
         android:textColor="#F0AAA7A7"
         android:textSize="12sp" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tvBio"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="10dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChecklist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tvBio"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="10dp" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     <TextView
         android:id="@+id/tvBio"
         android:layout_width="wrap_content"
@@ -66,15 +56,31 @@
         android:textSize="12sp" />
 
     <Button
-        android:id="@+id/btnLogOut"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
+        android:id="@+id/btnChangeProf"
+        style="@android:style/Widget.Material.Light.Button.Toggle"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/tvBio"
+        android:layout_marginTop="5dp"
         android:backgroundTint="#FFFFFF"
-        android:text="@string/logout"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/vlGreen" />
+        android:includeFontPadding="false"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Edit Profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="#000000"
+        android:textSize="10sp" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnChangeProf"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/plainWhite"
+        app:elevation="0dp"
+        app:menu="@menu/profile_bottom_navigation" />
 
 </RelativeLayout>
