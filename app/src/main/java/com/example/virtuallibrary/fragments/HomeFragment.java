@@ -242,6 +242,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void showInviteDialog() {
+        invites = (List<Invite>) new ArrayList<Invite>(((MainActivity) getActivity()).invites);
         FragmentManager fm = getFragmentManager();
         UserInvitesFragment userInvitesFragment = UserInvitesFragment.newInstance(invites);
         userInvitesFragment.show(fm, "fragment_user_invites");
