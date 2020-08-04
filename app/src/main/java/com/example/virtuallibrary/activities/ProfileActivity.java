@@ -1,12 +1,16 @@
 package com.example.virtuallibrary.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,8 +23,12 @@ import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.adapters.GoalsAdapter;
 import com.example.virtuallibrary.databinding.ActivityProfileBinding;
+import com.example.virtuallibrary.fragments.GoalsFragment;
+import com.example.virtuallibrary.fragments.ProfileGoalsFragment;
+import com.example.virtuallibrary.fragments.ProfileResourcesFragment;
 import com.example.virtuallibrary.models.Goal;
 import com.facebook.login.LoginManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -32,17 +40,16 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
 
     public static final String TAG = "ProfileActivity";
+    BottomNavigationView bottomNavigation;
     ImageView ivProfPic;
-    TextView tvUsername;
     TextView tvName;
     TextView tvBio;
-    RecyclerView rvChecklist;
     ImageButton btnAddFriend;
-    Button btnLogOut;
-    List<Goal> goals;
-    GoalsAdapter adapter;
     ParseUser user;
     boolean areFriends;
+    Button btnChangeProf;
+    Fragment fragment;
+    final FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +57,33 @@ public class ProfileActivity extends AppCompatActivity {
         ActivityProfileBinding binding = ActivityProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_default);
-
         user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra(UserUtils.TAG));
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.actionbar_profile);
+        Button btnLogOut = actionBar.getCustomView().findViewById(R.id.btnLogout);
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.getInstance().logOut();
+                ParseUser.logOut();
+                // go to login activity
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView tvUsername = actionBar.getCustomView().findViewById(R.id.tvUsername);
+        tvUsername.setText("@" + user.getUsername());
+
         ivProfPic = binding.ivProfile;
-        tvUsername = binding.tvScreenName;
         tvName = binding.tvName;
         tvBio = binding.tvBio;
-        rvChecklist = binding.rvChecklist;
         btnAddFriend = binding.btnAddFriend;
-        btnLogOut = binding.btnLogOut;
+        btnChangeProf = binding.btnChangeProf;
+        bottomNavigation = binding.bottomNavigation;
+        btnChangeProf.setEnabled(false);
+        btnChangeProf.setVisibility(View.GONE);
         btnLogOut.setEnabled(false);
         btnLogOut.setVisibility(View.GONE);
         if (UserUtils.equals(user, ParseUser.getCurrentUser())) {
@@ -69,20 +91,32 @@ public class ProfileActivity extends AppCompatActivity {
             btnAddFriend.setVisibility(View.GONE);
             btnLogOut.setVisibility(View.VISIBLE);
             btnLogOut.setEnabled(true);
+            btnChangeProf.setVisibility(View.VISIBLE);
+            btnChangeProf.setEnabled(true);
         }
-        goals = new ArrayList<>();
         areFriends = false;
+
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_goals:
+                        fragment = ProfileGoalsFragment.newInstance(user);
+                        break;
+                    case R.id.action_resources:
+                        fragment = new ProfileResourcesFragment();
+                        break;
+                }
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
+            }
+        });
+
 
         if (UserUtils.userContained(UserUtils.getFriends(ParseUser.getCurrentUser()), user)) {
             btnAddFriend.setImageResource(R.drawable.ic_baseline_person_24);
             areFriends = true;
         }
-
-        adapter = new GoalsAdapter(this, goals);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvChecklist.setAdapter(adapter);
-        rvChecklist.setLayoutManager(linearLayoutManager);
-        queryGoals();
 
         ParseFile profile = UserUtils.getProfilePicture(user);
         if (profile != null) {
@@ -90,8 +124,6 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             Glide.with(this).load(R.drawable.ic_baseline_person_24_black).transform(new CircleCrop()).into(ivProfPic);
         }
-
-        tvUsername.setText("@" + UserUtils.getUsername(user));
 
         String name = UserUtils.getName(user);
         if (name != null) {
@@ -123,22 +155,5 @@ public class ProfileActivity extends AppCompatActivity {
                 areFriends = !areFriends;
             }
         });
-
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LoginManager.getInstance().logOut();
-                ParseUser.logOut();
-                // go to login activity
-                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void queryGoals() {
-        List<Goal> foundGoals = UserUtils.getGoals(user);
-        adapter.clear();
-        adapter.addAll(foundGoals);
     }
 }

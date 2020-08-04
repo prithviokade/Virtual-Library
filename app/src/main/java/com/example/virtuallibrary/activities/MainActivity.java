@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.actionProgress:
                         if (selectedFragmentTag.equals(GoalsFragment.TAG)) { return true; }
-                        Fragment savedFragment = null;
                         getSupportActionBar().setCustomView(R.layout.actionbar_default);
                         btnAdd.setVisibility(View.VISIBLE);
                         selectedFragmentTag = GoalsFragment.TAG;

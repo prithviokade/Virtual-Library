@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_resources"
+        android:icon="@drawable/ic_baseline_grid_on_24"
+        android:title="@string/resources"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_goals"
+        android:icon="@drawable/ic_baseline_done_outline_24"
+        android:title="@string/goals"
+        app:showAsAction="always" />
+</menu>

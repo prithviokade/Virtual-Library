@@ -14,12 +14,12 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/actionProgress"
-        android:icon="@drawable/ic_baseline_done_outline_24"
+        android:icon="@drawable/ic_baseline_person_outline_24"
         android:title="@string/progress"
         app:showAsAction="always" />
     <item
         android:id="@+id/actionPosts"
-        android:icon="@drawable/ic_baseline_people_alt_24"
+        android:icon="@drawable/ic_baseline_library_books_24"
         android:title="@string/resources"
         app:showAsAction="always" />
 </menu>
