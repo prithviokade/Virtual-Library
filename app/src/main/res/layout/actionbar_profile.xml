@@ -10,23 +10,25 @@
 
     <TextView
         android:id="@+id/tvUsername"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/plainWhite"
-        android:textStyle="bold" />
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:textColor="@color/plainWhite" />
 
     <Button
         android:id="@+id/btnLogout"
-        android:layout_width="87dp"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
         android:layout_height="38dp"
-        android:layout_alignTop="@+id/tvUsername"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="5dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="0dp"
         android:backgroundTint="#FFFFFF"
-        android:text="Log Out"
+        android:text="@string/logout"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/black" />
 
 </RelativeLayout>

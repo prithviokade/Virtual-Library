@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.ProfileActivity;
+import com.example.virtuallibrary.activities.ResourceDetailsActivity;
 import com.example.virtuallibrary.models.Post;
 import com.parse.ParseFile;
 
@@ -142,6 +144,15 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
                     intent.setAction(android.content.Intent.ACTION_VIEW);
                     File file = new File(post.getFilePath());
                     intent.setData(Uri.fromFile(file));
+                    context.startActivity(intent);
+                }
+            });
+
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ResourceDetailsActivity.class);
+                    intent.putExtra(Post.TAG, Parcels.wrap(post));
                     context.startActivity(intent);
                 }
             });

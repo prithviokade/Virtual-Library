@@ -1,6 +1,7 @@
 package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.virtuallibrary.R;
+import com.example.virtuallibrary.activities.ResourceDetailsActivity;
 import com.example.virtuallibrary.models.Post;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -83,6 +87,15 @@ public class ProfileResourceAdapter extends RecyclerView.Adapter<ProfileResource
                 tvFile.setVisibility(View.VISIBLE);
                 tvFile.setText(post.getFileName());
             }
+
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ResourceDetailsActivity.class);
+                    intent.putExtra(Post.TAG, Parcels.wrap(post));
+                    context.startActivity(intent);
+                }
+            });
 
         }
 

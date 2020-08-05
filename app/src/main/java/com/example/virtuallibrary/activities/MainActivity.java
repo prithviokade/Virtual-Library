@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -105,10 +104,8 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setCustomView(R.layout.actionbar_default);
                 btnCancel.setVisibility(View.VISIBLE);
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
-                Log.d(TAG, selectedFragmentTag + selectedSubFragmentTag);
                 switch (selectedFragmentTag) {
                     case ProfileFragment.TAG:
-                        Log.d(TAG, "hi");
                         switch (selectedSubFragmentTag) {
                             case ProfileGoalsFragment.TAG:
                                 fragment = new CreateGoalFragment();
@@ -116,10 +113,8 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case ProfileResourcesFragment.TAG:
                             default:
-                                Log.d(TAG, "hiii");
                                 fragment = new CreateResourceFragment();
                                 selectedFragmentTag = CreateGoalFragment.TAG;
-                                Log.d(TAG, "hiii" + selectedFragmentTag);
                                 break;
                         }
                         break;
@@ -143,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 btnAdd.setVisibility(View.VISIBLE);
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
-                Log.d(TAG, selectedFragmentTag);
                 switch (selectedFragmentTag) {
                     case CreateGoalFragment.TAG:
                         fragment = new ProfileFragment();

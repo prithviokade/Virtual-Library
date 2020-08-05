@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".ParseApplication"
         android:allowBackup="true"
@@ -23,12 +22,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.CallActivity"></activity>
+        <activity android:name=".activities.ResourceDetailsActivity"></activity>
+        <activity android:name=".activities.CallActivity" />
         <activity android:name=".activities.InviteActivity" />
         <activity android:name=".activities.ProfileActivity" />
         <activity
             android:name=".activities.TableDetailsActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.SignUpActivity" />
 
         <meta-data
