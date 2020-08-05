@@ -1,5 +1,6 @@
 package com.example.virtuallibrary.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 
@@ -55,6 +56,10 @@ public class ResourceDetailsActivity extends AppCompatActivity {
         ActivityResourceDetailsBinding binding = ActivityResourceDetailsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.actionbar_default);
 
         tvScreenName = binding.tvScreenName;
         tvCaption = binding.tvCaption;

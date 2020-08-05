@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -37,6 +38,7 @@ import com.parse.livequery.SubscriptionHandling;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +61,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
     ImageButton btnPlayMusic;
     Button btnVisit;
 
+    private MediaPlayer mediaPlayer;
+
     List<Message> messages;
     MessageAdapter adapter;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -78,6 +82,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
 
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
 
+        mediaPlayer = new MediaPlayer();
+
         tvSize = binding.tvSize;
         tvMembers = binding.tvMembers;
         tvVisitors = binding.tvVisitors;
@@ -91,6 +97,18 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         btnVideoCall = binding.btnVideoCall;
         btnPlayMusic = binding.btnPlayMusic;
         btnVisit = binding.btnVisit;
+
+        prepareMediaPlayer();
+        btnPlayMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                } else {
+                    mediaPlayer.start();
+                }
+            }
+        });
 
         messages = new ArrayList<>();
         adapter = new MessageAdapter(this, messages);
@@ -310,6 +328,16 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                 });
             }
         });
+    }
+
+    private void prepareMediaPlayer() {
+        try {
+            mediaPlayer.setDataSource("http://infinityandroid.com/music/good_times.mp3");
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void getMessages() {
