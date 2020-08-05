@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,8 @@ import com.example.virtuallibrary.fragments.CreateResourceFragment;
 import com.example.virtuallibrary.fragments.CreateTableFragment;
 import com.example.virtuallibrary.fragments.ProfileFragment;
 import com.example.virtuallibrary.fragments.HomeFragment;
+import com.example.virtuallibrary.fragments.ProfileGoalsFragment;
+import com.example.virtuallibrary.fragments.ProfileResourcesFragment;
 import com.example.virtuallibrary.fragments.ResourcesFragment;
 import com.example.virtuallibrary.fragments.SearchFragment;
 import com.example.virtuallibrary.models.Invite;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private String selectedFragmentTag = "";
+    public String selectedSubFragmentTag = "";
 
     BottomNavigationView bottomNavigation;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -101,10 +105,23 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setCustomView(R.layout.actionbar_default);
                 btnCancel.setVisibility(View.VISIBLE);
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
+                Log.d(TAG, selectedFragmentTag + selectedSubFragmentTag);
                 switch (selectedFragmentTag) {
                     case ProfileFragment.TAG:
-                        fragment = new CreateGoalFragment();
-                        selectedFragmentTag = CreateGoalFragment.TAG;
+                        Log.d(TAG, "hi");
+                        switch (selectedSubFragmentTag) {
+                            case ProfileGoalsFragment.TAG:
+                                fragment = new CreateGoalFragment();
+                                selectedFragmentTag = CreateGoalFragment.TAG;
+                                break;
+                            case ProfileResourcesFragment.TAG:
+                            default:
+                                Log.d(TAG, "hiii");
+                                fragment = new CreateResourceFragment();
+                                selectedFragmentTag = CreateGoalFragment.TAG;
+                                Log.d(TAG, "hiii" + selectedFragmentTag);
+                                break;
+                        }
                         break;
                     case ResourcesFragment.TAG:
                         fragment = new CreateResourceFragment();
@@ -125,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btnAdd.setVisibility(View.VISIBLE);
-                Fragment fragment;
                 // case on each fragment and navigate to the corresponding add table/goal/post fragment
+                Log.d(TAG, selectedFragmentTag);
                 switch (selectedFragmentTag) {
                     case CreateGoalFragment.TAG:
                         fragment = new ProfileFragment();

@@ -15,7 +15,7 @@
     <item
         android:id="@+id/actionProgress"
         android:icon="@drawable/ic_baseline_person_outline_24"
-        android:title="@string/progress"
+        android:title="@string/profile"
         app:showAsAction="always" />
     <item
         android:id="@+id/actionPosts"

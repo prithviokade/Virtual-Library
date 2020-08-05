@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
 
-    public static final String TAG = "GoalsFragment";
+    public static final String TAG = "ProfileFragment";
     ImageView ivProfPic;
     TextView tvName;
     TextView tvBio;
@@ -88,9 +88,11 @@ public class ProfileFragment extends Fragment {
                 switch (menuItem.getItemId()) {
                     case R.id.action_goals:
                         fragment = ProfileGoalsFragment.newInstance(ParseUser.getCurrentUser());
+                        ((MainActivity) getActivity()).selectedSubFragmentTag = ProfileGoalsFragment.TAG;
                         break;
                     case R.id.action_resources:
                     default:
+                        ((MainActivity) getActivity()).selectedSubFragmentTag = ProfileResourcesFragment.TAG;
                         fragment = ProfileResourcesFragment.newInstance(ParseUser.getCurrentUser());
                         break;
                 }
