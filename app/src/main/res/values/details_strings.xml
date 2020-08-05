@@ -46,6 +46,9 @@
     <!-- main -->
     <string name="cancel">Cancel</string>
 
+    <!-- profile -->
+    <string name="edit_prof">Edit Profile</string>
+
     <!-- create goal -->
     <string name="goal">Goal</string>
     <string name="goals">Goals</string>

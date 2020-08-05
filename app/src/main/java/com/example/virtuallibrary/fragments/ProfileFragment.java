@@ -44,7 +44,6 @@ public class ProfileFragment extends Fragment {
 
     public static final String TAG = "GoalsFragment";
     ImageView ivProfPic;
-    TextView tvUsername;
     TextView tvName;
     TextView tvBio;
     List<Goal> goals;
@@ -67,7 +66,6 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ivProfPic = binding.ivProfile;
-        tvUsername = binding.tvScreenName;
         tvName = binding.tvName;
         tvBio = binding.tvBio;
         bottomNavigation = binding.bottomNavigation;
