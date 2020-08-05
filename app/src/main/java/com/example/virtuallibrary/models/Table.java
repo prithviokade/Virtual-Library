@@ -32,7 +32,9 @@ public class Table extends ParseObject {
     public static final String KEY_CHAT = "chat";
     public static final String KEY_INVITES = "invites";
     public static final String KEY_CHANNEL = "channel";
-    public static final String KEY_ALLOWED = "allowed";
+    public static final String KEY_SONGS = "songs";
+    public static final String KEY_CURRENT_SONGS = "current_song";
+
 
     public ParseUser getCreator() {
         try {
@@ -231,5 +233,35 @@ public class Table extends ParseObject {
             }
         }
         return false;
+    }
+
+    public void setSongs(List<String> songs) {
+        put(KEY_SONGS, songs);
+    }
+
+    public List<String> getSongs() {
+        try {
+            return (List<String>) fetch().get(KEY_SONGS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void addSong(String song) {
+        add(KEY_SONGS, song);
+    }
+
+    public String getCurrentSong() {
+        try {
+            return fetch().getString(KEY_CURRENT_SONGS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setCurrentSong(String song) {
+        put(KEY_CURRENT_SONGS, song);
     }
 }

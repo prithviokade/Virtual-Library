@@ -60,7 +60,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileprovider" />
-        </provider>
+        </provider> numb, happy, sad, angry, confused
         -->
         <activity
             android:name=".activities.MainActivity"

@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
@@ -60,7 +61,8 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
     ImageButton btnVideoCall;
     ImageButton btnPlayMusic;
     Button btnVisit;
-
+    List<String> songs;
+    String currentSong;
     private MediaPlayer mediaPlayer;
 
     List<Message> messages;
@@ -81,6 +83,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         getSupportActionBar().setCustomView(R.layout.actionbar_notification);
 
         table = (Table) Parcels.unwrap(getIntent().getParcelableExtra(TableUtils.TAG));
+        songs = table.getSongs();
 
         mediaPlayer = new MediaPlayer();
 
@@ -98,15 +101,40 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         btnPlayMusic = binding.btnPlayMusic;
         btnVisit = binding.btnVisit;
 
-        prepareMediaPlayer();
+
         btnPlayMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
+                currentSong = table.getCurrentSong();
+                if (currentSong == null || currentSong.isEmpty()) {
+                    if (songs != null && songs.size() != 0) {
+                        currentSong = songs.get(0);
+                        table.setCurrentSong(currentSong);
+                        table.saveInBackground();
+                        prepareMediaPlayer();
+                    } else {
+                        Toast.makeText(TableDetailsActivity.this, "Please add songs to your table's playlist", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 } else {
-                    mediaPlayer.start();
+                    prepareMediaPlayer();
                 }
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mediaPlayer) {
+                        mediaPlayer.start();
+                        btnPlayMusic.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (mediaPlayer.isPlaying()) {
+                                    mediaPlayer.pause();
+                                } else {
+                                    mediaPlayer.start();
+                                }
+                            }
+                        });
+                    }
+                });
             }
         });
 
@@ -332,12 +360,49 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
 
     private void prepareMediaPlayer() {
         try {
-            mediaPlayer.setDataSource("http://infinityandroid.com/music/good_times.mp3");
+            currentSong = table.getCurrentSong();
+            mediaPlayer.setDataSource(currentSong);
             mediaPlayer.prepare();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    int currentSongIndex = findSong(songs, currentSong);
+                    if (currentSongIndex + 1 < songs.size()) {
+                        currentSong = songs.get(currentSongIndex + 1);
+                        table.setCurrentSong(currentSong);
+                        table.saveInBackground();
+                        try {
+                            mediaPlayer.setDataSource(currentSong);
+                            mediaPlayer.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        currentSong = songs.get(0);
+                        table.setCurrentSong(currentSong);
+                        table.saveInBackground();
+                        try {
+                            mediaPlayer.setDataSource(currentSong);
+                            mediaPlayer.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private int findSong(List<String> songs, String currentSong) {
+        for (int i = 0; i < songs.size(); i++) {
+            if (songs.get(i).equals(currentSong)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     private void getMessages() {
