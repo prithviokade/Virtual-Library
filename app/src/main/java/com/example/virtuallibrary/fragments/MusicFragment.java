@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -86,15 +87,27 @@ public class MusicFragment extends DialogFragment {
         songs = table.getSongs();
 
         seekBar.setMax(100);
+        seekBar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                SeekBar playerSeekBar = (SeekBar) view;
+                int playPosition = (player.getDuration() / 100) * playerSeekBar.getProgress();
+                player.seekTo(playPosition);
+                tvCurrentTime.setText(millisecondsToTimer(player.getCurrentPosition()));
+                return false;
+            }
+        });
 
         if (player.isPlaying()) {
             updateSeekBar();
             ivPlay.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
         } else {
+            seekBar.setProgress((int) (((float) player.getCurrentPosition() / player.getDuration()) * 100));
             ivPlay.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
         }
 
         tvTotalTime.setText(millisecondsToTimer(player.getDuration()));
+        tvCurrentTime.setText(millisecondsToTimer(player.getCurrentPosition()));
 
         ivDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +115,7 @@ public class MusicFragment extends DialogFragment {
                 String song = etSong.getText().toString();
                 table.addSong(song);
                 table.saveInBackground();
+                etSong.setText("");
             }
         });
 
@@ -112,11 +126,20 @@ public class MusicFragment extends DialogFragment {
                     handler.removeCallbacks(updater);
                     player.pause();
                     ivPlay.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
+                    ((TableDetailsActivity) getActivity()).btnPlayMusic.setImageResource(R.drawable.ic_baseline_play_arrow_24);
                 } else {
                     player.start();
                     ivPlay.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
+                    ((TableDetailsActivity) getActivity()).btnPlayMusic.setImageResource(R.drawable.ic_baseline_pause_24);
                     updateSeekBar();
                 }
+            }
+        });
+
+        player.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+            @Override
+            public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
+                seekBar.setSecondaryProgress(i);
             }
         });
 
@@ -134,6 +157,7 @@ public class MusicFragment extends DialogFragment {
                         mediaPlayer.reset();
                         mediaPlayer.setDataSource(currentSong);
                         mediaPlayer.prepare();
+                        mediaPlayer.start();
                         tvTotalTime.setText(millisecondsToTimer(player.getDuration()));
                         updateSeekBar();
                     } catch (IOException e) {
@@ -147,6 +171,7 @@ public class MusicFragment extends DialogFragment {
                         mediaPlayer.reset();
                         mediaPlayer.setDataSource(currentSong);
                         mediaPlayer.prepare();
+                        mediaPlayer.start();
                         tvTotalTime.setText(millisecondsToTimer(player.getDuration()));
                         updateSeekBar();
                     } catch (IOException e) {

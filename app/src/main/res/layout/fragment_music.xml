@@ -63,7 +63,7 @@
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/ivAddSong"
         android:ems="10"
-        android:hint="Song URL"
+        android:hint="@string/song_url"
         android:inputType="textPersonName"
         android:textSize="12sp" />
 

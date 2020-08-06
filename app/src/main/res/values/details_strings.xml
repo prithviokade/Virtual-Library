@@ -91,4 +91,7 @@
     <string name="notification_plural">notifications.</string>
     <string name="notification_singular">notification.</string>
 
+    <!-- music -->
+    <string name="song_url">Song URL</string>
+
 </resources>

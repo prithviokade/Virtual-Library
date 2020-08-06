@@ -62,7 +62,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
     Spinner spnStatus;
     ImageButton btnInvite;
     ImageButton btnVideoCall;
-    ImageButton btnPlayMusic;
+    public ImageButton btnPlayMusic;
     Button btnVisit;
     List<String> songs;
     String currentSong;
