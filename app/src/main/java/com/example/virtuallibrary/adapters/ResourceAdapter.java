@@ -3,6 +3,7 @@ package com.example.virtuallibrary.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,11 +111,11 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
             }
             if (post.getLink() != null && !post.getLink().isEmpty()) {
                 tvLink.setVisibility(View.VISIBLE);
-                tvLink.setText(post.getLink());
+                tvLink.setText(Html.fromHtml("<font color=#000000>" + context.getString(R.string.linked) + " " + "</font>" + post.getLink()));
             }
-            if (post.getFile() != null) {
+            if (post.getFileName() != null) {
                 tvFile.setVisibility(View.VISIBLE);
-                tvFile.setText(post.getFileName());
+                tvFile.setText(Html.fromHtml("<font color=#000000>" + context.getString(R.string.attached) + " " + "</font>" + post.getFileName()));
             }
 
             tvScreenName.setOnClickListener(new View.OnClickListener() {
@@ -140,11 +141,10 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
             tvFile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.setAction(android.content.Intent.ACTION_VIEW);
-                    File file = new File(post.getFilePath());
-                    intent.setData(Uri.fromFile(file));
-                    context.startActivity(intent);
+                    Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+                    pdfIntent.setDataAndType(Uri.parse(post.getFileName()), "application/pdf");
+                    pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(pdfIntent);
                 }
             });
 

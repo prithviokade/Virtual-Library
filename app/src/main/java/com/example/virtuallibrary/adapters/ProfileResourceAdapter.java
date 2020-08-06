@@ -2,6 +2,7 @@ package com.example.virtuallibrary.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,11 +82,11 @@ public class ProfileResourceAdapter extends RecyclerView.Adapter<ProfileResource
             }
             if (post.getLink() != null && !post.getLink().isEmpty()) {
                 tvLink.setVisibility(View.VISIBLE);
-                tvLink.setText(post.getLink());
+                tvLink.setText(Html.fromHtml("<font color=#000000>" + context.getString(R.string.linked) + " " + "</font>" + post.getLink()));
             }
-            if (post.getFile() != null) {
+            if (post.getFileName() != null) {
                 tvFile.setVisibility(View.VISIBLE);
-                tvFile.setText(post.getFileName());
+                tvFile.setText(Html.fromHtml("<font color=#000000>" + context.getString(R.string.attached) + " " + "</font>" + post.getFileName()));
             }
 
             container.setOnClickListener(new View.OnClickListener() {

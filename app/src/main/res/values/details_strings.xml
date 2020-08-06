@@ -66,6 +66,8 @@
     <string name="link">Link</string>
     <string name="file">File</string>
     <string name="subject">Subject</string>
+    <string name="attached">Attached:</string>
+    <string name="linked">Link:</string>
 
     <!-- create table -->
     <string name="visitors_question">Visitors?</string>

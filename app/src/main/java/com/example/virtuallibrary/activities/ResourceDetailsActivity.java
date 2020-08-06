@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -99,11 +100,11 @@ public class ResourceDetailsActivity extends AppCompatActivity {
         }
         if (resource.getLink() != null && !resource.getLink().isEmpty()) {
             tvLink.setVisibility(View.VISIBLE);
-            tvLink.setText(resource.getLink());
+            tvLink.setText(Html.fromHtml("<font color=#000000>" + getString(R.string.linked) + " " + "</font>" + resource.getLink()));
         }
-        if (resource.getFile() != null) {
+        if (resource.getFileName() != null) {
             tvFile.setVisibility(View.VISIBLE);
-            tvFile.setText(resource.getFileName());
+            tvFile.setText(Html.fromHtml("<font color=#000000>" + getString(R.string.attached) + " " + "</font>" + resource.getFileName()));
         }
 
         tvScreenName.setOnClickListener(new View.OnClickListener() {
@@ -127,11 +128,10 @@ public class ResourceDetailsActivity extends AppCompatActivity {
         tvFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setAction(android.content.Intent.ACTION_VIEW);
-                File file = new File(resource.getFilePath());
-                intent.setData(Uri.fromFile(file));
-                startActivity(intent);
+                Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+                pdfIntent.setDataAndType(Uri.parse(resource.getFileName()), "application/pdf");
+                pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(pdfIntent);
             }
         });
     }

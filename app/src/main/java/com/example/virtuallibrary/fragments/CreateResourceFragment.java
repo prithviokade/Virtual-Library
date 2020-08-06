@@ -1,6 +1,7 @@
 package com.example.virtuallibrary.fragments;
 
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.activities.ResourceDetailsActivity;
 import com.example.virtuallibrary.databinding.FragmentCreateResourceBinding;
@@ -113,7 +117,7 @@ public class CreateResourceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("file/*");
+                intent.setType("application/pdf");
                 startActivityForResult(intent, PICKFILE_RESULT_CODE);
             }
         });
@@ -135,7 +139,7 @@ public class CreateResourceFragment extends Fragment {
                 String link = etLink.getText().toString();
                 String filepath = tvFilename.getText().toString();
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                Post createdPost = saveNewPost(caption, subject, currentUser, photoFile, link, filepath);
+                Post createdPost = saveNewPost(caption, subject, currentUser, photoFile, link);
                 initializeView();
                 Intent intent = new Intent(getContext(), ResourceDetailsActivity.class);
                 intent.putExtra(Post.TAG, Parcels.wrap(createdPost));
@@ -197,30 +201,37 @@ public class CreateResourceFragment extends Fragment {
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
-        } else if (resultCode == PICKFILE_RESULT_CODE) {
+        }
+
+        if (requestCode == PICKFILE_RESULT_CODE) {
             if (resultCode == RESULT_OK) {
-                String FilePath = data.getData().getPath();
-                filename = data.getData().getLastPathSegment();
+                Uri fileuri = data.getData();
+                filename = fileuri.toString();
                 tvFilename.setVisibility(View.VISIBLE);
-                tvFilename.setText(FilePath);
+                tvFilename.setText(Html.fromHtml("<font color=#000000>" + getString(R.string.attached) + " " + "</font>" + filename));
+                tvFilename.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+                        pdfIntent.setDataAndType(Uri.parse(filename), "application/pdf");
+                        pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(pdfIntent);
+                    }
+                });
             } else {
                 Toast.makeText(getContext(), "File wasn't attatched!", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private Post saveNewPost(String caption, String subject, ParseUser user, File photoFile, String link, String filepath) {
+
+    private Post saveNewPost(String caption, String subject, ParseUser user, File photoFile, String link) {
         Post post = new Post();
         post.setCaption(caption);
         post.setSubject(subject);
         if (photoFile != null) { post.setImage(new ParseFile(photoFile)); }
         if (!link.isEmpty()) { post.setLink(link); }
-        if (!filepath.isEmpty()) {
-            post.setFilePath(filepath);
-            post.setFileName(filename);
-            File file = new File(filepath);
-            post.setFile(new ParseFile(file));
-        }
+        if (filename != null && !filename.isEmpty()) { post.setFileName(filename); }
         post.setUser(user);
         post.saveInBackground();
         return post;
