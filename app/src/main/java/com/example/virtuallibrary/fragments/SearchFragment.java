@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +22,9 @@ import android.widget.TextView;
 import com.example.virtuallibrary.R;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.activities.MainActivity;
-import com.example.virtuallibrary.adapters.SearchUserAdapter;
+import com.example.virtuallibrary.adapters.SearchAdapter;
 import com.example.virtuallibrary.databinding.FragmentSearchBinding;
+import com.example.virtuallibrary.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -43,7 +46,8 @@ public class SearchFragment extends Fragment {
     TextView tvCancel;
     RecyclerView rvUsers;
     List<ParseUser> users;
-    SearchUserAdapter adapter;
+    List<Post> resources;
+    SearchAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,11 +67,13 @@ public class SearchFragment extends Fragment {
         rvUsers = binding.rvUsers;
 
         users = new ArrayList<>();
-        adapter = new SearchUserAdapter(this, users);
+        resources = new ArrayList<>();
+        adapter = new SearchAdapter(this, users, resources);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvUsers.setAdapter(adapter);
         rvUsers.setLayoutManager(linearLayoutManager);
         queryUsers();
+        queryPosts();
 
         tvCancel = view.findViewById(R.id.tvCancel);
         tvCancel.setOnClickListener(new View.OnClickListener() {
@@ -81,24 +87,29 @@ public class SearchFragment extends Fragment {
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                Log.d(TAG, "detected BEFORE");
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                Log.d(TAG, "detected ON" + charSequence + i + i1 + i2);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 String searched = etSearch.getText().toString();
-                filterBy(searched);
+                filterUserBy(searched);
+                filterResourceBy(searched);
             }
         });
 
     }
 
-    private void filterBy(String searched) {
+    private void filterUserBy(String searched) {
+        if (searched.isEmpty()) {
+            queryUsers();
+            return;
+        }
         List<ParseUser> searchedUsers = new ArrayList<>();
 
         for (ParseUser user : users) {
@@ -106,8 +117,26 @@ public class SearchFragment extends Fragment {
                 searchedUsers.add(user);
             }
         }
-        adapter.clear();
-        adapter.addAll(searchedUsers);
+        adapter.clearUsers();
+        adapter.addAllUsers(searchedUsers);
+    }
+
+    private void filterResourceBy(String searched) {
+        if (searched.isEmpty()) {
+            queryPosts();
+            return;
+        }
+        List<Post> searchedResources = new ArrayList<>();
+
+        for (Post resource : resources) {
+            if (resource.getCaption().toLowerCase().contains(searched.toLowerCase())) {
+                searchedResources.add(resource);
+            } else if (resource.getSubject().toLowerCase().contains(searched.toLowerCase())) {
+                searchedResources.add(resource);
+            }
+        }
+        adapter.clearResources();
+        adapter.addAllResources(searchedResources);
     }
 
     private void queryUsers() {
@@ -130,8 +159,25 @@ public class SearchFragment extends Fragment {
                         break;
                     }
                 }
-                adapter.clear();
-                adapter.addAll(retreivedUsers);
+                adapter.clearUsers();
+                adapter.addAllUsers(retreivedUsers);
+            }
+        });
+    }
+
+    protected void queryPosts() {
+        // Specify which class to query
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> retreivedPosts, ParseException e) {
+                if (e != null) {
+                    return;
+                }
+                adapter.clearResources();
+                adapter.addAllResources(retreivedPosts);
             }
         });
     }
