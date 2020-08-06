@@ -23,10 +23,14 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.example.virtuallibrary.TableUtils;
+import com.example.virtuallibrary.activities.ResourceDetailsActivity;
 import com.example.virtuallibrary.databinding.FragmentCreateResourceBinding;
 import com.example.virtuallibrary.models.Post;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.io.File;
 
@@ -131,8 +135,11 @@ public class CreateResourceFragment extends Fragment {
                 String link = etLink.getText().toString();
                 String filepath = tvFilename.getText().toString();
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                saveNewPost(caption, subject, currentUser, photoFile, link, filepath);
+                Post createdPost = saveNewPost(caption, subject, currentUser, photoFile, link, filepath);
                 initializeView();
+                Intent intent = new Intent(getContext(), ResourceDetailsActivity.class);
+                intent.putExtra(Post.TAG, Parcels.wrap(createdPost));
+                startActivity(intent);
             }
         });
 
@@ -202,7 +209,7 @@ public class CreateResourceFragment extends Fragment {
         }
     }
 
-    private void saveNewPost(String caption, String subject, ParseUser user, File photoFile, String link, String filepath) {
+    private Post saveNewPost(String caption, String subject, ParseUser user, File photoFile, String link, String filepath) {
         Post post = new Post();
         post.setCaption(caption);
         post.setSubject(subject);
@@ -216,6 +223,7 @@ public class CreateResourceFragment extends Fragment {
         }
         post.setUser(user);
         post.saveInBackground();
+        return post;
     }
 
 }

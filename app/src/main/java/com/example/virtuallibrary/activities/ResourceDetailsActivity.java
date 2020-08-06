@@ -82,9 +82,11 @@ public class ResourceDetailsActivity extends AppCompatActivity {
         tvCaption.setText(resource.getCaption());
         tvSubject.setText(resource.getSubject());
         Date time = resource.getCreatedAt();
-        DateFormat dateFormat = new SimpleDateFormat("h:mm aa EEE MMM dd yyyy");
-        String dateString = dateFormat.format(time);
-        tvCreated.setText(dateString);
+        if (time != null) {
+            DateFormat dateFormat = new SimpleDateFormat("h:mm aa EEE MMM dd yyyy");
+            String dateString = dateFormat.format(time);
+            tvCreated.setText(dateString);
+        }
         ParseFile profile = UserUtils.getProfilePicture(resource.getUser());
         if (profile != null) {
             Glide.with(this).load(profile.getUrl()).transform(new CircleCrop()).into(ivProfile);

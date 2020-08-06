@@ -43,7 +43,7 @@ A group study app where students can check into app, log their day's goals/topic
 * [x] User can post a new file resource or link to their feed
 * [x] User can choose how to sort the tables
 * [x] User can video chat with others at their table
-* [ ] User can listen to the music at their table
+* [x] User can listen to the music at their table
 
 ### 2. Screen Archetypes
 
