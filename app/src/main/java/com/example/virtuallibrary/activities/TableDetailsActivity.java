@@ -29,7 +29,10 @@ import com.example.virtuallibrary.TableUtils;
 import com.example.virtuallibrary.UserUtils;
 import com.example.virtuallibrary.adapters.MessageAdapter;
 import com.example.virtuallibrary.databinding.ActivityTableDetailsBinding;
+import com.example.virtuallibrary.fragments.MusicFragment;
 import com.example.virtuallibrary.fragments.TableFragment;
+import com.example.virtuallibrary.fragments.UserInvitesFragment;
+import com.example.virtuallibrary.models.Invite;
 import com.example.virtuallibrary.models.Message;
 import com.example.virtuallibrary.models.Table;
 import com.parse.ParseQuery;
@@ -63,7 +66,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
     Button btnVisit;
     List<String> songs;
     String currentSong;
-    private MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
 
     List<Message> messages;
     MessageAdapter adapter;
@@ -101,7 +104,6 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         btnPlayMusic = binding.btnPlayMusic;
         btnVisit = binding.btnVisit;
 
-
         btnPlayMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +116,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                         prepareMediaPlayer();
                     } else {
                         Toast.makeText(TableDetailsActivity.this, "Please add songs to your table's playlist", Toast.LENGTH_SHORT).show();
+                        showMusicDialog();
                         return;
                     }
                 } else {
@@ -123,18 +126,29 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                     @Override
                     public void onPrepared(MediaPlayer mediaPlayer) {
                         mediaPlayer.start();
+                        btnPlayMusic.setImageResource(R.drawable.ic_baseline_pause_24);
                         btnPlayMusic.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 if (mediaPlayer.isPlaying()) {
                                     mediaPlayer.pause();
+                                    btnPlayMusic.setImageResource(R.drawable.ic_baseline_play_arrow_24);
                                 } else {
                                     mediaPlayer.start();
+                                    btnPlayMusic.setImageResource(R.drawable.ic_baseline_pause_24);
                                 }
                             }
                         });
                     }
                 });
+            }
+        });
+
+        btnPlayMusic.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showMusicDialog();
+                return false;
             }
         });
 
@@ -330,6 +344,12 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
         });
     }
 
+    private void showMusicDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        MusicFragment musicFragment = MusicFragment.newInstance(table);
+        musicFragment.show(fm, "fragment_music");
+    }
+
     private void liveQuery() {
         // Make sure the Parse server is setup to configured for live queries
         ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient();
@@ -367,24 +387,32 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     int currentSongIndex = findSong(songs, currentSong);
+                    Log.d(TAG, " " + currentSongIndex);
+                    songs = table.getSongs();
+
                     if (currentSongIndex + 1 < songs.size()) {
                         currentSong = songs.get(currentSongIndex + 1);
                         table.setCurrentSong(currentSong);
                         table.saveInBackground();
                         try {
+                            mediaPlayer.reset();
                             mediaPlayer.setDataSource(currentSong);
                             mediaPlayer.prepare();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     } else {
+                        Log.d(TAG, "here");
                         currentSong = songs.get(0);
+                        Log.d(TAG, currentSong);
                         table.setCurrentSong(currentSong);
                         table.saveInBackground();
                         try {
+                            mediaPlayer.reset();
                             mediaPlayer.setDataSource(currentSong);
                             mediaPlayer.prepare();
                         } catch (IOException e) {
+                            Log.d(TAG, e.getMessage());
                             e.printStackTrace();
                         }
                     }

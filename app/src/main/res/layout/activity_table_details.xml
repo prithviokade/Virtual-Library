@@ -14,14 +14,16 @@
         android:id="@+id/flContainer"
         android:layout_width="match_parent"
         android:layout_height="211dp">
-    </FrameLayout>
 
+    </FrameLayout>
 
     <ImageButton
         android:id="@+id/btnPlayMusic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnVideoCall"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:backgroundTint="@color/plainWhite"
         app:srcCompat="@drawable/ic_baseline_queue_music_24" />
@@ -32,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnInvite"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:backgroundTint="#FFFFFF"
         app:srcCompat="@drawable/ic_baseline_video_call_24" />
@@ -222,6 +225,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
         android:backgroundTint="#FFFFFF"
         app:srcCompat="@drawable/ic_baseline_group_add_24" />
 

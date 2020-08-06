@@ -44,7 +44,7 @@ public class UserInvitesFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment// Inflate the layout for this fragment
+        // Inflate the layout for this fragment
         binding = FragmentUserInvitesBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         return view;
