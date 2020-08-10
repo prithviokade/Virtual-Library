@@ -262,6 +262,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                 } else {
                     UserUtils.setVisiting(ParseUser.getCurrentUser(), table);
                     btnVisit.setText(getString(R.string.end_visit));
+                    btnInvite.setVisibility(View.GONE);
 
                     rvMessages.setVisibility(View.VISIBLE);
                     etCompose.setVisibility(View.VISIBLE);
@@ -315,6 +316,7 @@ public class TableDetailsActivity extends AppCompatActivity implements AdapterVi
                         btnVisit.setVisibility(View.VISIBLE);
                         btnVisit.setText("Visit");
                     }
+                    if (mediaPlayer.isPlaying()) { mediaPlayer.reset(); }
 
                     TableUtils.removeFromPreviousTable(ParseUser.getCurrentUser());
                     UserUtils.removeCurrentTable(ParseUser.getCurrentUser());

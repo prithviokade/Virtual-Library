@@ -86,6 +86,18 @@ public class MusicFragment extends DialogFragment {
         currentSong = table.getCurrentSong();
         songs = table.getSongs();
 
+        ivDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String song = etSong.getText().toString();
+                table.addSong(song);
+                table.saveInBackground();
+                etSong.setText("");
+            }
+        });
+
+        if (songs == null) { return; }
+
         seekBar.setMax(100);
         seekBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -108,16 +120,6 @@ public class MusicFragment extends DialogFragment {
 
         tvTotalTime.setText(millisecondsToTimer(player.getDuration()));
         tvCurrentTime.setText(millisecondsToTimer(player.getCurrentPosition()));
-
-        ivDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String song = etSong.getText().toString();
-                table.addSong(song);
-                table.saveInBackground();
-                etSong.setText("");
-            }
-        });
 
         ivPlay.setOnClickListener(new View.OnClickListener() {
             @Override

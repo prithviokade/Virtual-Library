@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
         setContentView(view);
 
         ivLogo = binding.ivLogo;
-        ivLogo.setImageResource(R.drawable.logo);
+        ivLogo.setImageResource(R.drawable.logoname);
 
         if (ParseUser.getCurrentUser() != null) {
             goMainActivity();

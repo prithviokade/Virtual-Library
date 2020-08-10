@@ -24,6 +24,7 @@ import com.parse.ParseUser;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ProfileGoalsFragment extends Fragment {
@@ -88,7 +89,9 @@ public class ProfileGoalsFragment extends Fragment {
     }
 
     private void queryGoals() {
-        List<Goal> foundGoals = UserUtils.getGoals(user);
+        List<Goal> foundGoals = new ArrayList<>();
+        foundGoals.addAll(UserUtils.getGoals(user));
+        Collections.reverse(foundGoals);
         adapter.clear();
         adapter.addAll(foundGoals);
         if (swipeContainer != null) { swipeContainer.setRefreshing(false); }

@@ -7,7 +7,9 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.telecom.Call;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,6 +27,11 @@ import com.example.virtuallibrary.models.Table;
 
 import org.parceler.Parcels;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +60,6 @@ public class CallActivity extends AppCompatActivity {
     ImageButton btnEndCall;
     ImageButton btnAddFilter;
     ImageView blankProfile;
-    ImageView remoteBlankProfile;
     boolean audioMuted = false;
     boolean videoMuted = true;
     boolean filterEnabled = false;
@@ -61,8 +67,6 @@ public class CallActivity extends AppCompatActivity {
     int usersPresent = 0;
     List<SurfaceView> remoteUserViews = new ArrayList<>();
     List<Integer> remoteUserUid = new ArrayList<>();
-    List<ImageView> remoteUserBlankViews = new ArrayList<>();
-    List<Integer> remoteUserBlankUid = new ArrayList<>();
 
     // Ask for Android device permissions at runtime.
     private static final String[] REQUESTED_PERMISSIONS = {
