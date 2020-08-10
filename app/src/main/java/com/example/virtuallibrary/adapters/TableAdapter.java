@@ -102,7 +102,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
             String topic = table.getTopic();
             String type = table.getType();
             String description = table.getDescription();
-            String fullDescription = context.getString(R.string.description_pt1) + " " + type + " " + context.getString(R.string.description_pt2) + topic + ".\n" + description;
+            String fullDescription = context.getString(R.string.description_pt1) + " " + type + " " + context.getString(R.string.description_pt2) + " " + topic + ".\n" + description;
             tvDescription.setText(fullDescription);
         }
     }

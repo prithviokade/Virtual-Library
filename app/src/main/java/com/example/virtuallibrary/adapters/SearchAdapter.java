@@ -54,7 +54,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         if (viewType == VIEW_TYPE_RESOURCE) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_profile_resource, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.item_search_resource, parent, false);
             return new ResourceViewHolder(view);
         }
         return null;
@@ -159,9 +159,6 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         TextView tvCaption;
         TextView tvSubject;
-        ImageView ivPost;
-        TextView tvLink;
-        TextView tvFile;
         ImageView ivBookmark;
         RelativeLayout container;
 
@@ -170,19 +167,11 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvSubject = itemView.findViewById(R.id.tvSubject);
-            ivPost = itemView.findViewById(R.id.ivPost);
-            tvLink = itemView.findViewById(R.id.tvLink);
-            tvFile = itemView.findViewById(R.id.tvFile);
             container = itemView.findViewById(R.id.container);
             ivBookmark = itemView.findViewById(R.id.ivBookmark);
         }
 
         public void bind(Post resource) {
-            ivPost.setVisibility(View.GONE);
-            tvLink.setVisibility(View.GONE);
-            tvFile.setVisibility(View.GONE);
-            ivBookmark.setVisibility(View.VISIBLE);
-
             tvCaption.setText(resource.getCaption());
             tvSubject.setText(resource.getSubject());
 

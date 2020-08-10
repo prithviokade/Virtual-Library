@@ -141,9 +141,13 @@ public class CreateResourceFragment extends Fragment {
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 Post createdPost = saveNewPost(caption, subject, currentUser, photoFile, link);
                 initializeView();
-                Intent intent = new Intent(getContext(), ResourceDetailsActivity.class);
-                intent.putExtra(Post.TAG, Parcels.wrap(createdPost));
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent(getContext(), ResourceDetailsActivity.class);
+                    intent.putExtra(Post.TAG, Parcels.wrap(createdPost));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 

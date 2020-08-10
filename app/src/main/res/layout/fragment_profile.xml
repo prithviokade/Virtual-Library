@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     tools:context=".fragments.ProfileFragment">
 
     <FrameLayout
@@ -12,7 +13,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/bottomNavigation"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="0dp"
+        android:background="#FFFFFF">
 
     </FrameLayout>
 
@@ -42,10 +44,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvName"
-        android:autoLink="all"
-        android:linksClickable="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="12sp" />
 
