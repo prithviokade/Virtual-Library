@@ -9,6 +9,7 @@ import com.example.virtuallibrary.models.Post;
 import com.example.virtuallibrary.models.Table;
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.facebook.ParseFacebookUtils;
 
 public class ParseApplication extends Application {
 
@@ -31,5 +32,7 @@ public class ParseApplication extends Application {
                 .applicationId("prithvi-virtual-library") // should correspond to APP_ID env variable
                 .clientKey("PrithviParseVirtualLibraryFour")  // set explicitly unless clientKey is explicitly configured on Parse server
                 .server("https://prithvi-virtual-library.herokuapp.com/parse").build());
+
+        ParseFacebookUtils.initialize(getApplicationContext());
     }
 }

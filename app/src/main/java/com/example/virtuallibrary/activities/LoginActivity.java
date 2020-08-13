@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,8 +29,10 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+import com.parse.facebook.ParseFacebookUtils;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 public class LoginActivity extends AppCompatActivity implements GetUserCallback.IGetUserResponse {
 
@@ -49,8 +52,7 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-        goLoginActivity();
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
     private void goLoginActivity() {
@@ -82,15 +84,22 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
 
         mCallbackManager = CallbackManager.Factory.create();
 
-        LoginButton mLoginButton = binding.loginButton;
+        ImageButton mLoginButton = binding.loginButton;
+
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logInWithFacebook(null);
+            }
+        });
 
         // Set the initial permissions to request from the user while logging in
-        mLoginButton.setPermissions(Arrays.asList(EMAIL, USER_POSTS));
+        // mLoginButton.setPermissions(Arrays.asList(EMAIL, USER_POSTS));
 
-        mLoginButton.setAuthType(AUTH_TYPE);
+        // mLoginButton.setAuthType(AUTH_TYPE);
 
         // Register a callback to respond to the user
-        mLoginButton.registerCallback(
+        /* mLoginButton.registerCallback(
                 mCallbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -108,6 +117,9 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
                     @Override
                     public void onError(FacebookException e) { }
                 });
+
+         */
+
 
         etUsername = binding.etUsername;
         etPassword = binding.etPassword;
@@ -233,5 +245,18 @@ public class LoginActivity extends AppCompatActivity implements GetUserCallback.
             });
         }
 
+    }
+
+    public void logInWithFacebook(Collection<String> permissions){
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+            @Override
+            public void done(final ParseUser user, ParseException err) {
+                if (user == null) {
+                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                } else {
+                    goMainActivity();
+                }
+            }
+        });
     }
 }
